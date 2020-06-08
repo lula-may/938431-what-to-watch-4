@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Юлия Елагина](https://up.htmlacademy.ru/react/4/user/938431).
-* Наставник: `Неизвестно`.
+* Наставник: [Дмитрий Марков](https://up.htmlacademy.ru/react/4/user/83550).
 
 ---
 
