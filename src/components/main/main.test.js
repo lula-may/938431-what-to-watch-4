@@ -21,6 +21,7 @@ it(`Should render Jurassik Park`, () => {
         headerMovieGenre={genre}
         headerMovieYear={year}
         movieTitles={movies}
+        onMovieTitleClick={() => {}}
       />
   )
     .toJSON();

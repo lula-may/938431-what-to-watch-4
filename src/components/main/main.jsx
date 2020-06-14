@@ -16,7 +16,7 @@ const getBgSrc = (title) => {
 const getImgSrc = (movie) => `img/${transformToKebabCase(movie)}.jpg`;
 
 const Main = (props) => {
-  const {headerMovieTitle, headerMovieGenre, headerMovieYear, movieTitles} = props;
+  const {headerMovieTitle, headerMovieGenre, headerMovieYear, movieTitles, onMovieTitleClick} = props;
   const posterSrc = getPosterSrc(headerMovieTitle);
   const posterAlt = `${headerMovieTitle} poster`;
   const bgSrc = getBgSrc(headerMovieTitle);
@@ -124,7 +124,7 @@ const Main = (props) => {
               <div className="small-movie-card__image">
                 <img src={movieImgSrc} alt={title} width="280" height="175" />
               </div>
-              <h3 className="small-movie-card__title">
+              <h3 className="small-movie-card__title" onClick={onMovieTitleClick}>
                 <a className="small-movie-card__link" href="movie-page.html">{title}</a>
               </h3>
             </article>;
@@ -156,7 +156,8 @@ Main.propTypes = {
   headerMovieTitle: PropTypes.string.isRequired,
   headerMovieGenre: PropTypes.string.isRequired,
   headerMovieYear: PropTypes.number.isRequired,
-  movieTitles: PropTypes.arrayOf(PropTypes.string).isRequired
+  movieTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  onMovieTitleClick: PropTypes.func.isRequired
 };
 
 export default Main;
