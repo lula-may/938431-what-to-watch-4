@@ -6,10 +6,10 @@ const App = (props) => {
   const {headerMovieTitle, genre, releaseYear, movies} = props;
 
   return <Main
-    title={headerMovieTitle}
-    genre={genre}
-    year={releaseYear}
-    movies={movies}
+    headerMovieTitle={headerMovieTitle}
+    headerMovieGenre={genre}
+    headerMovieYear={releaseYear}
+    movieTitles={movies}
   />;
 };
 
