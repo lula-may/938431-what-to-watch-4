@@ -16,15 +16,15 @@ const getBgSrc = (title) => {
 const getImgSrc = (movie) => `img/${transformToKebabCase(movie)}.jpg`;
 
 const Main = (props) => {
-  const {title, genre, year, movies} = props;
-  const posterSrc = getPosterSrc(title);
-  const posterAlt = `${title} poster`;
-  const bgSrc = getBgSrc(title);
+  const {headerMovieTitle, headerMovieGenre, headerMovieYear, movies, onMovieTitleClick} = props;
+  const posterSrc = getPosterSrc(headerMovieTitle);
+  const posterAlt = `${headerMovieTitle} poster`;
+  const bgSrc = getBgSrc(headerMovieTitle);
 
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={bgSrc} alt={title} />
+        <img src={bgSrc} alt={headerMovieTitle} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -52,10 +52,10 @@ const Main = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{title}</h2>
+            <h2 className="movie-card__title">{headerMovieTitle}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{genre}</span>
-              <span className="movie-card__year">{year}</span>
+              <span className="movie-card__genre">{headerMovieGenre}</span>
+              <span className="movie-card__year">{headerMovieYear}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -116,16 +116,15 @@ const Main = (props) => {
 
         <div className="catalog__movies-list">
 
-          {movies.map((movie, i) => {
-            const movieImgSrc = getImgSrc(movie);
-
-            return <article key={movie + i}
+          {movies.map((movie) => {
+            const movieImgSrc = getImgSrc(movie.title);
+            return <article key={movie.id}
               className="small-movie-card catalog__movies-card">
               <div className="small-movie-card__image">
-                <img src={movieImgSrc} alt={movie} width="280" height="175" />
+                <img src={movieImgSrc} alt={movie.title} width="280" height="175" />
               </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">{movie}</a>
+              <h3 className="small-movie-card__title" onClick={onMovieTitleClick}>
+                <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
               </h3>
             </article>;
           })}
@@ -153,10 +152,16 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  title: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.string).isRequired
+  headerMovieTitle: PropTypes.string.isRequired,
+  headerMovieGenre: PropTypes.string.isRequired,
+  headerMovieYear: PropTypes.number.isRequired,
+  movies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired
+      })
+  ).isRequired,
+  onMovieTitleClick: PropTypes.func.isRequired
 };
 
 export default Main;
