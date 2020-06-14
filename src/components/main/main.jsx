@@ -16,7 +16,7 @@ const getBgSrc = (title) => {
 const getImgSrc = (movie) => `img/${transformToKebabCase(movie)}.jpg`;
 
 const Main = (props) => {
-  const {headerMovieTitle, headerMovieGenre, headerMovieYear, movieTitles, onMovieTitleClick} = props;
+  const {headerMovieTitle, headerMovieGenre, headerMovieYear, movies, onMovieTitleClick} = props;
   const posterSrc = getPosterSrc(headerMovieTitle);
   const posterAlt = `${headerMovieTitle} poster`;
   const bgSrc = getBgSrc(headerMovieTitle);
@@ -116,16 +116,15 @@ const Main = (props) => {
 
         <div className="catalog__movies-list">
 
-          {movieTitles.map((title, i) => {
-            const movieImgSrc = getImgSrc(title);
-            const keyWord = `${title}${i}`;
-            return <article key={keyWord}
+          {movies.map((movie) => {
+            const movieImgSrc = getImgSrc(movie.title);
+            return <article key={movie.id}
               className="small-movie-card catalog__movies-card">
               <div className="small-movie-card__image">
-                <img src={movieImgSrc} alt={title} width="280" height="175" />
+                <img src={movieImgSrc} alt={movie.title} width="280" height="175" />
               </div>
               <h3 className="small-movie-card__title" onClick={onMovieTitleClick}>
-                <a className="small-movie-card__link" href="movie-page.html">{title}</a>
+                <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
               </h3>
             </article>;
           })}
@@ -156,7 +155,12 @@ Main.propTypes = {
   headerMovieTitle: PropTypes.string.isRequired,
   headerMovieGenre: PropTypes.string.isRequired,
   headerMovieYear: PropTypes.number.isRequired,
-  movieTitles: PropTypes.arrayOf(PropTypes.string).isRequired,
+  movies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired
+      })
+  ).isRequired,
   onMovieTitleClick: PropTypes.func.isRequired
 };
 

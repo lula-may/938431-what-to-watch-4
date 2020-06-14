@@ -11,7 +11,7 @@ const App = (props) => {
     headerMovieTitle={headerMovieTitle}
     headerMovieGenre={genre}
     headerMovieYear={releaseYear}
-    movieTitles={movies}
+    movies={movies}
     onMovieTitleClick={onMovieTitleClick}
   />;
 };
@@ -20,7 +20,12 @@ App.propTypes = {
   headerMovieTitle: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
   releaseYear: PropTypes.number.isRequired,
-  movies: PropTypes.arrayOf(PropTypes.string).isRequired
+  movies: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        id: PropTypes.number.isRequired
+      })
+  ).isRequired
 };
 
 export default App;

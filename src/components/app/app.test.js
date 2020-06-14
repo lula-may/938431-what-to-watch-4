@@ -2,13 +2,20 @@ import React from "react";
 import renderer from "react-test-renderer";
 import App from "./app.jsx";
 
-const movies = [
+const movieTitles = [
   `Gone With The Wind`,
   `The Godfather`,
   `Casablanca`,
   `A Streetcar Named Desire`,
   `Some Likes It Hot`,
 ];
+
+const movies = movieTitles.map((title, i) => {
+  return {
+    title,
+    id: i
+  };
+});
 
 const title = `Jurassic Park`;
 const genre = `Sci-Fi`;

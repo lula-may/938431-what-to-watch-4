@@ -25,11 +25,18 @@ const movieTitles = [
   `Midnight Special`
 ];
 
+const moviesWithId = movieTitles.map((title) => {
+  return {
+    title,
+    id: Math.round(new Date() * Math.random())
+  };
+});
+
 const mainPageData = {
   headerMovieTitle: `The Grand Budapest Hotel`,
   genre: `Drama`,
   releaseYear: 2014,
-  movies: movieTitles
+  movies: moviesWithId
 };
 
 const init = (settings) => {
