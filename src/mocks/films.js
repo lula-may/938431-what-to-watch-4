@@ -21,6 +21,8 @@ const movieTitles = [
   `Midnight Special`
 ];
 
+const MOCK_MOVIES_AMOUNT = 8;
+
 const headerMovieTitle = `The Grand Budapest Hotel`;
 
 const transformToKebabCase = (phrase) => {
@@ -37,7 +39,7 @@ const getBgSrc = (title) => {
 
 const getImgSrc = (movie) => `img/${transformToKebabCase(movie)}.jpg`;
 
-const movies = movieTitles.map((title, i) => {
+const movies = movieTitles.slice(0, MOCK_MOVIES_AMOUNT).map((title, i) => {
   return {
     id: i,
     title,
