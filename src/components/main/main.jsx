@@ -1,25 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const transformToKebabCase = (phrase) => {
-  return phrase.toLowerCase().replace(`:`, ``).split(` `).join(`-`);
-};
-
-const getPosterSrc = (title) => {
-  return `img/${transformToKebabCase(title)}-poster.jpg`;
-};
-
-const getBgSrc = (title) => {
-  return `img/bg-${transformToKebabCase(title)}.jpg`;
-};
-
-const getImgSrc = (movie) => `img/${transformToKebabCase(movie)}.jpg`;
 
 const Main = (props) => {
-  const {headerMovieTitle, headerMovieGenre, headerMovieYear, movies, onMovieTitleClick} = props;
-  const posterSrc = getPosterSrc(headerMovieTitle);
+  const {headerMovie, movies, onMovieTitleClick} = props;
+  const {
+    bg: bgSrc,
+    genre: headerMovieGenre,
+    poster: posterSrc,
+    releaseYear: headerMovieYear,
+    title: headerMovieTitle
+  } = headerMovie;
   const posterAlt = `${headerMovieTitle} poster`;
-  const bgSrc = getBgSrc(headerMovieTitle);
 
   return <React.Fragment>
     <section className="movie-card">
@@ -117,11 +109,10 @@ const Main = (props) => {
         <div className="catalog__movies-list">
 
           {movies.map((movie) => {
-            const movieImgSrc = getImgSrc(movie.title);
             return <article key={movie.id}
               className="small-movie-card catalog__movies-card">
               <div className="small-movie-card__image">
-                <img src={movieImgSrc} alt={movie.title} width="280" height="175" />
+                <img src={movie.src} alt={movie.title} width="280" height="175" />
               </div>
               <h3 className="small-movie-card__title" onClick={onMovieTitleClick}>
                 <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
@@ -152,13 +143,17 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  headerMovieTitle: PropTypes.string.isRequired,
-  headerMovieGenre: PropTypes.string.isRequired,
-  headerMovieYear: PropTypes.number.isRequired,
+  headerMovie: PropTypes.shape({
+    bg: PropTypes.string.isRequired,
+    genre: PropTypes.string.isRequired,
+    releaseYear: PropTypes.number.isRequired,
+    poster: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+  }).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape({
+        id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired
       })
   ).isRequired,
   onMovieTitleClick: PropTypes.func.isRequired
