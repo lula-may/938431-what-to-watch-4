@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
+import {headerMovieShape, movieShape} from "../../shapes.js";
 
 const onMovieTitleClick = () => {};
 
@@ -15,18 +16,9 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  headerMovie: PropTypes.shape({
-    bg: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseYear: PropTypes.number.isRequired,
-    poster: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }).isRequired,
+  headerMovie: PropTypes.shape(headerMovieShape).isRequired,
   movies: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-      })
+      PropTypes.shape(movieShape)
   ).isRequired
 };
 

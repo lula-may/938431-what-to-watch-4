@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {headerMovieShape, movieShape} from "../../shapes.js";
 
 
 const Main = (props) => {
@@ -143,18 +144,9 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  headerMovie: PropTypes.shape({
-    bg: PropTypes.string.isRequired,
-    genre: PropTypes.string.isRequired,
-    releaseYear: PropTypes.number.isRequired,
-    poster: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  }).isRequired,
+  headerMovie: PropTypes.shape(headerMovieShape).isRequired,
   movies: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        title: PropTypes.string.isRequired,
-      })
+      PropTypes.shape(movieShape)
   ).isRequired,
   onMovieTitleClick: PropTypes.func.isRequired
 };
