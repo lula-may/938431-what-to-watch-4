@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {headerMovieShape, movieShape} from "../../shapes.js";
+import MoviesList from "../movies-list/movies-list.jsx";
+import {headerMovieShape, movieShape} from "../shapes.js";
 
 
 const Main = (props) => {
@@ -107,20 +108,10 @@ const Main = (props) => {
           </li>
         </ul>
 
-        <div className="catalog__movies-list">
-
-          {movies.map((movie) => {
-            return <article key={movie.id}
-              className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src={movie.src} alt={movie.title} width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title" onClick={onMovieTitleClick}>
-                <a className="small-movie-card__link" href="movie-page.html">{movie.title}</a>
-              </h3>
-            </article>;
-          })}
-        </div>
+        <MoviesList
+          movies={movies}
+          onMovieTitleClick={onMovieTitleClick}
+        />
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -148,7 +139,7 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
-  onMovieTitleClick: PropTypes.func.isRequired
+  onMovieTitleClick: PropTypes.func.isRequired,
 };
 
 export default Main;

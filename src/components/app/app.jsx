@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
-import {headerMovieShape, movieShape} from "../../shapes.js";
+import {headerMovieShape, movieShape} from "../shapes.js";
 
 const onMovieTitleClick = () => {};
 
