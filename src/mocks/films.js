@@ -70,16 +70,17 @@ const MOCK_MOVIES_COUNT = 8;
 
 const headerMovieTitle = `The Grand Budapest Hotel`;
 
-const RateToText = {
-  "9": `Excellent`,
-  "8": `Very good`,
-  "7": `Good`,
-  "6": `Not bad`,
-  "5": `Satisfactory`,
-  "4": `Bad`,
-  "3": `Very bad`,
-  "2": `Terrible`,
-  "1": `Terrible`
+const getRatingLevel = (rate) => {
+  if (rate < 3) {
+    return `Bad`;
+  } else if (rate < 5) {
+    return `Normal`;
+  } else if (rate < 8) {
+    return `Good`;
+  } else if (rate < 10) {
+    return `Very Good`;
+  }
+  return `Awesome`;
 };
 
 const transformToKebabCase = (phrase) => {
@@ -132,7 +133,7 @@ const getFilmDescription = () => {
 const allmovies = movieTitles.map((title, i) => {
   const src = getImgSrc(title);
   const rating = getRandomInteger(10, 100) / 10;
-  const ratingLevel = RateToText[Math.floor(rating).toString()];
+  const ratingLevel = getRatingLevel(rating);
   return {
     actors: getActorsText(),
     bigPoster: src,
@@ -167,4 +168,4 @@ const headerMovie = {
 
 allmovies.unshift(headerMovie);
 const movies = allmovies.slice(0, MOCK_MOVIES_COUNT);
-export {movies};
+export {movies, getRatingLevel};
