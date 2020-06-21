@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
-import {headerMovieShape, movieShape} from "../shapes.js";
+import {movieShape} from "../shapes.js";
 import MovieDetails from "../movie-details/movie-details.jsx";
 
 const onMovieTitleClick = () => {};
@@ -13,6 +13,7 @@ class App extends PureComponent {
   }
 
   render() {
+    const movie = this.props.movies[0];
     return (
       <BrowserRouter>
         <Switch>
@@ -20,7 +21,8 @@ class App extends PureComponent {
             {this._renderApp()}
           </Route>
           <Route exact path="/dev-film">
-            <MovieDetails />
+            <MovieDetails
+              movie={movie} />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -40,7 +42,7 @@ class App extends PureComponent {
 
 
 App.propTypes = {
-  headerMovie: PropTypes.shape(headerMovieShape).isRequired,
+  headerMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired

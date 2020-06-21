@@ -71,15 +71,15 @@ const MOCK_MOVIES_COUNT = 8;
 const headerMovieTitle = `The Grand Budapest Hotel`;
 
 const RateToText = {
-  [9]: `Excellent`,
-  [8]: `Very good`,
-  [7]: `Good`,
-  [6]: `Not bad`,
-  [5]: `Satisfactory`,
-  [4]: `Bad`,
-  [3]: `Very bad`,
-  [2]: `Terrible`,
-  [1]: `Terrible`
+  "9": `Excellent`,
+  "8": `Very good`,
+  "7": `Good`,
+  "6": `Not bad`,
+  "5": `Satisfactory`,
+  "4": `Bad`,
+  "3": `Very bad`,
+  "2": `Terrible`,
+  "1": `Terrible`
 };
 
 const transformToKebabCase = (phrase) => {
@@ -116,40 +116,43 @@ const getActorsText = () => {
   return `${actors.join(`, `)} and other`;
 };
 
+const sentences = DESCRIPTION_TEXT.split(`. `).map((item) => item.endsWith(`.`) ? item : `${item}.`);
+
+const getFilmDescription = () => {
+  const paragraphsCount = getRandomInteger(PARAGRAPH_COUNT_MIN, PARAGRAPH_COUNT_MAX);
+  const descriptions = new Array(paragraphsCount)
+    .fill(``)
+    .map(() => {
+      const descriptionLength = getRandomInteger(PARAGRAPH_SENTENCES_MIN, PARAGRAPH_SENTENCES_MAX);
+      return getRandomSubList(sentences, descriptionLength).join(` `);
+    });
+  return descriptions;
+};
+
 const allmovies = movieTitles.map((title, i) => {
   const src = getImgSrc(title);
   const rating = getRandomInteger(10, 100) / 10;
-  const ratingLevel = RateToText[Math.floor(rating)];
+  const ratingLevel = RateToText[Math.floor(rating).toString()];
   return {
     actors: getActorsText(),
     bigPoster: src,
-    description: DESCRIPTION_TEXT,
+    descriptions: getFilmDescription(),
     director: getRandomItem(DIRECTORS),
     genre: getRandomItem(GENRES),
     id: i,
     poster: src,
     ratingCount: getRandomInteger(50, 300),
     ratingLevel,
-    ratingScore: getRandomInteger(20, 100) / 10,
+    ratingScore: rating,
     releaseYear: getRandomInteger(MIN_YEAR, MAX_YEAR),
     title,
   };
 });
-const sentences = DESCRIPTION_TEXT.split(`. `).map((item) => item.endsWith(`.`) ? item : `${item}.`);
-
-const getFilmDescription = () => {
-  const paragraphsCount = getRandomInteger(PARAGRAPH_COUNT_MIN, PARAGRAPH_COUNT_MAX);
-  const descriptions = new Array(paragraphsCount).fill(``);
-  return descriptions.map(() => {
-    const descriptionLength = getRandomInteger(PARAGRAPH_SENTENCES_MIN, PARAGRAPH_SENTENCES_MAX);
-    return getRandomSubList(sentences, descriptionLength).join(` `);
-  });
-};
 
 const headerMovie = {
   actors: getActorsText(),
   bigPoster: getBgSrc(headerMovieTitle),
-  description: getFilmDescription(),
+  descriptions: getFilmDescription(),
   director: getRandomItem(DIRECTORS),
   genre: `Drama`,
   id: Math.round(Math.random() * new Date()),
@@ -162,7 +165,6 @@ const headerMovie = {
 };
 
 
+allmovies.unshift(headerMovie);
 const movies = allmovies.slice(0, MOCK_MOVIES_COUNT);
-//   movie.similarMovies = getRandomSubList(allmovies, 4);
-// });
-export {headerMovie, movies};
+export {movies};

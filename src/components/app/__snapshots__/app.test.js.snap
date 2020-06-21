@@ -10,7 +10,7 @@ Array [
     >
       <img
         alt="Jurassic Park"
-        src="background.jpg"
+        src="bip-poster-0.jpg"
       />
     </div>
     <h1
@@ -71,7 +71,7 @@ Array [
           <img
             alt="Jurassic Park poster"
             height="327"
-            src="header-poster.jpg"
+            src="poster-0.jpg"
             width="218"
           />
         </div>
@@ -94,7 +94,7 @@ Array [
             <span
               className="movie-card__year"
             >
-              1993
+              2000
             </span>
           </p>
           <div
@@ -267,7 +267,7 @@ Array [
             <img
               alt="Gone With The Wind"
               height="175"
-              src="poster-0.jpg"
+              src="poster-1.jpg"
               width="280"
             />
           </div>
@@ -293,7 +293,7 @@ Array [
             <img
               alt="The Godfather"
               height="175"
-              src="poster-1.jpg"
+              src="poster-2.jpg"
               width="280"
             />
           </div>
@@ -319,7 +319,7 @@ Array [
             <img
               alt="Casablanca"
               height="175"
-              src="poster-2.jpg"
+              src="poster-3.jpg"
               width="280"
             />
           </div>
@@ -345,7 +345,7 @@ Array [
             <img
               alt="A Streetcar Named Desire"
               height="175"
-              src="poster-3.jpg"
+              src="poster-4.jpg"
               width="280"
             />
           </div>
@@ -371,7 +371,7 @@ Array [
             <img
               alt="Some Likes It Hot"
               height="175"
-              src="poster-4.jpg"
+              src="poster-5.jpg"
               width="280"
             />
           </div>

@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDom from "react-dom";
 import App from "./components/app/app.jsx";
-import {headerMovie, movies} from "./mocks/films";
+import {movies} from "./mocks/films";
 
-
+const headerMovie = movies[0];
 const init = () => {
 
   ReactDom.render(

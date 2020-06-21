@@ -1,9 +1,9 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import MovieCard from "./movie-card.jsx";
-import {movies} from "../../test-mocks/test-films";
+import {testMovies} from "../../test-mocks/test-films";
 
-const movie = movies[3];
+const movie = testMovies[4];
 
 it(`should correctly render MovieCardComponent`, () => {
   const tree = renderer.create(

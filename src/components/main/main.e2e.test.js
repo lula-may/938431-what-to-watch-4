@@ -2,11 +2,14 @@ import React from "react";
 import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Main from "./main.jsx";
-import {headerMovie, movies} from "../../test-mocks/test-films";
+import {testMovies} from "../../test-mocks/test-films";
 
 Enzyme.configure({
   adapter: new Adapter()
 });
+
+const headerMovie = testMovies[0];
+const movies = testMovies.slice(1);
 
 describe(`MainComponent`, () => {
   it(`Should run callback on every movie title click`, () => {
