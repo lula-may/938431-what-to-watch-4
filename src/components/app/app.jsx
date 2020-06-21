@@ -5,15 +5,23 @@ import Main from "../main/main.jsx";
 import {movieShape} from "../shapes.js";
 import MovieDetails from "../movie-details/movie-details.jsx";
 
-const onMovieTitleClick = () => {};
+const Mode = {
+  MAIN: `main`,
+  DETAILS: `details`,
+};
 
 class App extends PureComponent {
   constructor(props) {
     super(props);
+    this.state = {
+      mode: Mode.MAIN,
+      movie: this.props.movies[0]
+    };
+    this._handleCardClick = this._handleCardClick.bind(this);
   }
 
   render() {
-    const movie = this.props.movies[0];
+    const movie = this.state.movie;
     return (
       <BrowserRouter>
         <Switch>
@@ -31,12 +39,27 @@ class App extends PureComponent {
 
   _renderApp() {
     const {headerMovie, movies} = this.props;
+    const mode = this.state.mode;
+    switch (mode) {
+      case Mode.MAIN:
+        return <Main
+          headerMovie={headerMovie}
+          movies={movies}
+          onMovieTitleClick={this._handleCardClick}
+        />;
+      case Mode.DETAILS:
+        return <MovieDetails
+          movie={this.state.movie}
+        />;
+      default: return null;
+    }
+  }
 
-    return <Main
-      headerMovie={headerMovie}
-      movies={movies}
-      onMovieTitleClick={onMovieTitleClick}
-    />;
+  _handleCardClick(movie) {
+    this.setState({
+      mode: Mode.DETAILS,
+      movie
+    });
   }
 }
 

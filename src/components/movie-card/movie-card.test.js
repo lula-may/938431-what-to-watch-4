@@ -10,7 +10,7 @@ it(`should correctly render MovieCardComponent`, () => {
       <MovieCard
         movie={movie}
         onMouseEnter={() => {}}
-        onTitleClick={() => {}}
+        onCardClick={() => {}}
       />
   )
   .toJSON();

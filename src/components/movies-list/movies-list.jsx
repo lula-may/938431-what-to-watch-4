@@ -22,7 +22,10 @@ class MoviesList extends PureComponent {
             <MovieCard key={movie.id}
               movie={movie}
               onMouseEnter={this._handleMouseEnter}
-              onTitleClick={onMovieTitleClick}
+              onCardClick={(evt) => {
+                evt.preventDefault();
+                onMovieTitleClick(movie);
+              }}
             />
           );
         })}
