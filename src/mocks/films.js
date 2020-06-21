@@ -21,9 +21,66 @@ const movieTitles = [
   `Midnight Special`
 ];
 
-const MOCK_MOVIES_AMOUNT = 8;
+const DIRECTORS = [
+  `Martin Scorsese`,
+  `Steven Spielberg`,
+  `George Lucas`,
+  `James Cameron`,
+  `Quentin Tarantino`,
+  `Christopher Nolan`,
+  `Alfred Hitchcock`,
+  `Federico Fellini`,
+  `Ingmar Bergman`,
+  `Andrey Tarkovsky`
+];
+
+const ACTORS = [
+  `Tom Hanks`,
+  `John Malkovich`,
+  `Johnny Depp`,
+  `Julia Roberts`,
+  `Jack Nicholson`,
+  `Sigourney Weaver`,
+  `Anthony Hopkins`,
+  `Natalie Portman`,
+  `Jeremy Irons`,
+  `Angelina Jolie`,
+  `Brad Pitt`,
+  `Leonardo Dicaprio`,
+  `Robert De Niro`,
+  `Will Smith`,
+  `Colin Farrell`,
+  `Tom Hardy`,
+  `Hugh Grant`,
+  `Jennifer Lawrence`
+];
+
+const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
+const GENRES = [`Comedy`, `Crime`, `Documentary`, `Drama`, `Horror`, `Kids&Family`, `Romance`, `Sci-Fi`, `Thriller`];
+
+const ACTORS_COUNT = 4;
+const PARAGRAPH_COUNT_MIN = 1;
+const PARAGRAPH_COUNT_MAX = 3;
+const PARAGRAPH_SENTENCES_MIN = 2;
+const PARAGRAPH_SENTENCES_MAX = 5;
+
+const MAX_YEAR = 2019;
+const MIN_YEAR = 1999;
+const MOCK_MOVIES_COUNT = 8;
 
 const headerMovieTitle = `The Grand Budapest Hotel`;
+
+const RateToText = {
+  [9]: `Excellent`,
+  [8]: `Very good`,
+  [7]: `Good`,
+  [6]: `Not bad`,
+  [5]: `Satisfactory`,
+  [4]: `Bad`,
+  [3]: `Very bad`,
+  [2]: `Terrible`,
+  [1]: `Terrible`
+};
 
 const transformToKebabCase = (phrase) => {
   return phrase.toLowerCase().replace(`:`, ``).split(` `).join(`-`);
@@ -39,20 +96,73 @@ const getBgSrc = (title) => {
 
 const getImgSrc = (movie) => `img/${transformToKebabCase(movie)}.jpg`;
 
-const movies = movieTitles.slice(0, MOCK_MOVIES_AMOUNT).map((title, i) => {
-  return {
-    id: i,
-    title,
-    src: getImgSrc(title)
-  };
-});
+const getRandomInteger = (min, max) => Math.round(Math.random() * (max - min) + min);
 
-const headerMovie = {
-  title: headerMovieTitle,
-  genre: `Drama`,
-  releaseYear: 2014,
-  bg: getBgSrc(headerMovieTitle),
-  poster: getPosterSrc(headerMovieTitle)
+const getRandomItem = (items) => items[getRandomInteger(0, items.length - 1)];
+
+const getRandomSubList = (items, value) => {
+  let subList = [];
+  if (value) {
+    subList = items.slice();
+    for (let i = 0; i < items.length - value; i++) {
+      subList.splice(getRandomInteger(0, subList.length - 1), 1);
+    }
+  }
+  return subList;
 };
 
+const getActorsText = () => {
+  const actors = getRandomSubList(ACTORS, ACTORS_COUNT);
+  return `${actors.join(`, `)} and other`;
+};
+
+const allmovies = movieTitles.map((title, i) => {
+  const src = getImgSrc(title);
+  const rating = getRandomInteger(10, 100) / 10;
+  const ratingLevel = RateToText[Math.floor(rating)];
+  return {
+    actors: getActorsText(),
+    bigPoster: src,
+    description: DESCRIPTION_TEXT,
+    director: getRandomItem(DIRECTORS),
+    genre: getRandomItem(GENRES),
+    id: i,
+    poster: src,
+    ratingCount: getRandomInteger(50, 300),
+    ratingLevel,
+    ratingScore: getRandomInteger(20, 100) / 10,
+    releaseYear: getRandomInteger(MIN_YEAR, MAX_YEAR),
+    title,
+  };
+});
+const sentences = DESCRIPTION_TEXT.split(`. `).map((item) => item.endsWith(`.`) ? item : `${item}.`);
+
+const getFilmDescription = () => {
+  const paragraphsCount = getRandomInteger(PARAGRAPH_COUNT_MIN, PARAGRAPH_COUNT_MAX);
+  const descriptions = new Array(paragraphsCount).fill(``);
+  return descriptions.map(() => {
+    const descriptionLength = getRandomInteger(PARAGRAPH_SENTENCES_MIN, PARAGRAPH_SENTENCES_MAX);
+    return getRandomSubList(sentences, descriptionLength).join(` `);
+  });
+};
+
+const headerMovie = {
+  actors: getActorsText(),
+  bigPoster: getBgSrc(headerMovieTitle),
+  description: getFilmDescription(),
+  director: getRandomItem(DIRECTORS),
+  genre: `Drama`,
+  id: Math.round(Math.random() * new Date()),
+  poster: getPosterSrc(headerMovieTitle),
+  ratingCount: 240,
+  ratingLevel: `Very good`,
+  ratingScore: 8.9,
+  releaseYear: 2014,
+  title: headerMovieTitle,
+};
+
+
+const movies = allmovies.slice(0, MOCK_MOVIES_COUNT);
+//   movie.similarMovies = getRandomSubList(allmovies, 4);
+// });
 export {headerMovie, movies};
