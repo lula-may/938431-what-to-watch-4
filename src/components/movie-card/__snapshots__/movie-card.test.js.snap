@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should correctly render MovieCardComponent 1`] = `
+<article
+  className="small-movie-card catalog__movies-card"
+  onMouseEnter={[Function]}
+>
+  <div
+    className="small-movie-card__image"
+  >
+    <img
+      alt="A Streetcar Named Desire"
+      height="175"
+      src="poster-3.jpg"
+      width="280"
+    />
+  </div>
+  <h3
+    className="small-movie-card__title"
+    onClick={[Function]}
+  >
+    <a
+      className="small-movie-card__link"
+      href="movie-page.html"
+    >
+      A Streetcar Named Desire
+    </a>
+  </h3>
+</article>
+`;

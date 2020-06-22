@@ -10,7 +10,7 @@ Array [
     >
       <img
         alt="Jurassic Park"
-        src="img/bg-jurassic-park.jpg"
+        src="background.jpg"
       />
     </div>
     <h1
@@ -71,7 +71,7 @@ Array [
           <img
             alt="Jurassic Park poster"
             height="327"
-            src="img/jurassic-park-poster.jpg"
+            src="header-poster.jpg"
             width="218"
           />
         </div>
@@ -259,6 +259,7 @@ Array [
       >
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -266,7 +267,7 @@ Array [
             <img
               alt="Gone With The Wind"
               height="175"
-              src="img/gone-with-the-wind.jpg"
+              src="poster-0.jpg"
               width="280"
             />
           </div>
@@ -284,6 +285,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -291,7 +293,7 @@ Array [
             <img
               alt="The Godfather"
               height="175"
-              src="img/the-godfather.jpg"
+              src="poster-1.jpg"
               width="280"
             />
           </div>
@@ -309,6 +311,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -316,7 +319,7 @@ Array [
             <img
               alt="Casablanca"
               height="175"
-              src="img/casablanca.jpg"
+              src="poster-2.jpg"
               width="280"
             />
           </div>
@@ -334,6 +337,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -341,7 +345,7 @@ Array [
             <img
               alt="A Streetcar Named Desire"
               height="175"
-              src="img/a-streetcar-named-desire.jpg"
+              src="poster-3.jpg"
               width="280"
             />
           </div>
@@ -359,6 +363,7 @@ Array [
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -366,7 +371,7 @@ Array [
             <img
               alt="Some Likes It Hot"
               height="175"
-              src="img/some-likes-it-hot.jpg"
+              src="poster-4.jpg"
               width="280"
             />
           </div>

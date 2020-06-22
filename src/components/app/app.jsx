@@ -1,30 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
+import {headerMovieShape, movieShape} from "../shapes.js";
 
 const onMovieTitleClick = () => {};
 
 const App = (props) => {
-  const {headerMovieTitle, genre, releaseYear, movies} = props;
+  const {headerMovie, movies} = props;
 
   return <Main
-    headerMovieTitle={headerMovieTitle}
-    headerMovieGenre={genre}
-    headerMovieYear={releaseYear}
+    headerMovie={headerMovie}
     movies={movies}
     onMovieTitleClick={onMovieTitleClick}
   />;
 };
 
 App.propTypes = {
-  headerMovieTitle: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired,
-  releaseYear: PropTypes.number.isRequired,
+  headerMovie: PropTypes.shape(headerMovieShape).isRequired,
   movies: PropTypes.arrayOf(
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        id: PropTypes.number.isRequired
-      })
+      PropTypes.shape(movieShape)
   ).isRequired
 };
 

@@ -1,17 +1,16 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Main from "./main.jsx";
-import {headerMovie, movies} from "../../test-mocks/test-films";
+import MoviesList from "./movies-list.jsx";
+import {movies} from "../../test-mocks/test-films";
 
-
-it(`Should render Jurassik Park`, () => {
+it(`should correctly render MoviesList Component`, () => {
   const tree = renderer.create(
-      <Main
-        headerMovie={headerMovie}
+      <MoviesList
         movies={movies}
         onMovieTitleClick={() => {}}
       />
   )
-    .toJSON();
+  .toJSON;
+
   expect(tree).toMatchSnapshot();
 });

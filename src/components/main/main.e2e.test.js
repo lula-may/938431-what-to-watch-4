@@ -1,46 +1,25 @@
 import React from "react";
-import Enzyme, {shallow} from "enzyme";
+import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import Main from "./main.jsx";
+import {headerMovie, movies} from "../../test-mocks/test-films";
 
 Enzyme.configure({
   adapter: new Adapter()
 });
 
-const movieTitles = [
-  `Gone With The Wind`,
-  `The Godfather`,
-  `Casablanca`,
-  `A Streetcar Named Desire`,
-  `Some Likes It Hot`,
-];
-
-const movies = movieTitles.map((title, i) => {
-  return {
-    title,
-    id: i
-  };
-});
-
-
-const title = `Jurassic Park`;
-const genre = `Sci-Fi`;
-const year = 1993;
-
 describe(`MainComponent`, () => {
-  it(`Should movie title be pressed`, () => {
+  it(`Should run callback on every movie title click`, () => {
     const onMovieTitleClick = jest.fn();
-    const mainElement = shallow(
+    const mainElement = mount(
         <Main
-          headerMovieTitle={title}
-          headerMovieGenre={genre}
-          headerMovieYear={year}
+          headerMovie={headerMovie}
           movies={movies}
           onMovieTitleClick={onMovieTitleClick}
         />
     );
     const titleElements = mainElement.find(`h3.small-movie-card__title`);
-    titleElements.forEach((element) => element.simulate(`click`));
+    titleElements.forEach((element) => element.simulate(`click`, {}));
     expect(onMovieTitleClick).toHaveBeenCalledTimes(movies.length);
   });
 });
