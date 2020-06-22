@@ -1,16 +1,16 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MoviesList from "./movies-list.jsx";
+import MovieDetails from "./movie-details.jsx";
 import {testMovies} from "../../test-mocks/test-films";
 
-it(`should correctly render MoviesListComponent`, () => {
+const movie = testMovies[1];
+
+it(`should correctly render MovieDetailsComponent`, () => {
   const tree = renderer.create(
-      <MoviesList
-        movies={testMovies}
-        onMovieTitleClick={() => {}}
+      <MovieDetails
+        movie={movie}
       />
   )
   .toJSON();
-
   expect(tree).toMatchSnapshot();
 });
