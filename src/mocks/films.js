@@ -132,7 +132,7 @@ const getFilmDescription = () => {
 
 const allmovies = movieTitles.map((title, i) => {
   const src = getImgSrc(title);
-  const rating = getRandomInteger(10, 100) / 10;
+  const rating = (Math.random() * 10).toFixed(1);
   const ratingLevel = getRatingLevel(rating);
   return {
     actors: getActorsText(),

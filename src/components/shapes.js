@@ -10,7 +10,7 @@ const movieShape = {
   poster: PropTypes.string.isRequired,
   ratingCount: PropTypes.number.isRequired,
   ratingLevel: PropTypes.string.isRequired,
-  ratingScore: PropTypes.number.isRequired,
+  ratingScore: PropTypes.string.isRequired,
   releaseYear: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };

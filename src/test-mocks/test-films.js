@@ -34,7 +34,7 @@ const DIRECTORS = [`Stiven Spielberg`, `Mr. Good`, `Mr. Bad`, `Mrs. Ugly`, `Ms. 
 const GENRES = [`Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 const testMovies = movieTitles.map((title, i) => {
-  const rating = Math.round((9.7 - i) * 10) / 10;
+  const rating = (9.7 - i).toFixed(1);
   const ratingLevel = RateToText[Math.floor(rating).toString()];
   return {
     actors: ACTORS[i],
