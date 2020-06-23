@@ -1,14 +1,13 @@
 import React from "react";
 import ReactDom from "react-dom";
 import App from "./components/app/app.jsx";
-import {headerMovie, movies} from "./mocks/films";
-
+import {movies, promoMovie} from "./mocks/films";
 
 const init = () => {
 
   ReactDom.render(
       <App
-        headerMovie={headerMovie}
+        headerMovie={promoMovie}
         movies={movies}
       />,
       document.querySelector(`#root`)

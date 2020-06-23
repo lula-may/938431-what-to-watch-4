@@ -1,19 +1,16 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MovieCard from "./movie-card.jsx";
+import MovieDetails from "./movie-details.jsx";
 import {testMovies} from "../../test-mocks/test-films";
 
-const movie = testMovies[4];
+const movie = testMovies[1];
 
-it(`should correctly render MovieCardComponent`, () => {
+it(`should correctly render MovieDetailsComponent`, () => {
   const tree = renderer.create(
-      <MovieCard
+      <MovieDetails
         movie={movie}
-        onMouseEnter={() => {}}
-        onCardClick={() => {}}
       />
   )
   .toJSON();
-
   expect(tree).toMatchSnapshot();
 });

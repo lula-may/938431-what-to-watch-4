@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
-import {headerMovieShape, movieShape} from "../shapes.js";
+import {movieShape} from "../shapes.js";
 
 
 const Main = (props) => {
-  const {headerMovie, movies, onMovieTitleClick} = props;
+  const {headerMovie, movies, onMovieCardClick} = props;
   const {
-    bg: bgSrc,
+    bigPoster: bgSrc,
     genre: headerMovieGenre,
     poster: posterSrc,
     releaseYear: headerMovieYear,
@@ -110,7 +110,7 @@ const Main = (props) => {
 
         <MoviesList
           movies={movies}
-          onMovieTitleClick={onMovieTitleClick}
+          onMovieCardClick={onMovieCardClick}
         />
 
         <div className="catalog__more">
@@ -135,11 +135,11 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  headerMovie: PropTypes.shape(headerMovieShape).isRequired,
+  headerMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
-  onMovieTitleClick: PropTypes.func.isRequired,
+  onMovieCardClick: PropTypes.func.isRequired,
 };
 
 export default Main;

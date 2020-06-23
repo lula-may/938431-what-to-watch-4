@@ -1,15 +1,15 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import Main from "./main.jsx";
-import {headerMovie, movies} from "../../test-mocks/test-films";
+import {testMovies} from "../../test-mocks/test-films";
 
-
-it(`Should render Jurassik Park`, () => {
+const headerMovie = testMovies[0];
+it(`Should render Jurassik Park in header`, () => {
   const tree = renderer.create(
       <Main
         headerMovie={headerMovie}
-        movies={movies}
-        onMovieTitleClick={() => {}}
+        movies={testMovies}
+        onMovieCardClick={() => {}}
       />
   )
     .toJSON();
