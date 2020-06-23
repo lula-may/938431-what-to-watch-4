@@ -26,7 +26,7 @@ describe(`MovieCardComponent`, () => {
     expect(onMouseEnter.mock.calls[0][0]).toMatchObject(movie);
   });
 
-  it(`should run callback on image or title click`, () => {
+  it(`should run callback on image click`, () => {
     const onCardClick = jest.fn();
     const movieCard = shallow(
         <MovieCard
@@ -37,11 +37,24 @@ describe(`MovieCardComponent`, () => {
     );
 
     const imageWrapperElement = movieCard.find(`div.small-movie-card__image`);
-    const titleElement = movieCard.find(`h3`);
 
     imageWrapperElement.simulate(`click`);
-    titleElement.simulate(`click`);
+    expect(onCardClick).toHaveBeenCalledTimes(1);
+  });
 
-    expect(onCardClick).toHaveBeenCalledTimes(2);
+  it(`should run callback on title click`, () => {
+    const onCardClick = jest.fn();
+    const movieCard = shallow(
+        <MovieCard
+          movie={movie}
+          onMouseEnter={() => {}}
+          onCardClick={onCardClick}
+        />
+    );
+
+    const titleElement = movieCard.find(`h3`);
+
+    titleElement.simulate(`click`);
+    expect(onCardClick).toHaveBeenCalledTimes(1);
   });
 });
