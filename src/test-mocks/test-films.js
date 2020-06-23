@@ -20,9 +20,9 @@ const MAX_RATING = 9.7;
 const RATING_COUNT = 150;
 const MAX_RELEASE_YEAR = 2000;
 
-const DIRECTORS = [`Stiven Spielberg`, `Mr. Good`, `Mr. Bad`, `Mrs. Ugly`, `Ms. Red`, `Mr. Black`];
+const directors = [`Stiven Spielberg`, `Mr. Good`, `Mr. Bad`, `Mrs. Ugly`, `Ms. Red`, `Mr. Black`];
 
-const GENRES = [`Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
+const genres = [`Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 const testMovies = movieTitles.map((title, i) => {
   const rating = (MAX_RATING - i).toFixed(1);
@@ -32,8 +32,8 @@ const testMovies = movieTitles.map((title, i) => {
     description: {
       paragraphs: [`bla-bla-bla`, `olya-lya-lya`, `wow-wow`]
     },
-    director: DIRECTORS[i],
-    genre: GENRES[i],
+    director: directors[i],
+    genre: genres[i],
     id: i,
     poster: `poster-${i}.jpg`,
     rating: {

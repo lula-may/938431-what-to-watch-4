@@ -21,7 +21,7 @@ const movieTitles = [
   `Midnight Special`
 ];
 
-const DIRECTORS = [
+const directors = [
   `Martin Scorsese`,
   `Steven Spielberg`,
   `George Lucas`,
@@ -34,7 +34,7 @@ const DIRECTORS = [
   `Andrey Tarkovsky`
 ];
 
-const ACTORS = [
+const actors = [
   `Tom Hanks`,
   `John Malkovich`,
   `Johnny Depp`,
@@ -56,7 +56,7 @@ const ACTORS = [
 ];
 
 const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
-const GENRES = [`Comedy`, `Crime`, `Documentary`, `Drama`, `Horror`, `Kids&Family`, `Romance`, `Sci-Fi`, `Thriller`];
+const genres = [`Comedy`, `Crime`, `Documentary`, `Drama`, `Horror`, `Kids&Family`, `Romance`, `Sci-Fi`, `Thriller`];
 
 const ACTORS_COUNT = 4;
 const PARAGRAPH_COUNT_MIN = 1;
@@ -118,13 +118,13 @@ const movies = movieTitles.slice(0, MOCK_MOVIES_COUNT).map((title, i) => {
   const src = getImgSrc(title);
   const ratingScore = (Math.random() * 10).toFixed(1);
   return {
-    actors: getRandomSubList(ACTORS, ACTORS_COUNT),
+    actors: getRandomSubList(actors, ACTORS_COUNT),
     bigPoster: src,
     description: {
       paragraphs: getDescriptionParagraphs()
     },
-    director: getRandomItem(DIRECTORS),
-    genre: getRandomItem(GENRES),
+    director: getRandomItem(directors),
+    genre: getRandomItem(genres),
     id: i,
     poster: src,
     rating: {
@@ -137,12 +137,12 @@ const movies = movieTitles.slice(0, MOCK_MOVIES_COUNT).map((title, i) => {
 });
 
 const promoMovie = {
-  actors: getRandomSubList(ACTORS, ACTORS_COUNT),
+  actors: getRandomSubList(actors, ACTORS_COUNT),
   bigPoster: getBgSrc(promoMovieTitle),
   descriptions: {
     paragraphs: getDescriptionParagraphs()
   },
-  director: getRandomItem(DIRECTORS),
+  director: getRandomItem(directors),
   genre: `Drama`,
   id: Math.round(Math.random() * new Date()),
   poster: getPosterSrc(promoMovieTitle),
