@@ -266,6 +266,33 @@ Array [
             onClick={[Function]}
           >
             <img
+              alt="Jurassic Park"
+              height="175"
+              src="poster-0.jpg"
+              width="280"
+            />
+          </div>
+          <h3
+            className="small-movie-card__title"
+            onClick={[Function]}
+          >
+            <a
+              className="small-movie-card__link"
+              href="movie-page.html"
+            >
+              Jurassic Park
+            </a>
+          </h3>
+        </article>
+        <article
+          className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
+        >
+          <div
+            className="small-movie-card__image"
+            onClick={[Function]}
+          >
+            <img
               alt="Gone With The Wind"
               height="175"
               src="poster-1.jpg"
