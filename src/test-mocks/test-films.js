@@ -7,47 +7,40 @@ const movieTitles = [
   `Some Likes It Hot`,
 ];
 
-const ACTORS = [
-  `Sam Neill, Jeff GoldBlum, Laura Dern and others`,
-  `Tom Cruise, Rayan Gosling and others`,
-  `Anne Hathaway, Nicole Kidman, Keanu Reeves and others`,
-  `Will Smith, Bruce Willis, Mila Yovovich and others`,
-  `Sandra Bullock, Daniel Craig and others`,
-  `Robert De Niro, Vin Diesel, Charlize Theron and others`
+const actors = [
+  [`Sam Neill`, `Jeff GoldBlum`, `Laura Dern`],
+  [`Tom Cruise`, `Rayan Gosling`],
+  [`Anne Hathaway`, `Nicole Kidman`, `Keanu Reeves`],
+  [`Will Smith`, `Bruce Willis`, `Mila Yovovich`],
+  [`Sandra Bullock`, `Daniel Craig`],
+  [`Robert De Niro`, `Vin Diesel`, `Charlize Theron`]
 ];
 
-const RateToText = {
-  "9": `Excellent`,
-  "8": `Very good`,
-  "7": `Good`,
-  "6": `Not bad`,
-  "5": `Satisfactory`,
-  "4": `Bad`,
-  "3": `Very bad`,
-  "2": `Terrible`,
-  "1": `Terrible`
-};
-
+const MAX_RATING = 9.7;
+const RATING_COUNT = 150;
+const MAX_RELEASE_YEAR = 2000;
 
 const DIRECTORS = [`Stiven Spielberg`, `Mr. Good`, `Mr. Bad`, `Mrs. Ugly`, `Ms. Red`, `Mr. Black`];
 
 const GENRES = [`Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 const testMovies = movieTitles.map((title, i) => {
-  const rating = (9.7 - i).toFixed(1);
-  const ratingLevel = RateToText[Math.floor(rating).toString()];
+  const rating = (MAX_RATING - i).toFixed(1);
   return {
-    actors: ACTORS[i],
+    actors: actors[i],
     bigPoster: `bip-poster-${i}.jpg`,
-    descriptions: [`bla-bla-bla`, `olya-lya-lya`, `wow-wow`],
+    description: {
+      paragraphs: [`bla-bla-bla`, `olya-lya-lya`, `wow-wow`]
+    },
     director: DIRECTORS[i],
     genre: GENRES[i],
     id: i,
     poster: `poster-${i}.jpg`,
-    ratingCount: 150,
-    ratingLevel,
-    ratingScore: rating,
-    releaseYear: 2000 - i,
+    rating: {
+      count: RATING_COUNT,
+      score: rating,
+    },
+    releaseYear: MAX_RELEASE_YEAR - i,
     title,
   };
 });

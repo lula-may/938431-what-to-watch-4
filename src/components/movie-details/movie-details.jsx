@@ -2,21 +2,38 @@ import React from "react";
 import PropTypes from "prop-types";
 import {movieShape} from "../shapes";
 
+const getRatingLevel = (rating) => {
+  if (rating < 3) {
+    return `Bad`;
+  } else if (rating < 5) {
+    return `Normal`;
+  } else if (rating < 8) {
+    return `Good`;
+  } else if (rating < 10) {
+    return `Very Good`;
+  }
+  return `Awesome`;
+};
+
 const MovieDetails = (props) => {
   const {movie} = props;
   const {
     actors,
     bigPoster,
-    descriptions,
+    description,
     director,
     genre,
     poster,
-    ratingCount,
-    ratingLevel,
-    ratingScore,
+    rating,
     releaseYear,
     title,
   } = movie;
+  const {count: ratingCount, score: ratingScore} = rating;
+  const {paragraphs} = description;
+
+  const actorsText = `${actors.join(`, `)} and others`;
+  const ratingLevel = getRatingLevel(ratingScore);
+
   return <React.Fragment>
     <section className="movie-card movie-card--full">
       <div className="movie-card__hero">
@@ -99,11 +116,11 @@ const MovieDetails = (props) => {
             </div>
 
             <div className="movie-card__text">
-              {descriptions.map((paragraph) => (<p key={Math.random() * new Date()}>{paragraph}</p>))}
+              {paragraphs.map((paragraph) => (<p key={Math.random() * new Date()}>{paragraph}</p>))}
 
               <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-              <p className="movie-card__starring"><strong>Starring: {actors}</strong></p>
+              <p className="movie-card__starring"><strong>Starring: {actorsText}</strong></p>
             </div>
           </div>
         </div>

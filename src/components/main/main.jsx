@@ -5,7 +5,7 @@ import {movieShape} from "../shapes.js";
 
 
 const Main = (props) => {
-  const {headerMovie, movies, onMovieTitleClick} = props;
+  const {headerMovie, movies, onMovieCardClick} = props;
   const {
     bigPoster: bgSrc,
     genre: headerMovieGenre,
@@ -110,7 +110,7 @@ const Main = (props) => {
 
         <MoviesList
           movies={movies}
-          onMovieTitleClick={onMovieTitleClick}
+          onMovieCardClick={onMovieCardClick}
         />
 
         <div className="catalog__more">
@@ -139,7 +139,7 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
-  onMovieTitleClick: PropTypes.func.isRequired,
+  onMovieCardClick: PropTypes.func.isRequired,
 };
 
 export default Main;

@@ -13,16 +13,16 @@ const movies = testMovies.slice(1);
 
 describe(`MainComponent`, () => {
   it(`Should run callback on every movie title click`, () => {
-    const onMovieTitleClick = jest.fn();
+    const onMovieCardClick = jest.fn();
     const mainElement = mount(
         <Main
           headerMovie={headerMovie}
           movies={movies}
-          onMovieTitleClick={onMovieTitleClick}
+          onMovieCardClick={onMovieCardClick}
         />
     );
     const titleElements = mainElement.find(`h3.small-movie-card__title`);
     titleElements.forEach((element) => element.simulate(`click`, {}));
-    expect(onMovieTitleClick).toHaveBeenCalledTimes(movies.length);
+    expect(onMovieCardClick).toHaveBeenCalledTimes(movies.length);
   });
 });

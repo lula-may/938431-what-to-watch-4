@@ -36,15 +36,15 @@ class MoviesList extends PureComponent {
   }
 
   _handleCardClick(evt, movie) {
-    const {onMovieTitleClick} = this.props;
+    const {onMovieCardClick} = this.props;
     evt.preventDefault();
-    onMovieTitleClick(movie);
+    onMovieCardClick(movie);
   }
 }
 
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape(movieShape)).isRequired,
-  onMovieTitleClick: PropTypes.func.isRequired
+  onMovieCardClick: PropTypes.func.isRequired
 };
 
 export default MoviesList;

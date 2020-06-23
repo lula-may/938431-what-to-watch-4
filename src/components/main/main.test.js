@@ -10,7 +10,7 @@ it(`Should render Jurassik Park`, () => {
       <Main
         headerMovie={headerMovie}
         movies={movies}
-        onMovieTitleClick={() => {}}
+        onMovieCardClick={() => {}}
       />
   )
     .toJSON();

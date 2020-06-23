@@ -10,11 +10,11 @@ configure({
 
 it(`should movie object be supplied to callback on card image or title click`, () => {
   const movie = testMovies[2];
-  const onMovieTitleClick = jest.fn((...args) => [...args]);
+  const onMovieCardClick = jest.fn((...args) => [...args]);
   const moviesList = mount(
       <MoviesList
         movies={testMovies}
-        onMovieTitleClick={onMovieTitleClick}
+        onMovieCardClick={onMovieCardClick}
       />
   );
 
@@ -24,6 +24,6 @@ it(`should movie object be supplied to callback on card image or title click`, (
   cardImage.simulate(`click`, {});
   cardTitle.simulate(`click`, {});
 
-  expect(onMovieTitleClick.mock.calls[0][0]).toMatchObject(movie);
-  expect(onMovieTitleClick.mock.calls[1][0]).toMatchObject(movie);
+  expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
+  expect(onMovieCardClick.mock.calls[1][0]).toMatchObject(movie);
 });

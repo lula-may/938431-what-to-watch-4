@@ -7,7 +7,7 @@ it(`should correctly render MoviesListComponent`, () => {
   const tree = renderer.create(
       <MoviesList
         movies={testMovies}
-        onMovieTitleClick={() => {}}
+        onMovieCardClick={() => {}}
       />
   )
   .toJSON();
