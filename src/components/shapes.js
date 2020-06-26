@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 const movieShape = {
   actors: PropTypes.arrayOf(PropTypes.string).isRequired,
   bigPoster: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
   description: PropTypes.shape({
     paragraphs: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
