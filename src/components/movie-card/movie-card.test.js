@@ -11,7 +11,6 @@ it(`should correctly render MovieCardComponent`, () => {
         movie={movie}
         onMouseEnter={() => {}}
         onCardClick={() => {}}
-        renderVideo={() => {}}
       />
   )
   .toJSON();
