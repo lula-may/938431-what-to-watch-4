@@ -1,6 +1,15 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import VideoPlayer from "../video-player/video-player.jsx";
 import {movieShape} from "../shapes";
+import {PREVIEW} from "../../const";
+
+const previewPlayerSettings = {
+  areControlsShown: false,
+  height: PREVIEW.height,
+  isMuted: true,
+  width: PREVIEW.width,
+};
 
 class MovieCard extends PureComponent {
   constructor(props) {
@@ -15,7 +24,8 @@ class MovieCard extends PureComponent {
 
   render() {
     const {movie, onCardClick} = this.props;
-    const {title} = movie;
+    const {poster, src, title} = movie;
+    const {isVideoPlaying} = this.state;
 
     return (
       <article
@@ -23,7 +33,12 @@ class MovieCard extends PureComponent {
         onMouseLeave={this._handleMouseLeave}
         className="small-movie-card catalog__movies-card">
         <div className="small-movie-card__image" onClick={onCardClick}>
-          {this._renderMedia()}
+          <VideoPlayer
+            isPlaying={isVideoPlaying}
+            poster={poster}
+            src={src}
+            settings={previewPlayerSettings}
+          />
         </div>
         <h3 className="small-movie-card__title" onClick={onCardClick}>
           <a className="small-movie-card__link" href="movie-page.html">{title}</a>
@@ -45,24 +60,12 @@ class MovieCard extends PureComponent {
     clearTimeout(this.timeOut);
     this.setState({isVideoPlaying: false});
   }
-
-  _renderMedia() {
-    const {movie, renderVideo} = this.props;
-    const {poster, src, title} = movie;
-    const {isVideoPlaying} = this.state;
-    if (isVideoPlaying) {
-      return renderVideo(src, poster);
-    } else {
-      return <img src={poster} alt={title} width="280" height="175"/>;
-    }
-  }
 }
 
 MovieCard.propTypes = {
   movie: PropTypes.shape(movieShape).isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onCardClick: PropTypes.func.isRequired,
-  renderVideo: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

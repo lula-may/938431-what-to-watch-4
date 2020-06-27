@@ -10,10 +10,9 @@ exports[`should correctly render MovieCardComponent 1`] = `
     className="small-movie-card__image"
     onClick={[Function]}
   >
-    <img
-      alt="A Streetcar Named Desire"
+    <video
       height="175"
-      src="poster-4.jpg"
+      poster="poster-4.jpg"
       width="280"
     />
   </div>

@@ -19,4 +19,11 @@ const movieShape = {
   title: PropTypes.string.isRequired,
 };
 
-export {movieShape};
+const videoPlayerShape = {
+  areControlsShown: PropTypes.bool.isRequired,
+  height: PropTypes.string.isRequired,
+  isMuted: PropTypes.bool.isRequired,
+  width: PropTypes.string.isRequired,
+};
+
+export {movieShape, videoPlayerShape};

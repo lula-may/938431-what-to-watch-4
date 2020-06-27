@@ -266,10 +266,9 @@ Array [
             className="small-movie-card__image"
             onClick={[Function]}
           >
-            <img
-              alt="Jurassic Park"
+            <video
               height="175"
-              src="poster-0.jpg"
+              poster="poster-0.jpg"
               width="280"
             />
           </div>
@@ -294,10 +293,9 @@ Array [
             className="small-movie-card__image"
             onClick={[Function]}
           >
-            <img
-              alt="Gone With The Wind"
+            <video
               height="175"
-              src="poster-1.jpg"
+              poster="poster-1.jpg"
               width="280"
             />
           </div>
@@ -322,10 +320,9 @@ Array [
             className="small-movie-card__image"
             onClick={[Function]}
           >
-            <img
-              alt="The Godfather"
+            <video
               height="175"
-              src="poster-2.jpg"
+              poster="poster-2.jpg"
               width="280"
             />
           </div>
@@ -350,10 +347,9 @@ Array [
             className="small-movie-card__image"
             onClick={[Function]}
           >
-            <img
-              alt="Casablanca"
+            <video
               height="175"
-              src="poster-3.jpg"
+              poster="poster-3.jpg"
               width="280"
             />
           </div>
@@ -378,10 +374,9 @@ Array [
             className="small-movie-card__image"
             onClick={[Function]}
           >
-            <img
-              alt="A Streetcar Named Desire"
+            <video
               height="175"
-              src="poster-4.jpg"
+              poster="poster-4.jpg"
               width="280"
             />
           </div>
@@ -406,10 +401,9 @@ Array [
             className="small-movie-card__image"
             onClick={[Function]}
           >
-            <img
-              alt="Some Likes It Hot"
+            <video
               height="175"
-              src="poster-5.jpg"
+              poster="poster-5.jpg"
               width="280"
             />
           </div>
