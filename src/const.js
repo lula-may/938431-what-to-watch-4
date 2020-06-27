@@ -3,4 +3,6 @@ const PREVIEW = {
   height: `175`,
 };
 
-export {PREVIEW};
+const PLAYER_DELAY = 1000;
+
+export {PREVIEW, PLAYER_DELAY};

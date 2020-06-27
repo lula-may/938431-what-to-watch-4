@@ -18,7 +18,6 @@ describe(`MovieCardComponent`, () => {
           movie={movie}
           onMouseEnter={onMouseEnter}
           onCardClick={() => {}}
-          renderVideo={() => {}}
         />
     );
 
@@ -34,7 +33,6 @@ describe(`MovieCardComponent`, () => {
           movie={movie}
           onMouseEnter={() => {}}
           onCardClick={onCardClick}
-          renderVideo={() => {}}
         />
     );
 
@@ -51,7 +49,6 @@ describe(`MovieCardComponent`, () => {
           movie={movie}
           onMouseEnter={() => {}}
           onCardClick={onCardClick}
-          renderVideo={() => {}}
         />
     );
 

@@ -2,7 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import VideoPlayer from "../video-player/video-player.jsx";
 import {movieShape} from "../shapes";
-import {PREVIEW} from "../../const";
+import {PREVIEW, PLAYER_DELAY} from "../../const";
 
 const previewPlayerSettings = {
   areControlsShown: false,
@@ -52,7 +52,7 @@ class MovieCard extends PureComponent {
 
     this.timeOut = setTimeout(() => {
       this.setState({isVideoPlaying: true});
-    }, 1000);
+    }, PLAYER_DELAY);
     onMouseEnter(movie);
   }
 

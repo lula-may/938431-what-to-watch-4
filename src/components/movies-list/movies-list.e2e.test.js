@@ -7,23 +7,38 @@ import {testMovies} from "../../test-mocks/test-films";
 configure({
   adapter: new Adapter()
 });
+describe(`should movie object be supplied to callback`, () => {
+  it(` on card image click`, () => {
+    const movie = testMovies[2];
+    const onMovieCardClick = jest.fn((...args) => [...args]);
+    const moviesList = mount(
+        <MoviesList
+          movies={testMovies}
+          onMovieCardClick={onMovieCardClick}
+        />
+    );
 
-it(`should movie object be supplied to callback on card image or title click`, () => {
-  const movie = testMovies[2];
-  const onMovieCardClick = jest.fn((...args) => [...args]);
-  const moviesList = mount(
-      <MoviesList
-        movies={testMovies}
-        onMovieCardClick={onMovieCardClick}
-      />
-  );
+    const cardImage = moviesList.find(`.small-movie-card__image`).at(2);
+    cardImage.simulate(`click`, {});
 
-  const cardImage = moviesList.find(`.small-movie-card__image`).at(2);
-  const cardTitle = moviesList.find(`.small-movie-card__title`).at(2);
+    expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
+  });
 
-  cardImage.simulate(`click`, {});
-  cardTitle.simulate(`click`, {});
+  it(` on card title click`, () => {
+    const movie = testMovies[2];
+    const onMovieCardClick = jest.fn((...args) => [...args]);
+    const moviesList = mount(
+        <MoviesList
+          movies={testMovies}
+          onMovieCardClick={onMovieCardClick}
+        />
+    );
 
-  expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
-  expect(onMovieCardClick.mock.calls[1][0]).toMatchObject(movie);
+    const cardTitle = moviesList.find(`.small-movie-card__title`).at(2);
+    cardTitle.simulate(`click`, {});
+
+    expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
+  });
 });
+
+
