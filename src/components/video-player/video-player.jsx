@@ -31,6 +31,7 @@ class VideoPlayer extends PureComponent {
       video.src = src;
       video.muted = settings.isMuted;
       video.onloadedmetadata = video.play();
+
     } else {
       video.pause();
       video.src = ``;
@@ -42,14 +43,16 @@ class VideoPlayer extends PureComponent {
     video.onloadedmetadata = null;
     video.src = ``;
     video.poster = ``;
+    video.onpause = null;
+    video.onplay = null;
   }
 }
 
 VideoPlayer.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
+  poster: PropTypes.string.isRequired,
   settings: PropTypes.shape(videoPlayerShape).isRequired,
   src: PropTypes.string.isRequired,
-  poster: PropTypes.string.isRequired,
 };
 
 export default VideoPlayer;
