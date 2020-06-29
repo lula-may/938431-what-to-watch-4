@@ -16,7 +16,6 @@ it(`should correctly render VideoPlayer component`, () => {
   const tree = renderer.create(
       <VideoPlayer
         isPlaying={false}
-        onActiveChange={() => {}}
         settings={mockSettings}
         poster={movie.poster}
         src={movie.src}
