@@ -40,6 +40,12 @@ const withVideoPlayer = (Component) => {
       );
     }
 
+    componentWillUnmount() {
+      if (this.timeOut) {
+        clearTimeout(this.timeOut);
+      }
+    }
+
     _renderVideoPlayer(poster, src) {
       const {isPlaying} = this.state;
 
