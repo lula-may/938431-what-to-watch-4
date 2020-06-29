@@ -14,7 +14,7 @@ class MoviesList extends PureComponent {
     };
 
     this._handleMouseEnter = this._handleMouseEnter.bind(this);
-    this._handleCardClick = this._handleCardClick.bind(this);
+    this._setClickListener = this._setClickListener.bind(this);
   }
 
   render() {
@@ -26,7 +26,7 @@ class MoviesList extends PureComponent {
             <MovieCardWrapped key={movie.id}
               movie={movie}
               onMouseEnter={this._handleMouseEnter}
-              onCardClick={(evt) => this._handleCardClick(evt, movie)}
+              onCardClick={this._setClickListener(movie)}
             />
           );
         })}
@@ -38,10 +38,12 @@ class MoviesList extends PureComponent {
     this.setState({movie});
   }
 
-  _handleCardClick(evt, movie) {
-    const {onMovieCardClick} = this.props;
-    evt.preventDefault();
-    onMovieCardClick(movie);
+  _setClickListener(movie) {
+    return (evt) => {
+      const {onMovieCardClick} = this.props;
+      evt.preventDefault();
+      onMovieCardClick(movie);
+    };
   }
 }
 
