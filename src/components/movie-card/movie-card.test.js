@@ -9,8 +9,10 @@ it(`should correctly render MovieCardComponent`, () => {
   const tree = renderer.create(
       <MovieCard
         movie={movie}
-        onMouseEnter={() => {}}
         onCardClick={() => {}}
+        onMouseEnter={() => {}}
+        onMouseLeave={() => {}}
+        renderPlayer={() => {}}
       />
   )
   .toJSON();

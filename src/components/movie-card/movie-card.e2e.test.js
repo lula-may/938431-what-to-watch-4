@@ -11,19 +11,20 @@ configure({
 const movie = testMovies[3];
 
 describe(`MovieCardComponent`, () => {
-  it(`should Movie object be supplied to callback on Mouse Entering the film card`, () => {
-    const onMouseEnter = jest.fn((...args) => [...args]);
+  it(`should run callback on Mouse Entering the film card`, () => {
+    const onMouseEnter = jest.fn();
     const movieCard = shallow(
         <MovieCard
           movie={movie}
-          onMouseEnter={onMouseEnter}
           onCardClick={() => {}}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={() => {}}
+          renderPlayer={() => {}}
         />
     );
 
     movieCard.simulate(`mouseenter`);
     expect(onMouseEnter).toHaveBeenCalledTimes(1);
-    expect(onMouseEnter.mock.calls[0][0]).toMatchObject(movie);
   });
 
   it(`should run callback on image click`, () => {
@@ -32,7 +33,9 @@ describe(`MovieCardComponent`, () => {
         <MovieCard
           movie={movie}
           onMouseEnter={() => {}}
+          onMouseLeave={()=>{}}
           onCardClick={onCardClick}
+          renderPlayer={() => {}}
         />
     );
 
@@ -49,6 +52,8 @@ describe(`MovieCardComponent`, () => {
           movie={movie}
           onMouseEnter={() => {}}
           onCardClick={onCardClick}
+          onMouseLeave={()=>{}}
+          renderPlayer={() => {}}
         />
     );
 

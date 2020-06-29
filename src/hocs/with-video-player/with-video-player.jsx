@@ -57,7 +57,6 @@ const withVideoPlayer = (Component) => {
       return () => {
         const id = this.props.movie.id;
         const {onMouseEnter} = this.props;
-        console.log(onMouseEnter);
         if (movie.id === id) {
           this.timeOut = setTimeout(() => {
             this.setState({isPlaying: true});
