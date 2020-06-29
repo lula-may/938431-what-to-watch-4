@@ -39,6 +39,24 @@ describe(`MoviesList Component`, () => {
 
     expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
   });
+
+  it(`should movie object be passed to the State.movie on mouseEntering the movieCard`, () => {
+    const movie = testMovies[2];
+    const onMouseEnter = jest.fn();
+    const moviesList = mount(
+        <MoviesList
+          movies={testMovies}
+          onMovieCardClick={() => {}}
+          onMouseEnter={onMouseEnter}
+        />
+    );
+
+    const card = moviesList.find(`.small-movie-card`).at(2);
+    card.simulate(`mouseenter`, {});
+
+    expect(moviesList.state().movie).toMatchObject(movie);
+  });
+
 });
 
 
