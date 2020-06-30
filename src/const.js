@@ -15,7 +15,7 @@ const TABS = [
     id: `1`
   },
   {
-    type: `Previews`,
+    type: `Reviews`,
     id: `2`
   }
 ];

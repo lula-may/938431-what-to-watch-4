@@ -8,7 +8,7 @@ exports[`should render correctly Tabs Component, Second tab with active class 1`
     className="movie-nav__list"
   >
     <li
-      className="movie-nav__item "
+      className="movie-nav__item"
       id="First"
     >
       <a
@@ -32,7 +32,7 @@ exports[`should render correctly Tabs Component, Second tab with active class 1`
       </a>
     </li>
     <li
-      className="movie-nav__item "
+      className="movie-nav__item"
       id="Third"
     >
       <a
