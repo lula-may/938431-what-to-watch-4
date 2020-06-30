@@ -8,7 +8,7 @@ configure({
   adapter: new Adapter()
 });
 describe(`MoviesList Component`, () => {
-  it(`should movie object be supplied to callback on card image click`, () => {
+  it(`should return movie object to callback on card image click`, () => {
     const movie = testMovies[2];
     const onMovieCardClick = jest.fn((...args) => [...args]);
     const moviesList = mount(
@@ -24,7 +24,7 @@ describe(`MoviesList Component`, () => {
     expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
   });
 
-  it(`should movie object be supplied to callback on card title click`, () => {
+  it(`should return movie object to callback on card title click`, () => {
     const movie = testMovies[2];
     const onMovieCardClick = jest.fn((...args) => [...args]);
     const moviesList = mount(
@@ -40,7 +40,7 @@ describe(`MoviesList Component`, () => {
     expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
   });
 
-  it(`should movie object be passed to the State.movie on mouseEntering the movieCard`, () => {
+  it(`should pass movie object to the State.movie on mouseEntering the movieCard`, () => {
     const movie = testMovies[2];
     const onMouseEnter = jest.fn();
     const moviesList = mount(

@@ -15,11 +15,6 @@ const src = `video.mp3`;
 const movie = testMovies[0];
 
 describe(`WithAudioPlayer HOC`, () => {
-  beforeAll(() => {
-    window.HTMLMediaElement.prototype.play = () => {};
-    window.HTMLMediaElement.prototype.pause = () => {};
-  });
-
   it(`should VideoPlayer prop "isPlaying" be changed to "true" on WithVideoPlayer state.isPlaying change to "true"`, () => {
     const handleMouseEnter = jest.fn();
     const props = {
@@ -46,7 +41,6 @@ describe(`WithAudioPlayer HOC`, () => {
           {...props}
         />);
     let player = mockComponentWrapped.find(VideoPlayer);
-
     expect(player.props().isPlaying).toBe(false);
 
     mockComponentWrapped.setState({isPlaying: true});
@@ -55,7 +49,7 @@ describe(`WithAudioPlayer HOC`, () => {
     expect(player.props().isPlaying).toBe(true);
   });
 
-  it(`should should run callback on mouseEntering mockComponent"`, () => {
+  it(`should run callback on mouseEntering mockComponent"`, () => {
     const handleMouseEnter = jest.fn();
     const props = {
       movie,
@@ -63,7 +57,7 @@ describe(`WithAudioPlayer HOC`, () => {
     };
     const MockComponent = ({renderPlayer}) => {
       return (
-        <div
+        <div id="mockComponent"
           {...props}
         >
           {renderPlayer(poster, src)}
@@ -80,7 +74,7 @@ describe(`WithAudioPlayer HOC`, () => {
         <WithVideoPlayer
           {...props}
         />);
-    const mockComponent = mockComponentWrapped.find(`div`);
+    const mockComponent = mockComponentWrapped.find(`#mockComponent`);
 
     mockComponent.simulate(`mouseenter`);
 

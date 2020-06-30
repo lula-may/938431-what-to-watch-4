@@ -12,7 +12,7 @@ const mockSettings = {
 
 const movie = testMovies[0];
 
-it(`should correctly render VideoPlayer component`, () => {
+it(`should render correctly VideoPlayer component`, () => {
   const tree = renderer.create(
       <VideoPlayer
         isPlaying={false}

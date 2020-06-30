@@ -4,9 +4,8 @@ import {movieShape} from "../shapes";
 
 
 const MovieCard = (props) => {
-  const {movie, onCardClick, renderPlayer} = props;
+  const {movie, onCardClick, onMouseEnter, onMouseLeave, renderPlayer} = props;
   const {poster, src, title} = movie;
-  const {onMouseEnter, onMouseLeave} = props;
 
   return (
     <article
