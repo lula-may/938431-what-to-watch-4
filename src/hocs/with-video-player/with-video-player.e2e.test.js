@@ -15,7 +15,7 @@ const src = `video.mp3`;
 const movie = testMovies[0];
 
 describe(`WithAudioPlayer HOC`, () => {
-  it(`should VideoPlayer prop "isPlaying" be changed to "true" on WithVideoPlayer state.isPlaying change to "true"`, () => {
+  it(`should set VideoPlayer prop "isPlaying" to "true" on WithVideoPlayer state.isPlaying change to "true"`, () => {
     const handleMouseEnter = jest.fn();
     const props = {
       movie,
