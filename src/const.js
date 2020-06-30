@@ -5,4 +5,19 @@ const PREVIEW = {
 
 const PLAYER_DELAY = 1000;
 
-export {PREVIEW, PLAYER_DELAY};
+const TABS = [
+  {
+    type: `Overview`,
+    id: `0`
+  },
+  {
+    type: `Details`,
+    id: `1`
+  },
+  {
+    type: `Previews`,
+    id: `2`
+  }
+];
+
+export {PREVIEW, PLAYER_DELAY, TABS};
