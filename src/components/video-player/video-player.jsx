@@ -30,21 +30,17 @@ class VideoPlayer extends PureComponent {
       video.controls = settings.areControlsShown;
       video.src = src;
       video.muted = settings.isMuted;
-      video.onloadedmetadata = video.play();
+      video.autoplay = true;
 
     } else {
-      video.pause();
       video.src = ``;
     }
   }
 
   componentWillUnmount() {
     const video = this._videoRef.current;
-    video.onloadedmetadata = null;
     video.src = ``;
     video.poster = ``;
-    video.onpause = null;
-    video.onplay = null;
   }
 }
 
