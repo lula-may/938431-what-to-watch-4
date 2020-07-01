@@ -1,49 +1,19 @@
-import React, {PureComponent} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {movieShape} from "../shapes";
-import {TABS} from "../../const";
 import Tabs from "../tabs/tabs.jsx";
 
-const getRatingLevel = (rating) => {
-  if (rating < 3) {
-    return `Bad`;
-  } else if (rating < 5) {
-    return `Normal`;
-  } else if (rating < 8) {
-    return `Good`;
-  } else if (rating < 10) {
-    return `Very Good`;
-  }
-  return `Awesome`;
-};
 
-class MovieDetails extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      activeTab: TABS[0][`type`]
-    };
-  }
-
-  render() {
-    const {activeTab} = this.state;
+const MovieDetails = (props) => {
     const {movie} = this.props;
     const {
-      actors,
       bigPoster,
-      description,
-      director,
       genre,
       poster,
-      rating,
       releaseYear,
       title,
     } = movie;
-    const {count: ratingCount, score: ratingScore} = rating;
-    const {paragraphs} = description;
 
-    const actorsText = `${actors.join(`, `)} and others`;
-    const ratingLevel = getRatingLevel(ratingScore);
     return <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
@@ -101,33 +71,7 @@ class MovieDetails extends PureComponent {
             <div className="movie-card__poster movie-card__poster--big">
               <img src={poster} alt={`${title} poster`} width="218" height="327" />
             </div>
-
-            <div className="movie-card__desc">
-              <Tabs
-                activeTab={activeTab}
-                tabs={TABS}
-                onClick={(tab) => {
-                  this.setState({
-                    activeTab: tab
-                  });
-                }}
-              />
-              <div className="movie-rating">
-                <div className="movie-rating__score">{ratingScore}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{ratingLevel}</span>
-                  <span className="movie-rating__count">{ratingCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                {paragraphs.map((paragraph) => (<p key={Math.random() * new Date()}>{paragraph}</p>))}
-
-                <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {actorsText}</strong></p>
-              </div>
-            </div>
+              <Tabs movie={movie}/>
           </div>
         </div>
       </section>
