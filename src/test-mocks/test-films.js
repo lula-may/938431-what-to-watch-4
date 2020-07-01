@@ -42,6 +42,7 @@ const testMovies = movieTitles.map((title, i) => {
       score: rating,
     },
     releaseYear: MAX_RELEASE_YEAR - i,
+    runTime: 60 + i,
     title,
   };
 });

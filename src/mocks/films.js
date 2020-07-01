@@ -72,6 +72,9 @@ const MAX_YEAR = 2019;
 const MIN_YEAR = 1999;
 const MOCK_MOVIES_COUNT = 8;
 
+const MIN_RUNTIME = 50;
+const MAX_RUNTIME = 180;
+
 const promoMovieScore = `9.8`;
 const promoMovieTitle = `The Grand Budapest Hotel`;
 
@@ -137,6 +140,7 @@ const movies = movieTitles.slice(0, MOCK_MOVIES_COUNT).map((title, i) => {
       score: ratingScore
     },
     releaseYear: getRandomInteger(MIN_YEAR, MAX_YEAR),
+    runTime: getRandomInteger(MIN_RUNTIME, MAX_RUNTIME),
     title,
   };
 });
@@ -157,6 +161,7 @@ const promoMovie = {
     score: promoMovieScore
   },
   releaseYear: 2014,
+  runTime: 99,
   title: promoMovieTitle,
 };
 

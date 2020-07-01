@@ -16,6 +16,7 @@ const movieShape = {
     score: PropTypes.string.isRequired
   }).isRequired,
   releaseYear: PropTypes.number.isRequired,
+  runTime: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };
 
