@@ -162,11 +162,11 @@ Array [
             >
               <li
                 className="movie-nav__item movie-nav__item--active"
-                id="Overview"
               >
                 <a
                   className="movie-nav__link"
                   href="#"
+                  id="Overview"
                   onClick={[Function]}
                 >
                   Overview
@@ -174,11 +174,11 @@ Array [
               </li>
               <li
                 className="movie-nav__item"
-                id="Details"
               >
                 <a
                   className="movie-nav__link"
                   href="#"
+                  id="Details"
                   onClick={[Function]}
                 >
                   Details
@@ -186,11 +186,11 @@ Array [
               </li>
               <li
                 className="movie-nav__item"
-                id="Reviews"
               >
                 <a
                   className="movie-nav__link"
                   href="#"
+                  id="Reviews"
                   onClick={[Function]}
                 >
                   Reviews

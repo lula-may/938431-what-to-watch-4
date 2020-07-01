@@ -1,13 +1,13 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import Tabs from "./tabs.jsx";
+import Overview from "./overview.jsx";
 import {testMovies} from "../../test-mocks/test-films";
 
 const movie = testMovies[0];
 
-it(`should render correctly Tabs Component, Second tab with active class`, () => {
+it(`should render correctly Overview Component`, () => {
   const tree = renderer.create(
-      <Tabs
+      <Overview
         movie={movie}
       />
   ).toJSON();

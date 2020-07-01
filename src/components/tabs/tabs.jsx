@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import Overview from "../overview/overview.jsx";
 import {TabType} from "../../const";
 import {movieShape} from "../shapes";
 
@@ -18,18 +19,6 @@ const tabsWithIds = [
   }
 ];
 
-const getRatingLevel = (rating) => {
-  if (rating < 3) {
-    return `Bad`;
-  } else if (rating < 5) {
-    return `Normal`;
-  } else if (rating < 8) {
-    return `Good`;
-  } else if (rating < 10) {
-    return `Very Good`;
-  }
-  return `Awesome`;
-};
 
 class Tabs extends PureComponent {
   constructor(props) {
@@ -38,7 +27,7 @@ class Tabs extends PureComponent {
       activeTab: TabType.OVERVIEW
     };
 
-    this._setClickHandler = this._setClickHandler.bind(this);
+    this._handleLinkClick = this._handleLinkClick.bind(this);
   }
 
   render() {
@@ -52,10 +41,11 @@ class Tabs extends PureComponent {
             {tabsWithIds.map((item) => {
               const isActive = item.type === activeTab;
               return (
-                <li key={item.id} id={item.type} className={`movie-nav__item${isActive ? ` movie-nav__item--active` : ``}`}>
+                <li key={item.id} className={`movie-nav__item${isActive ? ` movie-nav__item--active` : ``}`}>
                   <a href="#"
                     className="movie-nav__link"
-                    onClick={this._setClickHandler(item.type)}
+                    id={item.type}
+                    onClick={this._handleLinkClick}
                   >{item.type}</a>
                 </li>
               );
@@ -67,43 +57,21 @@ class Tabs extends PureComponent {
     );
   }
 
-  _setClickHandler(type) {
-    return (evt) => {
-      evt.preventDefault();
-      this.setState({activeTab: type});
-    };
+  _handleLinkClick(evt) {
+    evt.preventDefault();
+    const newActiveTab = evt.target.id;
+    this.setState({activeTab: newActiveTab});
   }
 
   _renderInfo() {
     const {activeTab} = this.state;
     const {movie} = this.props;
-    const {actors, description, director, rating} = movie;
-    const {count: ratingCount, score: ratingScore} = rating;
-    const {paragraphs} = description;
-
-    const actorsText = `${actors.join(`, `)} and others`;
-    const ratingLevel = getRatingLevel(ratingScore);
 
     switch (activeTab) {
-      case TabType.OVERVIEW: return (
-        <React.Fragment>
-          <div className="movie-rating">
-            <div className="movie-rating__score">{ratingScore}</div>
-            <p className="movie-rating__meta">
-              <span className="movie-rating__level">{ratingLevel}</span>
-              <span className="movie-rating__count">{ratingCount} ratings</span>
-            </p>
-          </div>
-
-          <div className="movie-card__text">
-            {paragraphs.map((paragraph) => (<p key={Math.random() * new Date()}>{paragraph}</p>))}
-
-            <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-            <p className="movie-card__starring"><strong>Starring: {actorsText}</strong></p>
-          </div>
-        </React.Fragment>
-      );
+      case TabType.OVERVIEW:
+        return (
+          <Overview movie={movie}/>
+        );
       default: return null;
     }
   }
