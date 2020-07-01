@@ -2,16 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import {movieShape} from "../shapes";
 
+
 const MovieCard = (props) => {
-  const {movie, onMouseEnter, onCardClick} = props;
-  const {poster, title} = movie;
+  const {movie, onCardClick, onMouseEnter, onMouseLeave, renderPlayer} = props;
+  const {poster, src, title} = movie;
+
   return (
-    <article onMouseEnter={() => {
-      onMouseEnter(movie);
-    }}
-    className="small-movie-card catalog__movies-card">
+    <article
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className="small-movie-card catalog__movies-card">
       <div className="small-movie-card__image" onClick={onCardClick}>
-        <img src={poster} alt={title} width="280" height="175"/>
+        {renderPlayer(poster, src)}
       </div>
       <h3 className="small-movie-card__title" onClick={onCardClick}>
         <a className="small-movie-card__link" href="movie-page.html">{title}</a>
@@ -23,7 +25,9 @@ const MovieCard = (props) => {
 MovieCard.propTypes = {
   movie: PropTypes.shape(movieShape).isRequired,
   onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
   onCardClick: PropTypes.func.isRequired,
+  renderPlayer: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

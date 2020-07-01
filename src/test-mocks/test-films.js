@@ -29,6 +29,7 @@ const testMovies = movieTitles.map((title, i) => {
   return {
     actors: actors[i],
     bigPoster: `bip-poster-${i}.jpg`,
+    src: `video-${i}.mp3`,
     description: {
       paragraphs: [`bla-bla-bla`, `olya-lya-lya`, `wow-wow`]
     },

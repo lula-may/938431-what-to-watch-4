@@ -1,7 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import MovieCard from "../movie-card/movie-card.jsx";
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player.jsx";
 import {movieShape} from "../shapes";
+
+const MovieCardWrapped = withVideoPlayer(MovieCard);
 
 class MoviesList extends PureComponent {
   constructor(props) {
@@ -11,7 +14,7 @@ class MoviesList extends PureComponent {
     };
 
     this._handleMouseEnter = this._handleMouseEnter.bind(this);
-    this._handleCardClick = this._handleCardClick.bind(this);
+    this._setClickListener = this._setClickListener.bind(this);
   }
 
   render() {
@@ -20,10 +23,10 @@ class MoviesList extends PureComponent {
       <div className="catalog__movies-list">
         {movies.map((movie) => {
           return (
-            <MovieCard key={movie.id}
+            <MovieCardWrapped key={movie.id}
               movie={movie}
               onMouseEnter={this._handleMouseEnter}
-              onCardClick={(evt) => this._handleCardClick(evt, movie)}
+              onCardClick={this._setClickListener(movie)}
             />
           );
         })}
@@ -35,10 +38,12 @@ class MoviesList extends PureComponent {
     this.setState({movie});
   }
 
-  _handleCardClick(evt, movie) {
-    const {onMovieCardClick} = this.props;
-    evt.preventDefault();
-    onMovieCardClick(movie);
+  _setClickListener(movie) {
+    return (evt) => {
+      const {onMovieCardClick} = this.props;
+      evt.preventDefault();
+      onMovieCardClick(movie);
+    };
   }
 }
 

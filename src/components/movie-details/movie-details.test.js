@@ -5,7 +5,7 @@ import {testMovies} from "../../test-mocks/test-films";
 
 const movie = testMovies[1];
 
-it(`should correctly render MovieDetailsComponent`, () => {
+it(`should render correctly MovieDetailsComponent`, () => {
   const tree = renderer.create(
       <MovieDetails
         movie={movie}
