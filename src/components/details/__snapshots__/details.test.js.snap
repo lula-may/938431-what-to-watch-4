@@ -33,8 +33,11 @@ exports[`should render correctly tab Details component 1`] = `
         className="movie-card__details-value"
       >
         Sam Neill,
-Jeff GoldBlum,
-Laura Dern
+        <br />
+        Jeff GoldBlum,
+        <br />
+        Laura Dern
+        <br />
       </span>
     </p>
   </div>

@@ -1,4 +1,11 @@
 import PropTypes from "prop-types";
+const reviewShape = {
+  author: PropTypes.string.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
+  id: PropTypes.string.isRequired,
+  rating: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+};
 
 const movieShape = {
   actors: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -9,16 +16,20 @@ const movieShape = {
   }),
   director: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
   rating: PropTypes.shape({
     count: PropTypes.number.isRequired,
     score: PropTypes.string.isRequired
   }).isRequired,
   releaseYear: PropTypes.number.isRequired,
+  reviews: PropTypes.arrayOf(
+      PropTypes.shape(reviewShape)
+  ).isRequired,
   runTime: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };
+
 
 const videoPlayerShape = {
   areControlsShown: PropTypes.bool.isRequired,
@@ -27,4 +38,4 @@ const videoPlayerShape = {
   width: PropTypes.string.isRequired,
 };
 
-export {movieShape, videoPlayerShape};
+export {movieShape, reviewShape, videoPlayerShape};

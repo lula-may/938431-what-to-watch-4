@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Details from "../details/details.jsx";
 import Overview from "../overview/overview.jsx";
+import Reviews from "../reviews/reviews.jsx";
 import {TabType} from "../../const";
 import {movieShape} from "../shapes";
 
@@ -76,6 +77,10 @@ class Tabs extends PureComponent {
       case TabType.DETAILS:
         return (
           <Details movie={movie}/>
+        );
+      case TabType.REVIEWS:
+        return (
+          <Reviews movie={movie}/>
         );
       default: return null;
     }
