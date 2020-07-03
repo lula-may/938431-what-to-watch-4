@@ -86,39 +86,6 @@ exports[`should render correctly Reviews Component 1`] = `
         <p
           className="review__text"
         >
-          Jack and Jill went up the hill.
-        </p>
-        <footer
-          className="review__details"
-        >
-          <cite
-            className="review__author"
-          >
-            Jack Daniels
-          </cite>
-          <time
-            className="review__date"
-            dateTime="2016-12-24"
-          >
-            June 2, 2020
-          </time>
-        </footer>
-      </blockquote>
-      <div
-        className="review__rating"
-      >
-        7.7
-      </div>
-    </div>
-    <div
-      className="review"
-    >
-      <blockquote
-        className="review__quote"
-      >
-        <p
-          className="review__text"
-        >
           Betty Boughter bought some butter.
         </p>
         <footer

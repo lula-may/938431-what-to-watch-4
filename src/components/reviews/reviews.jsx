@@ -4,24 +4,9 @@ import ReviewsColumn from "../reviews-column/reviews-column.jsx";
 import {movieShape} from "../shapes";
 
 const splitReviewsIntoColumns = (reviews) => {
-  const totalLength = reviews.reduce((acc, item) => {
-    acc += item.text.length;
-    return acc;
-  }, 0);
-  const firstColumnReviews = reviews.slice(0, 1);
-  let lengthCount = reviews[0][`text`].length;
-  let count = 0;
-
-  while (lengthCount < (totalLength / 2)) {
-    count++;
-    const nextReview = reviews[count];
-    lengthCount += nextReview.text.length;
-    if (lengthCount < totalLength) {
-      firstColumnReviews.push(nextReview);
-    }
-  }
-
-  const secondColumnReviews = reviews.slice(count);
+  const firstColumnLength = Math.ceil(reviews.length / 2);
+  const firstColumnReviews = reviews.slice(0, firstColumnLength);
+  const secondColumnReviews = reviews.slice(firstColumnLength);
 
   return [firstColumnReviews, secondColumnReviews];
 };
