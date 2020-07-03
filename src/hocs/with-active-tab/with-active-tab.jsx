@@ -1,4 +1,10 @@
 import React, {PureComponent} from "react";
+import PropTypes from "prop-types";
+
+import Details from "../../components/details/details.jsx";
+import Overview from "../../components/overview/overview.jsx";
+import Reviews from "../../components/reviews/reviews.jsx";
+import {movieShape} from "../../components/shapes";
 import {TabType} from "../../const";
 
 const withActiveTab = (Component) => {
@@ -13,13 +19,41 @@ const withActiveTab = (Component) => {
 
     render() {
       const {activeTab} = this.state;
-      return (
-        <Component
-          {...this.props}
-          activeTab={activeTab}
-          onClick={this._handleLinkClick}
-        />
-      );
+      const {movie} = this.props;
+
+      switch (activeTab) {
+        case TabType.OVERVIEW:
+          return (
+            <Component
+              {...this.props}
+              activeTab={activeTab}
+              onClick={this._handleLinkClick}
+            >
+              <Overview movie={movie}/>
+            </Component>
+          );
+        case TabType.DETAILS:
+          return (
+            <Component
+              {...this.props}
+              activeTab={activeTab}
+              onClick={this._handleLinkClick}
+            >
+              <Details movie={movie}/>
+            </Component>
+          );
+        case TabType.REVIEWS:
+          return (
+            <Component
+              {...this.props}
+              activeTab={activeTab}
+              onClick={this._handleLinkClick}
+            >
+              <Reviews movie={movie}/>
+            </Component>
+          );
+        default: return null;
+      }
     }
 
     _handleLinkClick(evt) {
@@ -29,7 +63,9 @@ const withActiveTab = (Component) => {
     }
   }
 
-  WithActiveTab.propTypes = {};
+  WithActiveTab.propTypes = {
+    movie: PropTypes.shape(movieShape).isRequired
+  };
 
   return WithActiveTab;
 };

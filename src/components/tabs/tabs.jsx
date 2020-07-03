@@ -1,10 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Details from "../details/details.jsx";
-import Overview from "../overview/overview.jsx";
-import Reviews from "../reviews/reviews.jsx";
 import {TabType} from "../../const";
-import {movieShape} from "../shapes";
 
 const tabsWithIds = [
   {
@@ -23,25 +19,7 @@ const tabsWithIds = [
 
 
 const Tabs = (props) => {
-  const {activeTab, movie, onClick} = props;
-
-  const renderInfo = () => {
-    switch (activeTab) {
-      case TabType.OVERVIEW:
-        return (
-          <Overview movie={movie}/>
-        );
-      case TabType.DETAILS:
-        return (
-          <Details movie={movie}/>
-        );
-      case TabType.REVIEWS:
-        return (
-          <Reviews movie={movie}/>
-        );
-      default: return null;
-    }
-  };
+  const {activeTab, children, onClick} = props;
 
   return (
     <div className="movie-card__desc">
@@ -62,14 +40,17 @@ const Tabs = (props) => {
           })}
         </ul>
       </nav>
-      {renderInfo()}
+      {children}
     </div>
   );
 };
 
 Tabs.propTypes = {
   activeTab: PropTypes.string.isRequired,
-  movie: PropTypes.shape(movieShape).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
