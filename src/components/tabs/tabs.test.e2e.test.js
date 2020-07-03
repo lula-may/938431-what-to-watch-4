@@ -11,16 +11,19 @@ configure({
 const movie = testMovies[0];
 
 describe(`Tabs component`, () => {
-  it(`should pass Tab name to state.activeTab on link click`, () => {
-    const tabName = `Details`;
+  it(`should run callback on link click`, () => {
+    const activeTab = `Details`;
+    const onClick = jest.fn();
     const tabsComponent = shallow(
         <Tabs
+          activeTab={activeTab}
           movie={movie}
+          onClick={onClick}
         />
     );
-    const link = tabsComponent.find(`.movie-nav__link`).at(1);
+    const link = tabsComponent.find(`.movie-nav__link`).at(0);
 
-    link.simulate(`click`, {preventDefault: () => {}, target: {id: tabName}});
-    expect(tabsComponent.state().activeTab).toEqual(tabName);
+    link.simulate(`click`);
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

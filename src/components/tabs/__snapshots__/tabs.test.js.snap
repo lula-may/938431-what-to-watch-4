@@ -1,6 +1,144 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly Tabs Component, Second tab with active class 1`] = `
+exports[`Tabs Component should render correctly Tabs Component, "Details" tab with active class 1`] = `
+<div
+  className="movie-card__desc"
+>
+  <nav
+    className="movie-nav movie-card__nav"
+  >
+    <ul
+      className="movie-nav__list"
+    >
+      <li
+        className="movie-nav__item"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          id="Overview"
+          onClick={[Function]}
+        >
+          Overview
+        </a>
+      </li>
+      <li
+        className="movie-nav__item movie-nav__item--active"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          id="Details"
+          onClick={[Function]}
+        >
+          Details
+        </a>
+      </li>
+      <li
+        className="movie-nav__item"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          id="Reviews"
+          onClick={[Function]}
+        >
+          Reviews
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div
+    className="movie-card__text movie-card__row"
+  >
+    <div
+      className="movie-card__text-col"
+    >
+      <p
+        className="movie-card__details-item"
+      >
+        <strong
+          className="movie-card__details-name"
+        >
+          Director
+        </strong>
+        <span
+          className="movie-card__details-value"
+        >
+          Stiven Spielberg
+        </span>
+      </p>
+      <p
+        className="movie-card__details-item"
+      >
+        <strong
+          className="movie-card__details-name"
+        >
+          Starring
+        </strong>
+        <span
+          className="movie-card__details-value"
+        >
+          Sam Neill,
+          <br />
+          Jeff GoldBlum,
+          <br />
+          Laura Dern
+          <br />
+        </span>
+      </p>
+    </div>
+    <div
+      className="movie-card__text-col"
+    >
+      <p
+        className="movie-card__details-item"
+      >
+        <strong
+          className="movie-card__details-name"
+        >
+          Run Time
+        </strong>
+        <span
+          className="movie-card__details-value"
+        >
+          1h 0m
+        </span>
+      </p>
+      <p
+        className="movie-card__details-item"
+      >
+        <strong
+          className="movie-card__details-name"
+        >
+          Genre
+        </strong>
+        <span
+          className="movie-card__details-value"
+        >
+          Sci-Fi
+        </span>
+      </p>
+      <p
+        className="movie-card__details-item"
+      >
+        <strong
+          className="movie-card__details-name"
+        >
+          Released
+        </strong>
+        <span
+          className="movie-card__details-value"
+        >
+          2000
+        </span>
+      </p>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Tabs Component should render correctly Tabs Component, "Overview" tab with active class 1`] = `
 <div
   className="movie-card__desc"
 >
@@ -100,6 +238,201 @@ exports[`should render correctly Tabs Component, Second tab with active class 1`
         Sam Neill, Jeff GoldBlum, Laura Dern and others
       </strong>
     </p>
+  </div>
+</div>
+`;
+
+exports[`Tabs Component should render correctly Tabs Component, "Reviews" tab with active class 1`] = `
+<div
+  className="movie-card__desc"
+>
+  <nav
+    className="movie-nav movie-card__nav"
+  >
+    <ul
+      className="movie-nav__list"
+    >
+      <li
+        className="movie-nav__item"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          id="Overview"
+          onClick={[Function]}
+        >
+          Overview
+        </a>
+      </li>
+      <li
+        className="movie-nav__item"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          id="Details"
+          onClick={[Function]}
+        >
+          Details
+        </a>
+      </li>
+      <li
+        className="movie-nav__item movie-nav__item--active"
+      >
+        <a
+          className="movie-nav__link"
+          href="#"
+          id="Reviews"
+          onClick={[Function]}
+        >
+          Reviews
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div
+    className="movie-card__reviews movie-card__row"
+  >
+    <div
+      className="movie-card__reviews-col"
+    >
+      <div
+        className="review"
+      >
+        <blockquote
+          className="review__quote"
+        >
+          <p
+            className="review__text"
+          >
+            Should old acquaintance be forgot and never brought to mind.
+          </p>
+          <footer
+            className="review__details"
+          >
+            <cite
+              className="review__author"
+            >
+              Robert Burns
+            </cite>
+            <time
+              className="review__date"
+              dateTime="2016-12-24"
+            >
+              March 2, 2020
+            </time>
+          </footer>
+        </blockquote>
+        <div
+          className="review__rating"
+        >
+          8.8
+        </div>
+      </div>
+      <div
+        className="review"
+      >
+        <blockquote
+          className="review__quote"
+        >
+          <p
+            className="review__text"
+          >
+            Jack and Jill went up the hill.
+          </p>
+          <footer
+            className="review__details"
+          >
+            <cite
+              className="review__author"
+            >
+              Jack Daniels
+            </cite>
+            <time
+              className="review__date"
+              dateTime="2016-12-24"
+            >
+              June 2, 2020
+            </time>
+          </footer>
+        </blockquote>
+        <div
+          className="review__rating"
+        >
+          7.7
+        </div>
+      </div>
+    </div>
+    <div
+      className="movie-card__reviews-col"
+    >
+      <div
+        className="review"
+      >
+        <blockquote
+          className="review__quote"
+        >
+          <p
+            className="review__text"
+          >
+            Jack and Jill went up the hill.
+          </p>
+          <footer
+            className="review__details"
+          >
+            <cite
+              className="review__author"
+            >
+              Jack Daniels
+            </cite>
+            <time
+              className="review__date"
+              dateTime="2016-12-24"
+            >
+              June 2, 2020
+            </time>
+          </footer>
+        </blockquote>
+        <div
+          className="review__rating"
+        >
+          7.7
+        </div>
+      </div>
+      <div
+        className="review"
+      >
+        <blockquote
+          className="review__quote"
+        >
+          <p
+            className="review__text"
+          >
+            Betty Boughter bought some butter.
+          </p>
+          <footer
+            className="review__details"
+          >
+            <cite
+              className="review__author"
+            >
+              Betty Boughter
+            </cite>
+            <time
+              className="review__date"
+              dateTime="2016-12-24"
+            >
+              July 15, 2019
+            </time>
+          </footer>
+        </blockquote>
+        <div
+          className="review__rating"
+        >
+          6.6
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;
