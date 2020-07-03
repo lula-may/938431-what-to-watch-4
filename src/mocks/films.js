@@ -79,7 +79,6 @@ const MIN_REVIEW_COUNT = 1;
 const MAX_RUNTIME = 180;
 const MIN_YEAR = 1999;
 const MIN_RUNTIME = 50;
-const MOCK_MOVIES_COUNT = 8;
 const PARAGRAPH_COUNT_MIN = 1;
 const PARAGRAPH_COUNT_MAX = 3;
 const PARAGRAPH_SENTENCES_MIN = 2;
@@ -144,7 +143,7 @@ const getReview = () => ({
 
 const generateReviews = (count) => new Array(count).fill(``).map(() => (getReview()));
 
-const movies = movieTitles.slice(0, MOCK_MOVIES_COUNT).map((title, i) => {
+const movies = movieTitles.map((title, i) => {
   const src = getImgSrc(title);
   const ratingScore = (Math.random() * 10).toFixed(1);
   return {

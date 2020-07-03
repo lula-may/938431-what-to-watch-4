@@ -9,6 +9,8 @@ it(`should render correctly MovieDetailsComponent`, () => {
   const tree = renderer.create(
       <MovieDetails
         movie={movie}
+        allMovies={testMovies}
+        onMovieCardClick={() => {}}
       />
   )
   .toJSON();
