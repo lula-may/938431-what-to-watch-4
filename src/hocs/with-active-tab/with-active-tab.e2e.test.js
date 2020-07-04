@@ -18,10 +18,10 @@ const movie = testMovies[0];
 const MockComponent = (props) => {
   const {activeTab, children, onClick} = props;
   return (
-    <div className={activeTab}>
-      <a id="Overview" onClick={onClick}/>
-      <a id="Details" onClick={onClick}/>
-      <a id="Reviews" onClick={onClick}/>
+    <div>
+      <a id="Overview" onClick={onClick} className={activeTab === `Overview` ? `active` : ``}/>
+      <a id="Details" onClick={onClick} className={activeTab === `Details` ? `active` : ``}/>
+      <a id="Reviews" onClick={onClick} className={activeTab === `Reviews` ? `active` : ``}/>
       {children}
     </div>
   );
@@ -51,7 +51,7 @@ describe(`WithActiveTab HOC`, () => {
     expect(wrapper.find(Reviews).length).toBe(0);
   });
 
-  it(`should render Details component on Details link click`, () => {
+  it(`should render Details component and remove Overview component on Details link click`, () => {
     const wrapper = mount(
         <MockComponentWrapped
           movie={movie}
@@ -59,23 +59,29 @@ describe(`WithActiveTab HOC`, () => {
     );
 
     const detailsLink = wrapper.find(`#Details`);
-
+    expect(wrapper.find(Overview).length).toBe(1);
     expect(wrapper.find(Details).length).toBe(0);
 
     detailsLink.simulate(`click`);
     expect(wrapper.find(Details).length).toBe(1);
+    expect(wrapper.find(Overview).length).toBe(0);
   });
 
-  it(`should render Reviews component on Reviews link click`, () => {
+  it(`should add "active" class to Details link and remove "active" class from Overviews link on Details link click`, () => {
     const wrapper = mount(
         <MockComponentWrapped
           movie={movie}
         />
     );
 
-    expect(wrapper.find(Reviews).length).toBe(0);
-    const reviewsLink = wrapper.find(`#Reviews`);
-    reviewsLink.simulate(`click`);
-    expect(wrapper.find(Reviews).length).toBe(1);
+    const overviewLink = wrapper.find(`#Overview`);
+    expect(overviewLink.getDOMNode().className).toContain(`active`);
+
+    const detailsLink = wrapper.find(`#Details`);
+    expect(detailsLink.getDOMNode().className).not.toContain(`active`);
+
+    detailsLink.simulate(`click`);
+    expect(overviewLink.getDOMNode().className).not.toContain(`active`);
+    expect(detailsLink.getDOMNode().className).toContain(`active`);
   });
 });
