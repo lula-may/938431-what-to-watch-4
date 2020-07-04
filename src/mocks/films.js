@@ -55,6 +55,15 @@ const actors = [
   `Jennifer Lawrence`
 ];
 
+const reviewTexts = [
+  `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
+  `Anderson's films are too precious for some, but for those of us willing to lose ourselves in them, they're a delight. "The Grand Budapest Hotel" is no different, except that he has added a hint of gravitas to the mix, improving the recipe.`,
+  `I didn't find it amusing, and while I can appreciate the creativity, it's an hour and 40 minutes I wish I could take back.`,
+  `The mannered, madcap proceedings are often delightful, occasionally silly, and here and there, gruesome and/or heartbreaking.`,
+  `It is certainly a magical and childlike way of storytelling, even if the content is a little more adult.`,
+  `Lorem ipsum dolor sit amet, consectetur adipiscing elit`,
+];
+
 const DESCRIPTION_TEXT = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
 const genres = [`Comedy`, `Crime`, `Documentary`, `Drama`, `Horror`, `Kids&Family`, `Romance`, `Sci-Fi`, `Thriller`];
 const movieSources = [
@@ -63,14 +72,17 @@ const movieSources = [
 ];
 
 const ACTORS_COUNT = 4;
+const COMMENT_DATE_RANGE = 60;
+const MAX_YEAR = 2019;
+const MAX_REVIEW_COUNT = 7;
+const MIN_REVIEW_COUNT = 1;
+const MAX_RUNTIME = 180;
+const MIN_YEAR = 1999;
+const MIN_RUNTIME = 50;
 const PARAGRAPH_COUNT_MIN = 1;
 const PARAGRAPH_COUNT_MAX = 3;
 const PARAGRAPH_SENTENCES_MIN = 2;
 const PARAGRAPH_SENTENCES_MAX = 5;
-
-const MAX_YEAR = 2019;
-const MIN_YEAR = 1999;
-const MOCK_MOVIES_COUNT = 8;
 
 const promoMovieScore = `9.8`;
 const promoMovieTitle = `The Grand Budapest Hotel`;
@@ -117,8 +129,21 @@ const getDescriptionParagraphs = () => {
     });
   return descriptionParagraphs;
 };
+const today = new Date().getDate();
 
-const movies = movieTitles.slice(0, MOCK_MOVIES_COUNT).map((title, i) => {
+const getRandomDate = () => new Date().setDate(today - getRandomInteger(0, COMMENT_DATE_RANGE));
+
+const getReview = () => ({
+  author: getRandomItem(actors),
+  date: new Date(getRandomDate()),
+  id: Math.round(Math.random() * new Date()).toString(),
+  rating: (Math.random() * 10).toFixed(1),
+  text: getRandomItem(reviewTexts),
+});
+
+const generateReviews = (count) => new Array(count).fill(``).map(() => (getReview()));
+
+const movies = movieTitles.map((title, i) => {
   const src = getImgSrc(title);
   const ratingScore = (Math.random() * 10).toFixed(1);
   return {
@@ -130,13 +155,15 @@ const movies = movieTitles.slice(0, MOCK_MOVIES_COUNT).map((title, i) => {
     },
     director: getRandomItem(directors),
     genre: getRandomItem(genres),
-    id: i,
+    id: i.toString(),
     poster: src,
     rating: {
       count: getRandomInteger(50, 300),
       score: ratingScore
     },
     releaseYear: getRandomInteger(MIN_YEAR, MAX_YEAR),
+    reviews: generateReviews(getRandomInteger(MIN_REVIEW_COUNT, MAX_REVIEW_COUNT)),
+    runTime: getRandomInteger(MIN_RUNTIME, MAX_RUNTIME),
     title,
   };
 });
@@ -150,13 +177,15 @@ const promoMovie = {
   },
   director: getRandomItem(directors),
   genre: `Drama`,
-  id: Math.round(Math.random() * new Date()),
+  id: Math.round(Math.random() * new Date()).toString(),
   poster: getPosterSrc(promoMovieTitle),
   rating: {
     count: 240,
     score: promoMovieScore
   },
   releaseYear: 2014,
+  reviews: generateReviews(getRandomInteger(MIN_REVIEW_COUNT, MAX_REVIEW_COUNT)),
+  runTime: 99,
   title: promoMovieTitle,
 };
 

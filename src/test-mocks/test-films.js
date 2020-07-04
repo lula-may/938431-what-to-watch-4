@@ -16,6 +16,30 @@ const actors = [
   [`Robert De Niro`, `Vin Diesel`, `Charlize Theron`]
 ];
 
+const reviews = [
+  {
+    author: `Betty Boughter`,
+    date: new Date(2019, 6, 15, 23, 50),
+    id: `Betty `,
+    rating: `6.6`,
+    text: `Betty Boughter bought some butter.`
+  },
+  {
+    author: `Jack Daniels`,
+    date: new Date(2020, 5, 2, 23, 50),
+    id: `jack`,
+    rating: `7.7`,
+    text: `Jack and Jill went up the hill.`
+  },
+  {
+    author: `Robert Burns`,
+    date: new Date(2020, 2, 2, 23, 50),
+    id: `burns`,
+    rating: `8.8`,
+    text: `Should old acquaintance be forgot and never brought to mind.`
+  }
+];
+
 const MAX_RATING = 9.7;
 const RATING_COUNT = 150;
 const MAX_RELEASE_YEAR = 2000;
@@ -35,13 +59,15 @@ const testMovies = movieTitles.map((title, i) => {
     },
     director: directors[i],
     genre: genres[i],
-    id: i,
+    id: i.toString(),
     poster: `poster-${i}.jpg`,
     rating: {
       count: RATING_COUNT,
       score: rating,
     },
     releaseYear: MAX_RELEASE_YEAR - i,
+    reviews,
+    runTime: 60 + i,
     title,
   };
 });

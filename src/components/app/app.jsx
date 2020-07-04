@@ -2,8 +2,9 @@ import React, {PureComponent} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
-import {movieShape} from "../shapes.js";
 import MovieDetails from "../movie-details/movie-details.jsx";
+import {movieShape} from "../shapes.js";
+import {SHOWED_MOVIES_ON_START_COUNT} from "../../const";
 
 const Page = {
   MAIN: `main`,
@@ -17,11 +18,15 @@ class App extends PureComponent {
       page: Page.MAIN,
       movie: this.props.headerMovie
     };
+
+    this.showedMovies = props.movies.slice(0, SHOWED_MOVIES_ON_START_COUNT);
     this._handleCardClick = this._handleCardClick.bind(this);
   }
 
   render() {
     const {movie} = this.state;
+    const showedMovies = this.showedMovies;
+
     return (
       <BrowserRouter>
         <Switch>
@@ -30,7 +35,10 @@ class App extends PureComponent {
           </Route>
           <Route exact path="/dev-film">
             <MovieDetails
-              movie={movie} />
+              movie={movie}
+              allMovies={showedMovies}
+              onMovieCardClick={this._handleCardClick}
+            />
           </Route>
         </Switch>
       </BrowserRouter>
@@ -40,16 +48,19 @@ class App extends PureComponent {
   _renderApp() {
     const {headerMovie, movies} = this.props;
     const {movie, page} = this.state;
+    const showedMovies = this.showedMovies;
     switch (page) {
       case Page.MAIN:
         return <Main
           headerMovie={headerMovie}
-          movies={movies}
+          movies={showedMovies}
           onMovieCardClick={this._handleCardClick}
         />;
       case Page.DETAILS:
         return <MovieDetails
           movie={movie}
+          allMovies={movies}
+          onMovieCardClick={this._handleCardClick}
         />;
       default: return null;
     }

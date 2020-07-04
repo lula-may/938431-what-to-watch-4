@@ -1,38 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import MoviesList from "../movies-list/movies-list.jsx";
+import Tabs from "../tabs/tabs.jsx";
+import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
 import {movieShape} from "../shapes";
+import {SIMILAR_MOVIES_COUNT} from "../../const";
 
-const getRatingLevel = (rating) => {
-  if (rating < 3) {
-    return `Bad`;
-  } else if (rating < 5) {
-    return `Normal`;
-  } else if (rating < 8) {
-    return `Good`;
-  } else if (rating < 10) {
-    return `Very Good`;
-  }
-  return `Awesome`;
-};
-
+const TabsWrapped = withActiveTab(Tabs);
 const MovieDetails = (props) => {
-  const {movie} = props;
+  const {allMovies, movie, onMovieCardClick} = props;
   const {
-    actors,
     bigPoster,
-    description,
-    director,
     genre,
     poster,
-    rating,
     releaseYear,
     title,
   } = movie;
-  const {count: ratingCount, score: ratingScore} = rating;
-  const {paragraphs} = description;
 
-  const actorsText = `${actors.join(`, `)} and others`;
-  const ratingLevel = getRatingLevel(ratingScore);
+  const similarMovies = allMovies.filter((item) => (item.genre === movie.genre || item.id !== movie.id)).slice(SIMILAR_MOVIES_COUNT);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -91,38 +76,7 @@ const MovieDetails = (props) => {
           <div className="movie-card__poster movie-card__poster--big">
             <img src={poster} alt={`${title} poster`} width="218" height="327" />
           </div>
-
-          <div className="movie-card__desc">
-            <nav className="movie-nav movie-card__nav">
-              <ul className="movie-nav__list">
-                <li className="movie-nav__item movie-nav__item--active">
-                  <a href="#" className="movie-nav__link">Overview</a>
-                </li>
-                <li className="movie-nav__item">
-                  <a href="#" className="movie-nav__link">Details</a>
-                </li>
-                <li className="movie-nav__item">
-                  <a href="#" className="movie-nav__link">Reviews</a>
-                </li>
-              </ul>
-            </nav>
-
-            <div className="movie-rating">
-              <div className="movie-rating__score">{ratingScore}</div>
-              <p className="movie-rating__meta">
-                <span className="movie-rating__level">{ratingLevel}</span>
-                <span className="movie-rating__count">{ratingCount} ratings</span>
-              </p>
-            </div>
-
-            <div className="movie-card__text">
-              {paragraphs.map((paragraph) => (<p key={Math.random() * new Date()}>{paragraph}</p>))}
-
-              <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-              <p className="movie-card__starring"><strong>Starring: {actorsText}</strong></p>
-            </div>
-          </div>
+          <TabsWrapped movie={movie}/>
         </div>
       </div>
     </section>
@@ -131,43 +85,10 @@ const MovieDetails = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <div className="catalog__movies-list">
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-            </h3>
-          </article>
-
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
-            </h3>
-          </article>
-
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
-            </h3>
-          </article>
-
-          <article className="small-movie-card catalog__movies-card">
-            <div className="small-movie-card__image">
-              <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-            </div>
-            <h3 className="small-movie-card__title">
-              <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
-            </h3>
-          </article>
-        </div>
+        <MoviesList
+          movies={similarMovies}
+          onMovieCardClick={onMovieCardClick}
+        />
       </section>
       <footer className="page-footer">
         <div className="logo">
@@ -188,6 +109,10 @@ const MovieDetails = (props) => {
 
 MovieDetails.propTypes = {
   movie: PropTypes.shape(movieShape).isRequired,
+  allMovies: PropTypes.arrayOf(
+      PropTypes.shape(movieShape)
+  ).isRequired,
+  onMovieCardClick: PropTypes.func.isRequired,
 };
 
 export default MovieDetails;

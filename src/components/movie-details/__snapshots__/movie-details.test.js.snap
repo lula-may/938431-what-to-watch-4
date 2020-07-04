@@ -166,6 +166,8 @@ Array [
                 <a
                   className="movie-nav__link"
                   href="#"
+                  id="Overview"
+                  onClick={[Function]}
                 >
                   Overview
                 </a>
@@ -176,6 +178,8 @@ Array [
                 <a
                   className="movie-nav__link"
                   href="#"
+                  id="Details"
+                  onClick={[Function]}
                 >
                   Details
                 </a>
@@ -186,6 +190,8 @@ Array [
                 <a
                   className="movie-nav__link"
                   href="#"
+                  id="Reviews"
+                  onClick={[Function]}
                 >
                   Reviews
                 </a>
@@ -265,97 +271,55 @@ Array [
       >
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
         >
           <div
             className="small-movie-card__image"
+            onClick={[Function]}
           >
-            <img
-              alt="Fantastic Beasts: The Crimes of Grindelwald"
+            <video
               height="175"
-              src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+              poster="poster-4.jpg"
               width="280"
             />
           </div>
           <h3
             className="small-movie-card__title"
+            onClick={[Function]}
           >
             <a
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              Fantastic Beasts: The Crimes of Grindelwald
+              A Streetcar Named Desire
             </a>
           </h3>
         </article>
         <article
           className="small-movie-card catalog__movies-card"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
         >
           <div
             className="small-movie-card__image"
+            onClick={[Function]}
           >
-            <img
-              alt="Bohemian Rhapsody"
+            <video
               height="175"
-              src="img/bohemian-rhapsody.jpg"
+              poster="poster-5.jpg"
               width="280"
             />
           </div>
           <h3
             className="small-movie-card__title"
+            onClick={[Function]}
           >
             <a
               className="small-movie-card__link"
               href="movie-page.html"
             >
-              Bohemian Rhapsody
-            </a>
-          </h3>
-        </article>
-        <article
-          className="small-movie-card catalog__movies-card"
-        >
-          <div
-            className="small-movie-card__image"
-          >
-            <img
-              alt="Macbeth"
-              height="175"
-              src="img/macbeth.jpg"
-              width="280"
-            />
-          </div>
-          <h3
-            className="small-movie-card__title"
-          >
-            <a
-              className="small-movie-card__link"
-              href="movie-page.html"
-            >
-              Macbeth
-            </a>
-          </h3>
-        </article>
-        <article
-          className="small-movie-card catalog__movies-card"
-        >
-          <div
-            className="small-movie-card__image"
-          >
-            <img
-              alt="Aviator"
-              height="175"
-              src="img/aviator.jpg"
-              width="280"
-            />
-          </div>
-          <h3
-            className="small-movie-card__title"
-          >
-            <a
-              className="small-movie-card__link"
-              href="movie-page.html"
-            >
-              Aviator
+              Some Likes It Hot
             </a>
           </h3>
         </article>

@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly ReviewsColumnComponent 1`] = `
+<div
+  className="movie-card__reviews-col"
+>
+  <div
+    className="review"
+  >
+    <blockquote
+      className="review__quote"
+    >
+      <p
+        className="review__text"
+      >
+        Betty Boughter bought some butter.
+      </p>
+      <footer
+        className="review__details"
+      >
+        <cite
+          className="review__author"
+        >
+          Betty Boughter
+        </cite>
+        <time
+          className="review__date"
+          dateTime="2019-07-15"
+        >
+          July 15, 2019
+        </time>
+      </footer>
+    </blockquote>
+    <div
+      className="review__rating"
+    >
+      6.6
+    </div>
+  </div>
+  <div
+    className="review"
+  >
+    <blockquote
+      className="review__quote"
+    >
+      <p
+        className="review__text"
+      >
+        Jack and Jill went up the hill.
+      </p>
+      <footer
+        className="review__details"
+      >
+        <cite
+          className="review__author"
+        >
+          Jack Daniels
+        </cite>
+        <time
+          className="review__date"
+          dateTime="2020-06-02"
+        >
+          June 2, 2020
+        </time>
+      </footer>
+    </blockquote>
+    <div
+      className="review__rating"
+    >
+      7.7
+    </div>
+  </div>
+  <div
+    className="review"
+  >
+    <blockquote
+      className="review__quote"
+    >
+      <p
+        className="review__text"
+      >
+        Should old acquaintance be forgot and never brought to mind.
+      </p>
+      <footer
+        className="review__details"
+      >
+        <cite
+          className="review__author"
+        >
+          Robert Burns
+        </cite>
+        <time
+          className="review__date"
+          dateTime="2020-03-02"
+        >
+          March 2, 2020
+        </time>
+      </footer>
+    </blockquote>
+    <div
+      className="review__rating"
+    >
+      8.8
+    </div>
+  </div>
+</div>
+`;
