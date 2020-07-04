@@ -12,18 +12,17 @@ const splitReviewsIntoColumns = (reviews) => {
 };
 
 const Reviews = (props) => {
-  const {movie} = props;
-  const {reviews} = movie;
+  const {movie: {reviews}} = props;
 
   const sortedReviews = reviews.slice().sort((left, right) => {
     return right.rating - left.rating;
   });
 
-  const splitRevies = splitReviewsIntoColumns(sortedReviews);
+  const splitReviews = splitReviewsIntoColumns(sortedReviews);
   return (
     <div className="movie-card__reviews movie-card__row">
-      <ReviewsColumn reviews={splitRevies[0]}/>
-      <ReviewsColumn reviews={splitRevies[1]}/>
+      <ReviewsColumn reviews={splitReviews[0]}/>
+      <ReviewsColumn reviews={splitReviews[1]}/>
     </div>
   );
 };
