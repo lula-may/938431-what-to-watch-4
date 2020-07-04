@@ -25,7 +25,7 @@ exports[`should render correctly ReviewsColumnComponent 1`] = `
         </cite>
         <time
           className="review__date"
-          dateTime="2019-07-14"
+          dateTime="2019-07-15"
         >
           July 15, 2019
         </time>
@@ -58,7 +58,7 @@ exports[`should render correctly ReviewsColumnComponent 1`] = `
         </cite>
         <time
           className="review__date"
-          dateTime="2020-06-01"
+          dateTime="2020-06-02"
         >
           June 2, 2020
         </time>
@@ -91,7 +91,7 @@ exports[`should render correctly ReviewsColumnComponent 1`] = `
         </cite>
         <time
           className="review__date"
-          dateTime="2020-03-01"
+          dateTime="2020-03-02"
         >
           March 2, 2020
         </time>

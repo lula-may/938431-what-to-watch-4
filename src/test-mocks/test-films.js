@@ -19,21 +19,21 @@ const actors = [
 const reviews = [
   {
     author: `Betty Boughter`,
-    date: new Date(2019, 6, 15),
+    date: new Date(2019, 6, 15, 23, 50),
     id: `Betty `,
     rating: `6.6`,
     text: `Betty Boughter bought some butter.`
   },
   {
     author: `Jack Daniels`,
-    date: new Date(2020, 5, 2),
+    date: new Date(2020, 5, 2, 23, 50),
     id: `jack`,
     rating: `7.7`,
     text: `Jack and Jill went up the hill.`
   },
   {
     author: `Robert Burns`,
-    date: new Date(2020, 2, 2),
+    date: new Date(2020, 2, 2, 23, 50),
     id: `burns`,
     rating: `8.8`,
     text: `Should old acquaintance be forgot and never brought to mind.`
