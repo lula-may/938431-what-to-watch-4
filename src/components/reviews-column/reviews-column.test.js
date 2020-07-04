@@ -5,7 +5,7 @@ import {testMovies} from "../../test-mocks/test-films";
 
 const reviews = testMovies[0][`reviews`];
 
-it(`should render correctly ReviewsColumn Component`, () => {
+it(`should render correctly ReviewsColumnComponent`, () => {
   const tree = renderer.create(
       <ReviewsColumn
         reviews={reviews}
