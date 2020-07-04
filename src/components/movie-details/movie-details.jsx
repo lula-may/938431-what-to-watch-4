@@ -7,22 +7,6 @@ import {movieShape} from "../shapes";
 import {SIMILAR_MOVIES_COUNT} from "../../const";
 
 const TabsWrapped = withActiveTab(Tabs);
-const getSameGenreMovies = (movie, movies, maxCount) => {
-  const similarMovies = [];
-  let count = 0;
-  for (const item of movies) {
-    if (item.genre !== movie.genre || item.id === movie.id) {
-      continue;
-    }
-    similarMovies.push(item);
-    count++;
-    if (count === maxCount) {
-      return similarMovies;
-    }
-  }
-  return similarMovies;
-};
-
 const MovieDetails = (props) => {
   const {allMovies, movie, onMovieCardClick} = props;
   const {
@@ -33,7 +17,7 @@ const MovieDetails = (props) => {
     title,
   } = movie;
 
-  const similarMovies = getSameGenreMovies(movie, allMovies, SIMILAR_MOVIES_COUNT);
+  const similarMovies = allMovies.filter((item) => (item.genre === movie.genre || item.id !== movie.id)).slice(SIMILAR_MOVIES_COUNT);
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">

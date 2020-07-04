@@ -1,31 +1,7 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
 import {movieShape} from "../shapes";
-
-const HOUR = 60;
-
-const getActorsList = (actors) => {
-  const lastIndex = actors.length - 1;
-  const actorsWithComma = actors.map((actor) => (`${actor},`));
-  actorsWithComma[lastIndex] = actors[lastIndex];
-  return <Fragment>
-    {actorsWithComma.map((actor) => (
-      <Fragment key={actor}>
-        {actor}<br/>
-      </Fragment>
-    ))}
-  </Fragment>;
-};
-const formatTime = (duration) => {
-  const hours = Math.floor(duration / HOUR);
-  const minutes = duration % HOUR;
-
-  return (
-    (hours > 0)
-      ? `${hours}h ${minutes}m`
-      : `${minutes}m`
-  );
-};
+import {formatTime} from "../../utils.js";
 
 const Details = (props) => {
   const {movie} = props;
@@ -41,7 +17,7 @@ const Details = (props) => {
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
           <span className="movie-card__details-value">
-            {getActorsList(actors)}
+            {actors.map((actor, i, items) => (<Fragment key={actor}>{i < items.length - 1 ? `${actor},` : actor}<br/></Fragment>))}
           </span>
         </p>
       </div>
