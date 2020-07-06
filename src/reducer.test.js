@@ -1,12 +1,14 @@
 import {ActionType, reducer, ActionCreator} from "./reducer.js";
 import {movies} from "./mocks/films.js";
 
+const showedMovies = movies.slice(0, 8);
+
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
       allMovies: movies,
       genre: `All genres`,
-      showedMovies: movies,
+      showedMovies,
     });
   });
 
@@ -14,7 +16,7 @@ describe(`Reducer`, () => {
     expect(reducer({
       allMovies: movies,
       genre: `All genres`,
-      showedMovies: movies,
+      showedMovies,
     }, {
       type: ActionType.SET_GENRE,
       payload: `Comedy`,
@@ -22,7 +24,7 @@ describe(`Reducer`, () => {
     )).toEqual({
       allMovies: movies,
       genre: `Comedy`,
-      showedMovies: movies,
+      showedMovies,
     });
   });
 
@@ -43,22 +45,6 @@ describe(`Reducer`, () => {
       showedMovies: crimeMovies,
     });
   });
-
-  it(`should set all movies as showedMovies`, () => {
-    expect(reducer({
-      allMovies: movies,
-      genre: `Crime`,
-      showedMovies: crimeMovies,
-    }, {
-      type: ActionType.SET_SHOWED_FILMS,
-      payload: movies,
-    }
-    )).toEqual({
-      allMovies: movies,
-      genre: `Crime`,
-      showedMovies: movies,
-    });
-  });
 });
 
 describe(`ActionCreator`, () => {
@@ -70,11 +56,19 @@ describe(`ActionCreator`, () => {
   });
 
   it(`should return correct action for showedFilms to be set Crime films`, () => {
-    const dramaMovies = movies.filter((movie) => movie.genre === `Drama`);
+    const dramaMovies = movies.filter((movie) => movie.genre === `Drama`).slice(0, 8);
 
     expect(ActionCreator.setShowedFilms(`Drama`, movies)).toEqual({
       type: ActionType.SET_SHOWED_FILMS,
       payload: dramaMovies,
+    });
+  });
+
+  it(`should return correct action for showedFilms to be set "All genres" films`, () => {
+
+    expect(ActionCreator.setShowedFilms(`All genres`, movies)).toEqual({
+      type: ActionType.SET_SHOWED_FILMS,
+      payload: showedMovies,
     });
   });
 });
