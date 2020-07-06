@@ -20,9 +20,5 @@ const formatDateTimeAttribute = (date) => date.toISOString().slice(0, DATE_STRIN
 
 const getUniqueItems = (elements) => elements.filter((item, i, items) => items.indexOf(item) === i);
 
-const getMovieGenres = (movies) => {
-  const allMoviesGenres = movies.map((movie) => movie.genre);
-  return getUniqueItems(allMoviesGenres);
-};
 
-export {extend, formatDate, formatTime, formatDateTimeAttribute, getMovieGenres};
+export {extend, formatDate, formatTime, formatDateTimeAttribute, getUniqueItems};

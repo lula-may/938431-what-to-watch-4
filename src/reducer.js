@@ -1,13 +1,11 @@
 import {extend} from "./utils.js";
 import {movies} from "./mocks/films.js";
-
-const DEFAULT_GENRE = `All genres`;
-
+import {DEFAULT_GENRE, SHOWED_MOVIES_ON_START_COUNT} from "./const.js";
 
 const initialState = {
   allMovies: movies,
   genre: `All genres`,
-  showedMovies: movies,
+  showedMovies: movies.slice(0, SHOWED_MOVIES_ON_START_COUNT),
 };
 
 const ActionType = {
@@ -15,11 +13,11 @@ const ActionType = {
   SET_SHOWED_FILMS: `SET_SHOWED_FILMS`,
 };
 
-const getMoviesByGenre = (genre, allMovies) => {
+const getMoviesByGenre = (genre, allMovies, count) => {
   if (genre === DEFAULT_GENRE) {
-    return allMovies;
+    return allMovies.slice(0, count);
   }
-  return allMovies.filter((movie) => movie.genre === genre);
+  return allMovies.filter((movie) => movie.genre === genre).slice(0, count);
 };
 
 const ActionCreator = {
@@ -31,7 +29,7 @@ const ActionCreator = {
   setShowedFilms: (genre, allMovies) => {
     return {
       type: ActionType.SET_SHOWED_FILMS,
-      payload: getMoviesByGenre(genre, allMovies),
+      payload: getMoviesByGenre(genre, allMovies, SHOWED_MOVIES_ON_START_COUNT),
     };
   }
 };
