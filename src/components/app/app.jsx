@@ -1,10 +1,10 @@
 import React, {PureComponent} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import {movieShape} from "../shapes.js";
-import {SHOWED_MOVIES_ON_START_COUNT} from "../../const";
 
 const Page = {
   MAIN: `main`,
@@ -19,13 +19,12 @@ class App extends PureComponent {
       movie: this.props.headerMovie
     };
 
-    this.showedMovies = props.movies.slice(0, SHOWED_MOVIES_ON_START_COUNT);
     this._handleCardClick = this._handleCardClick.bind(this);
   }
 
   render() {
     const {movie} = this.state;
-    const showedMovies = this.showedMovies;
+    const {showedMovies} = this.props;
 
     return (
       <BrowserRouter>
@@ -46,9 +45,9 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {headerMovie, movies} = this.props;
+    const {headerMovie, showedMovies, movies} = this.props;
     const {movie, page} = this.state;
-    const showedMovies = this.showedMovies;
+
     switch (page) {
       case Page.MAIN:
         return <Main
@@ -77,9 +76,18 @@ class App extends PureComponent {
 
 App.propTypes = {
   headerMovie: PropTypes.shape(movieShape).isRequired,
+  showedMovies: PropTypes.arrayOf(
+      PropTypes.shape(movieShape)
+  ).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  movies: state.allMovies,
+  showedMovies: state.showedMovies,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

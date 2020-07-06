@@ -4,7 +4,7 @@ import {createStore} from "redux";
 import {Provider} from "react-redux";
 
 import App from "./components/app/app.jsx";
-import {movies, promoMovie} from "./mocks/films";
+import {promoMovie} from "./mocks/films";
 import {reducer} from "./reducer.js";
 
 const store = createStore(reducer,
@@ -16,7 +16,6 @@ const init = () => {
       <Provider store={store}>
         <App
           headerMovie={promoMovie}
-          movies={movies}
         />
       </Provider>,
       document.querySelector(`#root`)
