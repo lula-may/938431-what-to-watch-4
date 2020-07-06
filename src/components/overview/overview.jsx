@@ -21,7 +21,7 @@ const Overview = (props) => {
   const {count: ratingCount, score: ratingScore} = rating;
   const {paragraphs} = description;
 
-  const paragraphsWithId = paragraphs.map((item, i) => ({id: i, text: item}));
+  const paragraphsWithId = paragraphs.map((text, id) => ({id, text}));
   const actorsText = `${actors.join(`, `)} and others`;
   const ratingLevel = getRatingLevel(ratingScore);
 
