@@ -2,13 +2,13 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {GenresList} from "./genres-list.jsx";
 
-const genres = [`Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
+import {testMovies} from "../../test-mocks/test-films.js";
 
 it(`should render correctly GenresList Component, "War" with active class`, () => {
   const tree = renderer.create(
       <GenresList
         activeGenre={`War`}
-        genres={genres}
+        movies={testMovies}
         onGenreClick={() => {}}
       />
   ).toJSON();
