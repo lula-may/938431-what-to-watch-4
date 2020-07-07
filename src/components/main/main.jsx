@@ -5,9 +5,11 @@ import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 
 import {movieShape} from "../shapes.js";
+import {getMoviesByGenre} from "../utils.js";
+import {SHOWED_MOVIES_ON_START_COUNT} from "../../const.js";
 
 const Main = (props) => {
-  const {headerMovie, movies, onMovieCardClick} = props;
+  const {activeGenre, headerMovie, movies, onGenreClick, onMovieCardClick} = props;
   const {
     bigPoster: bgSrc,
     genre: headerMovieGenre,
@@ -16,6 +18,7 @@ const Main = (props) => {
     title: headerMovieTitle
   } = headerMovie;
   const posterAlt = `${headerMovieTitle} poster`;
+  const showedMovies = getMoviesByGenre(activeGenre, movies, SHOWED_MOVIES_ON_START_COUNT);
 
   return <React.Fragment>
     <section className="movie-card">
@@ -77,10 +80,14 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList/>
+        <GenresList
+          activeGenre={activeGenre}
+          movies={movies}
+          onClick={onGenreClick}
+        />
 
         <MoviesList
-          movies={movies}
+          movies={showedMovies}
           onMovieCardClick={onMovieCardClick}
         />
 
@@ -106,10 +113,12 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
+  activeGenre: PropTypes.string.isRequired,
   headerMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
+  onGenreClick: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
 };
 
