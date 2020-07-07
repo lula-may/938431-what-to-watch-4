@@ -13,6 +13,7 @@ const headerMovie = testMovies[0];
 describe(`App Component`, () => {
   it(`Should render Jurassic Park in header`, () => {
     const store = mockStore({
+      count: 4,
       genre: `All movies`,
       movies: testMovies,
     });
@@ -22,6 +23,8 @@ describe(`App Component`, () => {
           <App
             headerMovie={headerMovie}
             movies={testMovies}
+            onGenreClick={() =>{}}
+            onShowMoreClick={() => {}}
           />
         </Provider>
     )

@@ -20,8 +20,10 @@ describe(`MainComponent`, () => {
           activeGenre={`All genres`}
           headerMovie={headerMovie}
           movies={showedMovies}
+          moviesCount={8}
           onGenreClick={() =>{}}
           onMovieCardClick={onMovieCardClick}
+          onShowMoreClick={() => {}}
         />
     );
     const titleElements = mainElement.find(`h3.small-movie-card__title`);
@@ -36,8 +38,10 @@ describe(`MainComponent`, () => {
           activeGenre={`All genres`}
           headerMovie={headerMovie}
           movies={showedMovies}
+          moviesCount={8}
           onGenreClick={onGenreClick}
           onMovieCardClick={() => {}}
+          onShowMoreClick={() => {}}
         />
     );
     const genreLink = mainElement.find(`.catalog__genres-link`).at(1);

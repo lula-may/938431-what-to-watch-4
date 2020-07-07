@@ -3,13 +3,22 @@ import PropTypes from "prop-types";
 
 import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
+import ShowMore from "../show-more/show-more.jsx";
 
 import {movieShape} from "../shapes.js";
 import {getMoviesByGenre} from "../utils.js";
-import {SHOWED_MOVIES_ON_START_COUNT} from "../../const.js";
 
 const Main = (props) => {
-  const {activeGenre, headerMovie, movies, onGenreClick, onMovieCardClick} = props;
+  const {
+    activeGenre,
+    headerMovie,
+    movies,
+    moviesCount,
+    onGenreClick,
+    onMovieCardClick,
+    onShowMoreClick,
+  } = props;
+
   const {
     bigPoster: bgSrc,
     genre: headerMovieGenre,
@@ -18,8 +27,9 @@ const Main = (props) => {
     title: headerMovieTitle
   } = headerMovie;
   const posterAlt = `${headerMovieTitle} poster`;
-  const showedMovies = getMoviesByGenre(activeGenre, movies, SHOWED_MOVIES_ON_START_COUNT);
-
+  const currentMovies = getMoviesByGenre(activeGenre, movies);
+  const showedMovies = currentMovies.slice(0, moviesCount);
+  const areMoviesLeft = (currentMovies.length > moviesCount);
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -88,12 +98,12 @@ const Main = (props) => {
 
         <MoviesList
           movies={showedMovies}
+          moviesCount={moviesCount}
           onMovieCardClick={onMovieCardClick}
         />
 
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
+        {areMoviesLeft && <ShowMore onClick={onShowMoreClick}/>}
+
       </section>
       <footer className="page-footer">
         <div className="logo">
@@ -118,8 +128,10 @@ Main.propTypes = {
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
+  moviesCount: PropTypes.number.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
+  onShowMoreClick: PropTypes.func.isRequired,
 };
 
 export default Main;

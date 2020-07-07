@@ -7,6 +7,7 @@ it(`should render correctly MoviesListComponent`, () => {
   const tree = renderer.create(
       <MoviesList
         movies={testMovies}
+        moviesCount={8}
         onMovieCardClick={() => {}}
       />
   )

@@ -16,7 +16,7 @@ const MovieDetails = (props) => {
     releaseYear,
     title,
   } = movie;
-  const similarMovies = allMovies.filter((item) => (item.genre === movie.genre && item.id !== movie.id)).slice(0, SIMILAR_MOVIES_COUNT);
+  const similarMovies = allMovies.filter((item) => (item.genre === movie.genre && item.id !== movie.id));
 
   return <React.Fragment>
     <section className="movie-card movie-card--full">
@@ -86,6 +86,7 @@ const MovieDetails = (props) => {
 
         <MoviesList
           movies={similarMovies}
+          moviesCount={SIMILAR_MOVIES_COUNT}
           onMovieCardClick={onMovieCardClick}
         />
       </section>
