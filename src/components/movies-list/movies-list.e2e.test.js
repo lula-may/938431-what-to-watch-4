@@ -14,6 +14,7 @@ describe(`MoviesList Component`, () => {
     const moviesList = mount(
         <MoviesList
           movies={testMovies}
+          moviesCount={8}
           onMovieCardClick={onMovieCardClick}
         />
     );
@@ -30,6 +31,7 @@ describe(`MoviesList Component`, () => {
     const moviesList = mount(
         <MoviesList
           movies={testMovies}
+          moviesCount={8}
           onMovieCardClick={onMovieCardClick}
         />
     );
@@ -46,6 +48,7 @@ describe(`MoviesList Component`, () => {
     const moviesList = mount(
         <MoviesList
           movies={testMovies}
+          moviesCount={8}
           onMovieCardClick={() => {}}
           onMouseEnter={onMouseEnter}
         />

@@ -13,8 +13,10 @@ describe(`Main Component`, () => {
           activeGenre={`All genres`}
           headerMovie={headerMovie}
           movies={testMovies}
+          moviesCount={5}
           onGenreClick={() => {}}
           onMovieCardClick={() => {}}
+          onShowMoreClick={() => {}}
         />
     )
       .toJSON();
