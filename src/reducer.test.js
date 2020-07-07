@@ -39,6 +39,20 @@ describe(`Reducer`, () => {
       genre: `Sport`,
     });
   });
+
+  it(`should set count to initialState when action "RESET_COUNT" passed`, () => {
+    expect(reducer({
+      count: 20,
+      movies,
+      genre: `Sport`,
+    }, {
+      type: ActionType.RESET_COUNT,
+    })).toEqual({
+      count: 8,
+      movies,
+      genre: `Sport`,
+    });
+  });
 });
 
 describe(`ActionCreator`, () => {
@@ -53,6 +67,13 @@ describe(`ActionCreator`, () => {
     expect(ActionCreator.incrementCount()).toEqual({
       type: ActionType.INCREMENT_COUNT,
       payload: 8,
+    });
+  });
+
+  it(`should return correct action for count reset`, () => {
+    expect(ActionCreator.resetCount()).toEqual({
+      type: ActionType.RESET_COUNT,
+      payload: null,
     });
   });
 });

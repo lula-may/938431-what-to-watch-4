@@ -13,7 +13,7 @@ const headerMovie = testMovies[0];
 const showedMovies = testMovies.slice(1);
 
 describe(`MainComponent`, () => {
-  it(`Should run callback on every movie title click`, () => {
+  it(`should run callback on every movie title click`, () => {
     const onMovieCardClick = jest.fn();
     const mainElement = mount(
         <Main
@@ -48,5 +48,24 @@ describe(`MainComponent`, () => {
 
     genreLink.simulate(`click`, {preventDefault: () => {}});
     expect(onGenreClick).toHaveBeenCalledTimes(1);
+  });
+
+  it(`should run callback on Show More button click`, () => {
+    const onShowMoreClick = jest.fn();
+    const mainElement = mount(
+        <Main
+          activeGenre={`All genres`}
+          headerMovie={headerMovie}
+          movies={showedMovies}
+          moviesCount={4}
+          onGenreClick={() => {}}
+          onMovieCardClick={() => {}}
+          onShowMoreClick={onShowMoreClick}
+        />
+    );
+    const showMoreButton = mainElement.find(`.catalog__button`);
+
+    showMoreButton.simulate(`click`);
+    expect(onShowMoreClick).toHaveBeenCalledTimes(1);
   });
 });

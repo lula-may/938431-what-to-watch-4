@@ -11,6 +11,7 @@ const initialState = {
 const ActionType = {
   SET_GENRE: `SET_GENRE`,
   INCREMENT_COUNT: `INCREMENT_COUNT`,
+  RESET_COUNT: `RESET_COUNT`,
 };
 
 const ActionCreator = {
@@ -23,6 +24,11 @@ const ActionCreator = {
     type: ActionType.INCREMENT_COUNT,
     payload: SHOWED_MOVIES_ON_START_COUNT
   }),
+
+  resetCount: () => ({
+    type: ActionType.RESET_COUNT,
+    payload: null,
+  })
 };
 
 const reducer = (state = initialState, action) => {
@@ -35,6 +41,8 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         count: state.count + action.payload
       });
+    case ActionType.RESET_COUNT:
+      return extend(state, {count: SHOWED_MOVIES_ON_START_COUNT});
   }
   return state;
 };
