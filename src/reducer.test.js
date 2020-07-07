@@ -4,6 +4,7 @@ import {movies} from "./mocks/films.js";
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
+      count: 8,
       movies,
       genre: `All genres`,
     });
@@ -22,6 +23,22 @@ describe(`Reducer`, () => {
       genre: `Comedy`,
     });
   });
+
+  it(`should set count to 10`, () => {
+    expect(reducer({
+      count: 2,
+      movies,
+      genre: `Sport`,
+    }, {
+      type: ActionType.INCREMENT_COUNT,
+      payload: 8,
+    }
+    )).toEqual({
+      count: 10,
+      movies,
+      genre: `Sport`,
+    });
+  });
 });
 
 describe(`ActionCreator`, () => {
@@ -29,6 +46,13 @@ describe(`ActionCreator`, () => {
     expect(ActionCreator.setGenre(`Drama`)).toEqual({
       type: ActionType.SET_GENRE,
       payload: `Drama`,
+    });
+  });
+
+  it(`should return correct action for count increment`, () => {
+    expect(ActionCreator.incrementCount()).toEqual({
+      type: ActionType.INCREMENT_COUNT,
+      payload: 8,
     });
   });
 });
