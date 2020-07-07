@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly GenresList Component, "War" with active class 1`] = `
+<ul
+  className="catalog__genres-list"
+>
+  <li
+    className="catalog__genres-item"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="All genres"
+      onClick={[Function]}
+    >
+      All genres
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="Sci-Fi"
+      onClick={[Function]}
+    >
+      Sci-Fi
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item catalog__genres-item--active"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="War"
+      onClick={[Function]}
+    >
+      War
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="Detective"
+      onClick={[Function]}
+    >
+      Detective
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="Fantasy"
+      onClick={[Function]}
+    >
+      Fantasy
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="Sport"
+      onClick={[Function]}
+    >
+      Sport
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item"
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+      id="Adventure"
+      onClick={[Function]}
+    >
+      Adventure
+    </a>
+  </li>
+</ul>
+`;

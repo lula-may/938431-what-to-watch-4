@@ -1,6 +1,8 @@
 const HOUR = 60;
 const DATE_STRING_LENGTH = 10;
 
+const extend = (a, b) => Object.assign({}, a, b);
+
 const formatTime = (duration) => {
   const hours = Math.floor(duration / HOUR);
   const minutes = duration % HOUR;
@@ -16,4 +18,7 @@ const formatDate = (date) => date.toLocaleString(`en-US`, {day: `numeric`, month
 
 const formatDateTimeAttribute = (date) => date.toISOString().slice(0, DATE_STRING_LENGTH);
 
-export {formatDate, formatTime, formatDateTimeAttribute};
+const getUniqueItems = (elements) => elements.filter((item, i, items) => items.indexOf(item) === i);
+
+
+export {extend, formatDate, formatTime, formatDateTimeAttribute, getUniqueItems};

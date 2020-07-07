@@ -1,10 +1,11 @@
 import React, {PureComponent} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import {movieShape} from "../shapes.js";
-import {SHOWED_MOVIES_ON_START_COUNT} from "../../const";
+import {ActionCreator} from "../../reducer.js";
 
 const Page = {
   MAIN: `main`,
@@ -19,13 +20,12 @@ class App extends PureComponent {
       movie: this.props.headerMovie
     };
 
-    this.showedMovies = props.movies.slice(0, SHOWED_MOVIES_ON_START_COUNT);
     this._handleCardClick = this._handleCardClick.bind(this);
   }
 
   render() {
     const {movie} = this.state;
-    const showedMovies = this.showedMovies;
+    const {movies} = this.props;
 
     return (
       <BrowserRouter>
@@ -36,7 +36,7 @@ class App extends PureComponent {
           <Route exact path="/dev-film">
             <MovieDetails
               movie={movie}
-              allMovies={showedMovies}
+              allMovies={movies}
               onMovieCardClick={this._handleCardClick}
             />
           </Route>
@@ -46,14 +46,16 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {headerMovie, movies} = this.props;
+    const {activeGenre, headerMovie, movies, onGenreClick} = this.props;
     const {movie, page} = this.state;
-    const showedMovies = this.showedMovies;
+
     switch (page) {
       case Page.MAIN:
         return <Main
+          activeGenre={activeGenre}
           headerMovie={headerMovie}
-          movies={showedMovies}
+          movies={movies}
+          onGenreClick={onGenreClick}
           onMovieCardClick={this._handleCardClick}
         />;
       case Page.DETAILS:
@@ -74,12 +76,25 @@ class App extends PureComponent {
   }
 }
 
-
 App.propTypes = {
+  activeGenre: PropTypes.string.isRequired,
   headerMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
-  ).isRequired
+  ).isRequired,
+  onGenreClick: PropTypes.func.isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  activeGenre: state.genre,
+  movies: state.movies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGenreClick(genre) {
+    dispatch(ActionCreator.setGenre(genre));
+  },
+});
+
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);

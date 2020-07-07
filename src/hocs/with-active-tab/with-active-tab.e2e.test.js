@@ -14,14 +14,15 @@ configure({
 });
 
 const movie = testMovies[0];
+const tabs = [`Overview`, `Details`, `Reviews`];
 
 const MockComponent = (props) => {
   const {activeTab, children, onClick} = props;
   return (
     <div>
-      <a id="Overview" onClick={onClick} className={activeTab === `Overview` ? `active` : ``}/>
-      <a id="Details" onClick={onClick} className={activeTab === `Details` ? `active` : ``}/>
-      <a id="Reviews" onClick={onClick} className={activeTab === `Reviews` ? `active` : ``}/>
+      {tabs.map((tab) => (
+        <a key={tab} id={tab} onClick={onClick} className={activeTab === tab ? `active` : ``}/>
+      ))}
       {children}
     </div>
   );
