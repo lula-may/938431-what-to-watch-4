@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
-import ShowMore from "../show-more/show-more.jsx";
+import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 
 import {movieShape} from "../shapes.js";
 import {getMoviesByGenre} from "../utils.js";
@@ -16,7 +16,7 @@ const Main = (props) => {
     moviesCount,
     onGenreClick,
     onMovieCardClick,
-    onShowMoreClick,
+    onShowMoreButtonClick,
   } = props;
 
   const {
@@ -26,10 +26,12 @@ const Main = (props) => {
     releaseYear: headerMovieYear,
     title: headerMovieTitle
   } = headerMovie;
+
   const posterAlt = `${headerMovieTitle} poster`;
   const currentMovies = getMoviesByGenre(activeGenre, movies);
   const showedMovies = currentMovies.slice(0, moviesCount);
-  const areMoviesLeft = (currentMovies.length > moviesCount);
+  const hasHiddenMovies = (currentMovies.length > moviesCount);
+
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -102,7 +104,7 @@ const Main = (props) => {
           onMovieCardClick={onMovieCardClick}
         />
 
-        {areMoviesLeft && <ShowMore onClick={onShowMoreClick}/>}
+        {hasHiddenMovies && <ShowMoreButton onClick={onShowMoreButtonClick}/>}
 
       </section>
       <footer className="page-footer">
@@ -131,7 +133,7 @@ Main.propTypes = {
   moviesCount: PropTypes.number.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
-  onShowMoreClick: PropTypes.func.isRequired,
+  onShowMoreButtonClick: PropTypes.func.isRequired,
 };
 
 export default Main;

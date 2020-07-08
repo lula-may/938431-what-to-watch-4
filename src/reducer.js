@@ -3,14 +3,14 @@ import {movies} from "./mocks/films.js";
 import {DEFAULT_GENRE, SHOWED_MOVIES_ON_START_COUNT} from "./const.js";
 
 const initialState = {
-  count: SHOWED_MOVIES_ON_START_COUNT,
+  moviesCount: SHOWED_MOVIES_ON_START_COUNT,
   genre: DEFAULT_GENRE,
   movies,
 };
 
 const ActionType = {
   SET_GENRE: `SET_GENRE`,
-  INCREMENT_COUNT: `INCREMENT_COUNT`,
+  INCREMENT_MOVIES_COUNT: `INCREMENT_MOVIES_COUNT`,
   RESET_COUNT: `RESET_COUNT`,
 };
 
@@ -20,8 +20,8 @@ const ActionCreator = {
     payload: genre
   }),
 
-  incrementCount: () => ({
-    type: ActionType.INCREMENT_COUNT,
+  incrementMoviesCount: () => ({
+    type: ActionType.INCREMENT_MOVIES_COUNT,
     payload: SHOWED_MOVIES_ON_START_COUNT
   }),
 
@@ -37,12 +37,12 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         genre: action.payload
       });
-    case ActionType.INCREMENT_COUNT:
+    case ActionType.INCREMENT_MOVIES_COUNT:
       return extend(state, {
-        count: state.count + action.payload
+        moviesCount: state.moviesCount + action.payload
       });
     case ActionType.RESET_COUNT:
-      return extend(state, {count: SHOWED_MOVIES_ON_START_COUNT});
+      return extend(state, {moviesCount: SHOWED_MOVIES_ON_START_COUNT});
   }
   return state;
 };
