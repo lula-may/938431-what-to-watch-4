@@ -18,7 +18,11 @@ const GenresList = (props) => {
 
   const handleGenreClick = (evt) => {
     evt.preventDefault();
-    onClick(evt.target.id);
+    const newGenre = evt.target.id;
+    if (newGenre === activeGenre) {
+      return;
+    }
+    onClick(newGenre);
   };
 
   return (
