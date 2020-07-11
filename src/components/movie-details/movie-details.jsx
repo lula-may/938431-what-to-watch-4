@@ -2,11 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
 import Tabs from "../tabs/tabs.jsx";
-import withActiveTab from "../../hocs/with-active-tab/with-active-tab.jsx";
+import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import {movieShape} from "../shapes";
-import {SIMILAR_MOVIES_COUNT} from "../../const";
+import {SIMILAR_MOVIES_COUNT, TabType} from "../../const";
 
-const TabsWrapped = withActiveTab(Tabs);
+const TabsWrapped = withActiveItem(Tabs);
+
 const MovieDetails = (props) => {
   const {allMovies, movie, onMovieCardClick} = props;
   const {
@@ -75,7 +76,11 @@ const MovieDetails = (props) => {
           <div className="movie-card__poster movie-card__poster--big">
             <img src={poster} alt={`${title} poster`} width="218" height="327" />
           </div>
-          <TabsWrapped movie={movie}/>
+          <TabsWrapped
+            movie={movie}
+            activeItem={TabType.OVERVIEW}
+            onActiveChange={() => {}}
+          />
         </div>
       </div>
     </section>
