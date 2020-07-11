@@ -7,7 +7,7 @@ import {testMovies} from "../../test-mocks/test-films.js";
 it(`should render correctly GenresList Component, "War" with active class`, () => {
   const tree = renderer.create(
       <GenresList
-        activeGenre={`War`}
+        activeItem={`War`}
         movies={testMovies}
         onClick={() => {}}
       />

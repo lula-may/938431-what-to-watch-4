@@ -4,9 +4,12 @@ import PropTypes from "prop-types";
 import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
+import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 
 import {movieShape} from "../shapes.js";
 import {getMoviesByGenre} from "../utils.js";
+
+const GenresListWrapped = withActiveItem(GenresList);
 
 const Main = (props) => {
   const {
@@ -92,10 +95,10 @@ const Main = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenresList
-          activeGenre={activeGenre}
+        <GenresListWrapped
+          activeItem={activeGenre}
           movies={movies}
-          onClick={onGenreClick}
+          onActiveChange={onGenreClick}
         />
 
         <MoviesList
