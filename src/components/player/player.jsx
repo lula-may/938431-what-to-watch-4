@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {formatElapsedTime} from "../../utils.js";
 
 const Player = (props) => {
   const {children, isPlaying, onFullScreenButtonClick, onPlayButtonClick, progressValue, elapsedTime} = props;
+  const elapsedTimeFormated = formatElapsedTime(elapsedTime);
   return (
     <div className="player">
       {children}
@@ -14,7 +16,7 @@ const Player = (props) => {
             <progress className="player__progress" value={progressValue} max="100"></progress>
             <div className="player__toggler" style={{left: `${progressValue}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">{elapsedTime}</div>
+          <div className="player__time-value">{elapsedTimeFormated}</div>
         </div>
 
         <div className="player__controls-row">
@@ -49,7 +51,7 @@ Player.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]).isRequired,
-  elapsedTime: PropTypes.string.isRequired,
+  elapsedTime: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired,

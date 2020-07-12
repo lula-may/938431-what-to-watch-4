@@ -4,13 +4,18 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
+import Player from "../player/player.jsx";
+import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 import {movieShape} from "../shapes.js";
 import {ActionCreator} from "../../reducer.js";
 
 const Page = {
   MAIN: `main`,
   DETAILS: `details`,
+  PLAYER: `player`,
 };
+
+const PlayerWrapped = withFullVideo(Player);
 
 class App extends PureComponent {
   constructor(props) {
@@ -38,6 +43,11 @@ class App extends PureComponent {
               movie={movie}
               allMovies={movies}
               onMovieCardClick={this._handleCardClick}
+            />
+          </Route>
+          <Route exact path="/dev-player">
+            <PlayerWrapped
+              movie={movie}
             />
           </Route>
         </Switch>
@@ -73,6 +83,10 @@ class App extends PureComponent {
           movie={movie}
           allMovies={movies}
           onMovieCardClick={this._handleCardClick}
+        />;
+      case Page.PLAYER:
+        return <PlayerWrapped
+          movie={movie}
         />;
       default: return null;
     }

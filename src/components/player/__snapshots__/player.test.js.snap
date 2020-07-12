@@ -39,7 +39,7 @@ exports[`Player Component should render correctly full screen player 1`] = `
       <div
         className="player__time-value"
       >
-        1:30:24
+        01:23:20
       </div>
     </div>
     <div

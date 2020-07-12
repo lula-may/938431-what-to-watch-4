@@ -6,7 +6,7 @@ describe(`Player Component`, () => {
   it(`should render correctly full screen player`, () => {
     const tree = renderer.create(
         <Player
-          elapsedTime={`1:30:24`}
+          elapsedTime={5000.4}
           isPlaying={false}
           onFullScreenButtonClick={() => {}}
           onPlayButtonClick={() => {}}
