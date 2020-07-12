@@ -5,11 +5,13 @@ import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
+import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 
 import {movieShape} from "../shapes.js";
 import {getMoviesByGenre} from "../utils.js";
 
 const GenresListWrapped = withActiveItem(GenresList);
+const MoviesListWrapped = withActiveMovie(MoviesList);
 
 const Main = (props) => {
   const {
@@ -101,7 +103,7 @@ const Main = (props) => {
           onActiveChange={onGenreClick}
         />
 
-        <MoviesList
+        <MoviesListWrapped
           movies={showedMovies}
           moviesCount={moviesCount}
           onMovieCardClick={onMovieCardClick}

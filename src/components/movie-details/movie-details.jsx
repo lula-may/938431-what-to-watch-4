@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
 import Tabs from "../tabs/tabs.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
+import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 import {movieShape} from "../shapes";
 import {SIMILAR_MOVIES_COUNT, TabType} from "../../const";
 
+const MoviesListWrapped = withActiveMovie(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 const MovieDetails = (props) => {
@@ -89,7 +91,7 @@ const MovieDetails = (props) => {
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
 
-        <MoviesList
+        <MoviesListWrapped
           movies={similarMovies}
           moviesCount={SIMILAR_MOVIES_COUNT}
           onMovieCardClick={onMovieCardClick}
