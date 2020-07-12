@@ -1,15 +1,7 @@
-import React, {PureComponent} from "react";
-import VideoPlayer from "../../components/video-player/video-player.jsx";
+import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import {PREVIEW, PLAYER_DELAY} from "../../const";
 import {movieShape} from "../../components/shapes";
-
-const previewPlayerSettings = {
-  areControlsShown: false,
-  height: PREVIEW.height,
-  isMuted: true,
-  width: PREVIEW.width,
-};
 
 const withVideoPlayer = (Component) => {
   class WithVideoPlayer extends PureComponent {
@@ -19,69 +11,68 @@ const withVideoPlayer = (Component) => {
       this.state = {
         isPlaying: false
       };
-
+      this._videoRef = createRef();
       this.timeOut = null;
 
-      this._removeActiveState = this._removeActiveState.bind(this);
-      this._setActiveState = this._setActiveState.bind(this);
-      this._renderVideoPlayer = this._renderVideoPlayer.bind(this);
+      this.handleMouseEnter = this.handleMouseEnter.bind(this);
+      this.handleMouseLeave = this.handleMouseLeave.bind(this);
     }
 
     render() {
-      const {movie} = this.props;
-
+      const {movie: {poster}} = this.props;
       return (
         <Component
           {...this.props}
-          renderPlayer={this._renderVideoPlayer}
-          onMouseEnter={this._setActiveState(movie)}
-          onMouseLeave={this._removeActiveState(movie)}
-        />
+          onMouseEnter={this.handleMouseEnter}
+          onMouseLeave={this.handleMouseLeave}
+        >
+          <video
+            width={PREVIEW.width}
+            height={PREVIEW.height}
+            poster={poster}
+            ref={this._videoRef}
+          />
+        </Component>
       );
     }
 
+    componentDidUpdate() {
+      const {movie: {src}} = this.props;
+      const {isPlaying} = this.state;
+      const video = this._videoRef.current;
+
+      if (isPlaying) {
+        video.src = src;
+        video.muted = true;
+        video.autoplay = true;
+
+      } else {
+        video.src = ``;
+      }
+    }
+
     componentWillUnmount() {
+      const video = this._videoRef.current;
+      video.src = ``;
+      video.poster = ``;
+
       if (this.timeOut) {
         clearTimeout(this.timeOut);
       }
     }
 
-    _renderVideoPlayer(poster, src) {
-      const {isPlaying} = this.state;
-
-      return (
-        <VideoPlayer
-          isPlaying={isPlaying}
-          src={src}
-          poster={poster}
-          settings={previewPlayerSettings}
-        />
-      );
-    }
-
-    _setActiveState(movie) {
-      return () => {
-        const id = this.props.movie.id;
-        const {onMouseEnter} = this.props;
-        if (movie.id === id) {
-          this.timeOut = setTimeout(() => {
-            this.setState({isPlaying: true});
-          }, PLAYER_DELAY);
-          onMouseEnter(movie);
-        }
-      };
+    handleMouseEnter() {
+      const {movie, onMouseEnter} = this.props;
+      this.timeOut = setTimeout(() => {
+        this.setState({isPlaying: true});
+      }, PLAYER_DELAY);
+      onMouseEnter(movie);
     }
 
 
-    _removeActiveState(movie) {
-      return () => {
-        const id = this.props.movie.id;
-        if (movie.id === id) {
-
-          clearTimeout(this.timeOut);
-          this.setState({isPlaying: false});
-        }
-      };
+    handleMouseLeave() {
+      clearTimeout(this.timeOut);
+      this.setState({isPlaying: false});
     }
   }
 
