@@ -5,6 +5,7 @@ import {testMovies} from "../../test-mocks/test-films";
 
 const movie = testMovies[4];
 
+
 it(`should render correctly MovieCardComponent`, () => {
   const tree = renderer.create(
       <MovieCard
@@ -13,7 +14,9 @@ it(`should render correctly MovieCardComponent`, () => {
         onMouseEnter={() => {}}
         onMouseLeave={() => {}}
         renderPlayer={() => {}}
-      />
+      >
+        <video/>
+      </MovieCard>
   )
   .toJSON();
 

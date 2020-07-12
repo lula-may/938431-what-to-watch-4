@@ -8,13 +8,13 @@ configure({
   adapter: new Adapter()
 });
 describe(`MoviesList Component`, () => {
-  it(`should return movie object to callback on card image click`, () => {
-    const movie = testMovies[2];
-    const onMovieCardClick = jest.fn((...args) => [...args]);
+  it(`should run callback on card image click`, () => {
+    const onMovieCardClick = jest.fn();
     const moviesList = mount(
         <MoviesList
           movies={testMovies}
           moviesCount={8}
+          onMouseEnter={() => {}}
           onMovieCardClick={onMovieCardClick}
         />
     );
@@ -22,16 +22,16 @@ describe(`MoviesList Component`, () => {
     const cardImage = moviesList.find(`.small-movie-card__image`).at(2);
     cardImage.simulate(`click`, {});
 
-    expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
+    expect(onMovieCardClick).toHaveBeenCalledTimes(1);
   });
 
-  it(`should return movie object to callback on card title click`, () => {
-    const movie = testMovies[2];
-    const onMovieCardClick = jest.fn((...args) => [...args]);
+  it(`should run callback on card title click`, () => {
+    const onMovieCardClick = jest.fn();
     const moviesList = mount(
         <MoviesList
           movies={testMovies}
           moviesCount={8}
+          onMouseEnter={() => {}}
           onMovieCardClick={onMovieCardClick}
         />
     );
@@ -39,11 +39,10 @@ describe(`MoviesList Component`, () => {
     const cardTitle = moviesList.find(`.small-movie-card__title`).at(2);
     cardTitle.simulate(`click`, {});
 
-    expect(onMovieCardClick.mock.calls[0][0]).toMatchObject(movie);
+    expect(onMovieCardClick).toHaveBeenCalledTimes(1);
   });
 
-  it(`should pass movie object to the State.movie on mouseEntering the movieCard`, () => {
-    const movie = testMovies[2];
+  it(`should run callback on mouseEntering the movieCard`, () => {
     const onMouseEnter = jest.fn();
     const moviesList = mount(
         <MoviesList
@@ -57,9 +56,8 @@ describe(`MoviesList Component`, () => {
     const card = moviesList.find(`.small-movie-card`).at(2);
     card.simulate(`mouseenter`, {});
 
-    expect(moviesList.state().movie).toMatchObject(movie);
+    expect(onMouseEnter).toHaveBeenCalledTimes(1);
   });
-
 });
 
 

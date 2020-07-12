@@ -20,7 +20,9 @@ describe(`MovieCardComponent`, () => {
           onMouseEnter={onMouseEnter}
           onMouseLeave={() => {}}
           renderPlayer={() => {}}
-        />
+        >
+          <video/>
+        </MovieCard>
     );
 
     movieCard.simulate(`mouseenter`);
@@ -36,7 +38,9 @@ describe(`MovieCardComponent`, () => {
           onMouseLeave={()=>{}}
           onCardClick={onCardClick}
           renderPlayer={() => {}}
-        />
+        >
+          <video/>
+        </MovieCard>
     );
 
     const imageWrapperElement = movieCard.find(`div.small-movie-card__image`);
@@ -54,7 +58,9 @@ describe(`MovieCardComponent`, () => {
           onCardClick={onCardClick}
           onMouseLeave={()=>{}}
           renderPlayer={() => {}}
-        />
+        >
+          <video/>
+        </MovieCard>
     );
 
     const titleElement = movieCard.find(`h3`);

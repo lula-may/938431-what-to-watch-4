@@ -9,7 +9,9 @@ exports[`should render correctly MovieCardComponent 1`] = `
   <div
     className="small-movie-card__image"
     onClick={[Function]}
-  />
+  >
+    <video />
+  </div>
   <h3
     className="small-movie-card__title"
     onClick={[Function]}
