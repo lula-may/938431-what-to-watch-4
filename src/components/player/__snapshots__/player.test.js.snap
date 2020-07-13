@@ -7,6 +7,7 @@ exports[`Player Component should render correctly full screen player 1`] = `
   <video />
   <button
     className="player__exit"
+    onClick={[Function]}
     type="button"
   >
     Exit

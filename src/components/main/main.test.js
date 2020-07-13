@@ -16,6 +16,7 @@ describe(`Main Component`, () => {
           moviesCount={5}
           onGenreClick={() => {}}
           onMovieCardClick={() => {}}
+          onPlayButtonClick={() => {}}
           onShowMoreButtonClick={() => {}}
         />
     )

@@ -8,6 +8,7 @@ describe(`Player Component`, () => {
         <Player
           elapsedTime={5000.4}
           isPlaying={false}
+          onExitButtonClick={() => {}}
           onFullScreenButtonClick={() => {}}
           onPlayButtonClick={() => {}}
           progressValue={30}

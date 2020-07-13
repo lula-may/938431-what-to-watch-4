@@ -3,12 +3,20 @@ import PropTypes from "prop-types";
 import {formatElapsedTime} from "../../utils.js";
 
 const Player = (props) => {
-  const {children, isPlaying, onFullScreenButtonClick, onPlayButtonClick, progressValue, elapsedTime} = props;
+  const {
+    children,
+    isPlaying,
+    onExitButtonClick,
+    onFullScreenButtonClick,
+    onPlayButtonClick,
+    progressValue,
+    elapsedTime,
+  } = props;
   const elapsedTimeFormated = formatElapsedTime(elapsedTime);
   return (
     <div className="player">
       {children}
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={onExitButtonClick}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -53,8 +61,9 @@ Player.propTypes = {
   ]).isRequired,
   elapsedTime: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  onPlayButtonClick: PropTypes.func.isRequired,
+  onExitButtonClick: PropTypes.func.isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired,
+  onPlayButtonClick: PropTypes.func.isRequired,
   progressValue: PropTypes.number.isRequired,
 };
 

@@ -23,6 +23,7 @@ describe(`MainComponent`, () => {
           moviesCount={8}
           onGenreClick={() =>{}}
           onMovieCardClick={onMovieCardClick}
+          onPlayButtonClick={() => {}}
           onShowMoreButtonClick={() => {}}
         />
     );
@@ -41,6 +42,7 @@ describe(`MainComponent`, () => {
           moviesCount={8}
           onGenreClick={onGenreClick}
           onMovieCardClick={() => {}}
+          onPlayButtonClick={() => {}}
           onShowMoreButtonClick={() => {}}
         />
     );
@@ -60,6 +62,7 @@ describe(`MainComponent`, () => {
           moviesCount={4}
           onGenreClick={() => {}}
           onMovieCardClick={() => {}}
+          onPlayButtonClick={() => {}}
           onShowMoreButtonClick={onShowMoreButtonClick}
         />
     );
@@ -68,4 +71,24 @@ describe(`MainComponent`, () => {
     showMoreButton.simulate(`click`);
     expect(onShowMoreButtonClick).toHaveBeenCalledTimes(1);
   });
+
+  it(`should run callback on Play button click`, () => {
+    const onPlayButtonClick = jest.fn();
+    const mainElement = mount(
+        <Main
+          activeGenre={`All genres`}
+          headerMovie={headerMovie}
+          movies={showedMovies}
+          moviesCount={4}
+          onGenreClick={() => {}}
+          onMovieCardClick={() => {}}
+          onPlayButtonClick={onPlayButtonClick}
+          onShowMoreButtonClick={() => {}}
+        />
+    );
+    const playButton = mainElement.find(`.btn--play`);
+    playButton.simulate(`click`, {preventDefault: () => {}});
+    expect(onPlayButtonClick).toHaveBeenCalledTimes(1);
+  });
+
 });
