@@ -23,7 +23,7 @@ describe(`MainComponent`, () => {
           moviesCount={8}
           onGenreClick={() =>{}}
           onMovieCardClick={onMovieCardClick}
-          onShowMoreClick={() => {}}
+          onShowMoreButtonClick={() => {}}
         />
     );
     const titleElements = mainElement.find(`h3.small-movie-card__title`);
@@ -41,7 +41,7 @@ describe(`MainComponent`, () => {
           moviesCount={8}
           onGenreClick={onGenreClick}
           onMovieCardClick={() => {}}
-          onShowMoreClick={() => {}}
+          onShowMoreButtonClick={() => {}}
         />
     );
     const genreLink = mainElement.find(`.catalog__genres-link`).at(1);
@@ -51,7 +51,7 @@ describe(`MainComponent`, () => {
   });
 
   it(`should run callback on Show More button click`, () => {
-    const onShowMoreClick = jest.fn();
+    const onShowMoreButtonClick = jest.fn();
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
@@ -60,12 +60,12 @@ describe(`MainComponent`, () => {
           moviesCount={4}
           onGenreClick={() => {}}
           onMovieCardClick={() => {}}
-          onShowMoreClick={onShowMoreClick}
+          onShowMoreButtonClick={onShowMoreButtonClick}
         />
     );
     const showMoreButton = mainElement.find(`.catalog__button`);
 
     showMoreButton.simulate(`click`);
-    expect(onShowMoreClick).toHaveBeenCalledTimes(1);
+    expect(onShowMoreButtonClick).toHaveBeenCalledTimes(1);
   });
 });

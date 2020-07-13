@@ -10,10 +10,10 @@ configure({
 
 describe(`GenresList Component`, () => {
   it(`should pass "War" genre to callback on War tab click`, () => {
-    const onClick = jest.fn((...args) => [...args]);
+    const onClick = jest.fn();
     const genresList = shallow(
         <GenresList
-          activeGenre={`All genres`}
+          activeItem={`All genres`}
           movies={testMovies}
           onClick={onClick}
         />
@@ -21,7 +21,7 @@ describe(`GenresList Component`, () => {
 
     const warTabLink = genresList.find(`#War`);
 
-    warTabLink.simulate(`click`, {preventDefault: () => {}, target: {id: `War`}});
-    expect(onClick.mock.calls[0][0]).toBe(`War`);
+    warTabLink.simulate(`click`, {preventDefault: () => {}});
+    expect(onClick).toHaveBeenCalledTimes(1);
   });
 });

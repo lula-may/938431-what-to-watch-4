@@ -8,6 +8,7 @@ it(`should render correctly MoviesListComponent`, () => {
       <MoviesList
         movies={testMovies}
         moviesCount={8}
+        onMouseEnter={() => {}}
         onMovieCardClick={() => {}}
       />
   )

@@ -16,7 +16,7 @@ describe(`Main Component`, () => {
           moviesCount={5}
           onGenreClick={() => {}}
           onMovieCardClick={() => {}}
-          onShowMoreClick={() => {}}
+          onShowMoreButtonClick={() => {}}
         />
     )
       .toJSON();

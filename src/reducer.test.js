@@ -4,7 +4,7 @@ import {movies} from "./mocks/films.js";
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
-      count: 8,
+      moviesCount: 8,
       movies,
       genre: `All genres`,
     });
@@ -26,15 +26,15 @@ describe(`Reducer`, () => {
 
   it(`should set count to 10`, () => {
     expect(reducer({
-      count: 2,
+      moviesCount: 2,
       movies,
       genre: `Sport`,
     }, {
-      type: ActionType.INCREMENT_COUNT,
+      type: ActionType.INCREMENT_MOVIES_COUNT,
       payload: 8,
     }
     )).toEqual({
-      count: 10,
+      moviesCount: 10,
       movies,
       genre: `Sport`,
     });
@@ -42,13 +42,13 @@ describe(`Reducer`, () => {
 
   it(`should set count to initialState when action "RESET_COUNT" passed`, () => {
     expect(reducer({
-      count: 20,
+      moviesCount: 20,
       movies,
       genre: `Sport`,
     }, {
       type: ActionType.RESET_COUNT,
     })).toEqual({
-      count: 8,
+      moviesCount: 8,
       movies,
       genre: `Sport`,
     });
@@ -64,8 +64,8 @@ describe(`ActionCreator`, () => {
   });
 
   it(`should return correct action for count increment`, () => {
-    expect(ActionCreator.incrementCount()).toEqual({
-      type: ActionType.INCREMENT_COUNT,
+    expect(ActionCreator.incrementMoviesCount()).toEqual({
+      type: ActionType.INCREMENT_MOVIES_COUNT,
       payload: 8,
     });
   });

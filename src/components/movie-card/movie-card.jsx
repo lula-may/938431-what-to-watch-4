@@ -4,8 +4,7 @@ import {movieShape} from "../shapes";
 
 
 const MovieCard = (props) => {
-  const {movie, onCardClick, onMouseEnter, onMouseLeave, renderPlayer} = props;
-  const {poster, src, title} = movie;
+  const {children, movie: {title}, onCardClick, onMouseEnter, onMouseLeave} = props;
 
   return (
     <article
@@ -13,7 +12,7 @@ const MovieCard = (props) => {
       onMouseLeave={onMouseLeave}
       className="small-movie-card catalog__movies-card">
       <div className="small-movie-card__image" onClick={onCardClick}>
-        {renderPlayer(poster, src)}
+        {children}
       </div>
       <h3 className="small-movie-card__title" onClick={onCardClick}>
         <a className="small-movie-card__link" href="movie-page.html">{title}</a>
@@ -23,11 +22,14 @@ const MovieCard = (props) => {
 };
 
 MovieCard.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
   movie: PropTypes.shape(movieShape).isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   onCardClick: PropTypes.func.isRequired,
-  renderPlayer: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

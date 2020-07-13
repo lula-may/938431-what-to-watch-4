@@ -52,7 +52,7 @@ class App extends PureComponent {
       movies,
       moviesCount,
       onGenreClick,
-      onShowMoreClick,
+      onShowMoreButtonClick,
     } = this.props;
 
     const {movie, page} = this.state;
@@ -66,7 +66,7 @@ class App extends PureComponent {
           moviesCount={moviesCount}
           onGenreClick={onGenreClick}
           onMovieCardClick={this._handleCardClick}
-          onShowMoreClick={onShowMoreClick}
+          onShowMoreButtonClick={onShowMoreButtonClick}
         />;
       case Page.DETAILS:
         return <MovieDetails
@@ -94,13 +94,13 @@ App.propTypes = {
   ).isRequired,
   moviesCount: PropTypes.number.isRequired,
   onGenreClick: PropTypes.func.isRequired,
-  onShowMoreClick: PropTypes.func.isRequired,
+  onShowMoreButtonClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   activeGenre: state.genre,
   movies: state.movies,
-  moviesCount: state.count,
+  moviesCount: state.moviesCount,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -109,8 +109,8 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(ActionCreator.resetCount());
   },
 
-  onShowMoreClick() {
-    dispatch(ActionCreator.incrementCount());
+  onShowMoreButtonClick() {
+    dispatch(ActionCreator.incrementMoviesCount());
   }
 });
 

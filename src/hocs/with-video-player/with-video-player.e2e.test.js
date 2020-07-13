@@ -4,81 +4,73 @@ import Adapter from "enzyme-adapter-react-16";
 import PropTypes from "prop-types";
 import withVideoPlayer from "./with-video-player.jsx";
 import {testMovies} from "../../test-mocks/test-films";
-import VideoPlayer from "../../components/video-player/video-player.jsx";
 
 configure({
   adapter: new Adapter()
 });
 
-const poster = `poster.jpg`;
-const src = `video.mp3`;
 const movie = testMovies[0];
 
-describe(`WithAudioPlayer HOC`, () => {
-  it(`should set VideoPlayer prop "isPlaying" to "true" on WithVideoPlayer state.isPlaying change to "true"`, () => {
-    const handleMouseEnter = jest.fn();
-    const props = {
-      movie,
-      onMouseEnter: handleMouseEnter
-    };
-    const MockComponent = ({renderPlayer}) => {
-      return (
-        <div
-          {...props}
-        >
-          {renderPlayer(poster, src)}
-        </div>
-      );
-    };
+const MockComponent = (props) => {
+  const {children, onMouseEnter} = props;
+  return (
+    <div onMouseEnter={onMouseEnter}>
+      {children}
+    </div>
+  );
+};
 
-    MockComponent.propTypes = {
-      renderPlayer: PropTypes.func.isRequired
-    };
+MockComponent.propTypes = {
+  children: PropTypes.node.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+};
 
-    const WithVideoPlayer = withVideoPlayer(MockComponent);
-    const mockComponentWrapped = mount(
-        <WithVideoPlayer
-          {...props}
+const MockComponentWrapped = withVideoPlayer(MockComponent);
+
+describe(`WithVideoPlayer HOC`, () => {
+  it(`should pass "movie" to callback on mouse entering`, () => {
+    const onMouseEnter = jest.fn((...args) => [...args]);
+    const wrapper = mount(
+        <MockComponentWrapped
+          movie={movie}
+          onMouseEnter={onMouseEnter}
         />);
-    let player = mockComponentWrapped.find(VideoPlayer);
-    expect(player.props().isPlaying).toBe(false);
+    wrapper.simulate(`mouseenter`);
 
-    mockComponentWrapped.setState({isPlaying: true});
-    player = mockComponentWrapped.find(VideoPlayer);
-
-    expect(player.props().isPlaying).toBe(true);
+    expect(onMouseEnter).toHaveBeenCalledTimes(1);
+    expect(onMouseEnter.mock.calls[0][0]).toEqual(movie);
   });
 
-  it(`should run callback on mouseEntering mockComponent"`, () => {
-    const handleMouseEnter = jest.fn();
-    const props = {
-      movie,
-      onMouseEnter: handleMouseEnter
-    };
-    const MockComponent = ({renderPlayer}) => {
-      return (
-        <div id="mockComponent"
-          {...props}
-        >
-          {renderPlayer(poster, src)}
-        </div>
-      );
-    };
-
-    MockComponent.propTypes = {
-      renderPlayer: PropTypes.func.isRequired
-    };
-
-    const WithVideoPlayer = withVideoPlayer(MockComponent);
-    const mockComponentWrapped = mount(
-        <WithVideoPlayer
-          {...props}
+  it(`should set TimeOut on mouse entering`, () => {
+    const onMouseEnter = jest.fn((...args) => [...args]);
+    const wrapper = mount(
+        <MockComponentWrapped
+          movie={movie}
+          onMouseEnter={onMouseEnter}
         />);
-    const mockComponent = mockComponentWrapped.find(`#mockComponent`);
+    expect(wrapper.instance().timeOut).toEqual(null);
+    wrapper.simulate(`mouseenter`);
+    expect(wrapper.instance().timeOut).not.toEqual(null);
+  });
 
-    mockComponent.simulate(`mouseenter`);
+  it(`should autoplay video on mouse entering and timeout is over`, () => {
+    window.setTimeout = (func, timer) => {
+      func();
+      return timer;
+    };
+    const onMouseEnter = jest.fn();
+    const wrapper = mount(
+        <MockComponentWrapped
+          movie={movie}
+          onMouseEnter={onMouseEnter}
+        />);
+    const {_videoRef} = wrapper.instance();
+    expect(_videoRef.current.autoplay).toEqual(false);
+    expect(_videoRef.current.src).toEqual(``);
 
-    expect(handleMouseEnter).toHaveBeenCalledTimes(1);
+    wrapper.simulate(`mouseenter`);
+
+    expect(_videoRef.current.autoplay).toBe(true);
+    expect(_videoRef.current.src).toContain(movie.src);
   });
 });
-
