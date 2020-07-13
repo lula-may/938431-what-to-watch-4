@@ -170,7 +170,7 @@ const movies = movieTitles.map((title, i) => {
 
 const promoMovie = {
   actors: getRandomSubList(actors, ACTORS_COUNT),
-  src: ``,
+  src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   bigPoster: getBgSrc(promoMovieTitle),
   descriptions: {
     paragraphs: getDescriptionParagraphs()
