@@ -18,6 +18,7 @@ const withFullVideo = (Component) => {
       this._videoRef = createRef();
 
       this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
+      this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(this);
     }
 
     render() {
@@ -29,7 +30,7 @@ const withFullVideo = (Component) => {
           {...this.props}
           elapsedTime={elapsedTime}
           isPlaying={isPlaying}
-          onFullScreenButtonClick={() => {}}
+          onFullScreenButtonClick={this.handleFullscreenButtonClick}
           onPlayButtonClick={this.handlePlayButtonClick}
           progressValue={progressValue}
         >
@@ -52,7 +53,6 @@ const withFullVideo = (Component) => {
         this.setState({
           elapsedTime: this._duration,
           isLoading: false,
-          isPlaying: true,
         });
       };
 
@@ -72,6 +72,9 @@ const withFullVideo = (Component) => {
           elapsedTime,
         });
       };
+      video.onended = () => this.setState({
+        isPlaying: false,
+      });
     }
 
     componentDidUpdate() {
@@ -88,6 +91,7 @@ const withFullVideo = (Component) => {
 
     componentWillUnmount() {
       const video = this._videoRef.current;
+      video.onended = null;
       video.onloadedmetadata = null;
       video.onpause = null;
       video.onplay = null;
@@ -101,6 +105,17 @@ const withFullVideo = (Component) => {
       this.setState({
         isPlaying: !isPlaying
       });
+    }
+
+    handleFullscreenButtonClick() {
+      const video = this._videoRef.current;
+
+      if (!document.fullscreenElement) {
+        video.requestFullscreen()
+          .catch((err) => err);
+      } else {
+        document.exitFullscreen();
+      }
     }
   }
 
