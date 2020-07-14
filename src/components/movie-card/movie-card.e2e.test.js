@@ -12,21 +12,20 @@ const movie = testMovies[3];
 
 describe(`MovieCardComponent`, () => {
   it(`should run callback on Mouse Entering the film card`, () => {
-    const onMouseEnter = jest.fn();
+    const onCardEnter = jest.fn();
     const movieCard = shallow(
         <MovieCard
           movie={movie}
           onCardClick={() => {}}
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={() => {}}
-          renderPlayer={() => {}}
+          onCardEnter={onCardEnter}
+          onCardLeave={() => {}}
         >
           <video/>
         </MovieCard>
     );
 
     movieCard.simulate(`mouseenter`);
-    expect(onMouseEnter).toHaveBeenCalledTimes(1);
+    expect(onCardEnter).toHaveBeenCalledTimes(1);
   });
 
   it(`should run callback on image click`, () => {
@@ -34,10 +33,9 @@ describe(`MovieCardComponent`, () => {
     const movieCard = shallow(
         <MovieCard
           movie={movie}
-          onMouseEnter={() => {}}
-          onMouseLeave={()=>{}}
+          onCardEnter={() => {}}
+          onCardLeave={()=>{}}
           onCardClick={onCardClick}
-          renderPlayer={() => {}}
         >
           <video/>
         </MovieCard>
@@ -54,10 +52,9 @@ describe(`MovieCardComponent`, () => {
     const movieCard = shallow(
         <MovieCard
           movie={movie}
-          onMouseEnter={() => {}}
+          onCardEnter={() => {}}
           onCardClick={onCardClick}
-          onMouseLeave={()=>{}}
-          renderPlayer={() => {}}
+          onCardLeave={()=>{}}
         >
           <video/>
         </MovieCard>

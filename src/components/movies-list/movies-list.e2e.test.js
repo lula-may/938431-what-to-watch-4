@@ -14,7 +14,7 @@ describe(`MoviesList Component`, () => {
         <MoviesList
           movies={testMovies}
           moviesCount={8}
-          onMouseEnter={() => {}}
+          onMovieCardEnter={() => {}}
           onMovieCardClick={onMovieCardClick}
         />
     );
@@ -31,7 +31,7 @@ describe(`MoviesList Component`, () => {
         <MoviesList
           movies={testMovies}
           moviesCount={8}
-          onMouseEnter={() => {}}
+          onMovieCardEnter={() => {}}
           onMovieCardClick={onMovieCardClick}
         />
     );
@@ -43,20 +43,20 @@ describe(`MoviesList Component`, () => {
   });
 
   it(`should run callback on mouseEntering the movieCard`, () => {
-    const onMouseEnter = jest.fn();
+    const onMovieCardEnter = jest.fn();
     const moviesList = mount(
         <MoviesList
           movies={testMovies}
           moviesCount={8}
           onMovieCardClick={() => {}}
-          onMouseEnter={onMouseEnter}
+          onMovieCardEnter={onMovieCardEnter}
         />
     );
 
     const card = moviesList.find(`.small-movie-card`).at(2);
     card.simulate(`mouseenter`, {});
 
-    expect(onMouseEnter).toHaveBeenCalledTimes(1);
+    expect(onMovieCardEnter).toHaveBeenCalledTimes(1);
   });
 });
 

@@ -11,14 +11,14 @@ const withActiveMovie = (Component) => {
       };
 
       this.handleCardClick = this.handleCardClick.bind(this);
-      this.handleMouseEnter = this.handleMouseEnter.bind(this);
+      this.handleCardEnter = this.handleCardEnter.bind(this);
     }
 
     render() {
       return (
         <Component
           {... this.props}
-          onMouseEnter={this.handleMouseEnter}
+          onMovieCardEnter={this.handleCardEnter}
           onMovieCardClick={this.handleCardClick}
         />
       );
@@ -31,7 +31,7 @@ const withActiveMovie = (Component) => {
       onMovieCardClick(movie);
     }
 
-    handleMouseEnter(movie) {
+    handleCardEnter(movie) {
       this.setState({movie});
     }
   }

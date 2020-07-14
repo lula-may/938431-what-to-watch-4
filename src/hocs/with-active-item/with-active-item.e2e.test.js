@@ -50,7 +50,7 @@ describe(`WithActiveItem HOC`, () => {
     expect(firstLink.getDOMNode().className).not.toContain(`active`);
   });
 
-  it(`should return link id "Second" to callback on second link click`, () => {
+  it(`should pass "Second" to callback on second link click`, () => {
     const onActiveChange = jest.fn((...args) => [...args]);
     const wrapper = mount(
         <MockComponentWrapped

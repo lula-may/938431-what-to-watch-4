@@ -4,12 +4,12 @@ import {movieShape} from "../shapes";
 
 
 const MovieCard = (props) => {
-  const {children, movie: {title}, onCardClick, onMouseEnter, onMouseLeave} = props;
+  const {children, movie: {title}, onCardClick, onCardEnter, onCardLeave} = props;
 
   return (
     <article
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={onCardEnter}
+      onMouseLeave={onCardLeave}
       className="small-movie-card catalog__movies-card">
       <div className="small-movie-card__image" onClick={onCardClick}>
         {children}
@@ -27,8 +27,8 @@ MovieCard.propTypes = {
     PropTypes.node,
   ]).isRequired,
   movie: PropTypes.shape(movieShape).isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  onCardEnter: PropTypes.func.isRequired,
+  onCardLeave: PropTypes.func.isRequired,
   onCardClick: PropTypes.func.isRequired,
 };
 

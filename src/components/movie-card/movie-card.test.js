@@ -11,9 +11,8 @@ it(`should render correctly MovieCardComponent`, () => {
       <MovieCard
         movie={movie}
         onCardClick={() => {}}
-        onMouseEnter={() => {}}
-        onMouseLeave={() => {}}
-        renderPlayer={() => {}}
+        onCardEnter={() => {}}
+        onCardLeave={() => {}}
       >
         <video/>
       </MovieCard>

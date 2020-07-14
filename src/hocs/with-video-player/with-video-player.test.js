@@ -26,7 +26,7 @@ describe(`WithVideoPlayer HOC`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
           movie={movie}
-          onMouseEnter={() => {}}
+          onCardEnter={() => {}}
         />
     ).toJSON();
 
