@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithFullVideo HOC should render <video/> inside MockComponent 1`] = `
+<div>
+  <video
+    className="player__video"
+    poster="bip-poster-0.jpg"
+  />
+</div>
+`;

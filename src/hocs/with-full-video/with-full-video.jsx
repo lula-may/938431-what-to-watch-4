@@ -53,16 +53,9 @@ const withFullVideo = (Component) => {
         this.setState({
           elapsedTime: this._duration,
           isLoading: false,
+          isPlaying: true,
         });
       };
-
-      video.onplay = () => this.setState({
-        isPlaying: true
-      });
-
-      video.onpause = () => this.setState({
-        isPlaying: false
-      });
 
       video.ontimeupdate = () => {
         const progress = Math.floor(video.currentTime);
@@ -72,6 +65,7 @@ const withFullVideo = (Component) => {
           elapsedTime,
         });
       };
+
       video.onended = () => this.setState({
         isPlaying: false,
       });
@@ -80,10 +74,8 @@ const withFullVideo = (Component) => {
     componentDidUpdate() {
       const {isPlaying} = this.state;
       const video = this._videoRef.current;
-
       if (isPlaying) {
         video.play();
-
       } else {
         video.pause();
       }
@@ -93,8 +85,6 @@ const withFullVideo = (Component) => {
       const video = this._videoRef.current;
       video.onended = null;
       video.onloadedmetadata = null;
-      video.onpause = null;
-      video.onplay = null;
       video.ontimeupdate = null;
       video.poster = ``;
       video.src = ``;
