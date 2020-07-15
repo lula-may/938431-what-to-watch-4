@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import PropTypes from "prop-types";
-import withVideoPlayer from "./with-video-player.jsx";
+import withFullVideo from "./with-full-video.jsx";
 import {testMovies} from "../../test-mocks/test-films.js";
 
 const movie = testMovies[0];
@@ -19,19 +19,20 @@ MockComponent.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const MockComponentWrapped = withVideoPlayer(MockComponent);
+const MockComponentWrapped = withFullVideo(MockComponent);
 
-describe(`WithVideoPlayer HOC`, () => {
+describe(`WithFullVideo HOC`, () => {
   it(`should render <video/> inside MockComponent`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
           movie={movie}
-          onCardEnter={() => {}}
-        />
+        />, {
+          createNodeMock: () => {
+            return {};
+          }
+        }
     ).toJSON();
 
     expect(tree).toMatchSnapshot();
   });
 });
-
-

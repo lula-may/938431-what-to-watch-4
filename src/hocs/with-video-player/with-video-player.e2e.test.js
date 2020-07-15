@@ -12,9 +12,9 @@ configure({
 const movie = testMovies[0];
 
 const MockComponent = (props) => {
-  const {children, onMouseEnter} = props;
+  const {children, onCardEnter} = props;
   return (
-    <div onMouseEnter={onMouseEnter}>
+    <div onMouseEnter={onCardEnter}>
       {children}
     </div>
   );
@@ -22,31 +22,31 @@ const MockComponent = (props) => {
 
 MockComponent.propTypes = {
   children: PropTypes.node.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
+  onCardEnter: PropTypes.func.isRequired,
 };
 
 const MockComponentWrapped = withVideoPlayer(MockComponent);
 
 describe(`WithVideoPlayer HOC`, () => {
   it(`should pass "movie" to callback on mouse entering`, () => {
-    const onMouseEnter = jest.fn((...args) => [...args]);
+    const onCardEnter = jest.fn((...args) => [...args]);
     const wrapper = mount(
         <MockComponentWrapped
           movie={movie}
-          onMouseEnter={onMouseEnter}
+          onCardEnter={onCardEnter}
         />);
     wrapper.simulate(`mouseenter`);
 
-    expect(onMouseEnter).toHaveBeenCalledTimes(1);
-    expect(onMouseEnter.mock.calls[0][0]).toEqual(movie);
+    expect(onCardEnter).toHaveBeenCalledTimes(1);
+    expect(onCardEnter.mock.calls[0][0]).toEqual(movie);
   });
 
   it(`should set TimeOut on mouse entering`, () => {
-    const onMouseEnter = jest.fn((...args) => [...args]);
+    const onCardEnter = jest.fn((...args) => [...args]);
     const wrapper = mount(
         <MockComponentWrapped
           movie={movie}
-          onMouseEnter={onMouseEnter}
+          onCardEnter={onCardEnter}
         />);
     expect(wrapper.instance().timeOut).toEqual(null);
     wrapper.simulate(`mouseenter`);
@@ -58,11 +58,11 @@ describe(`WithVideoPlayer HOC`, () => {
       func();
       return timer;
     };
-    const onMouseEnter = jest.fn();
+    const onCardEnter = jest.fn();
     const wrapper = mount(
         <MockComponentWrapped
           movie={movie}
-          onMouseEnter={onMouseEnter}
+          onCardEnter={onCardEnter}
         />);
     const {_videoRef} = wrapper.instance();
     expect(_videoRef.current.autoplay).toEqual(false);

@@ -12,17 +12,17 @@ configure({
 const movie = testMovies[0];
 
 const MockComponent = (props) => {
-  const {onMovieCardClick, onMouseEnter} = props;
+  const {onMovieCardClick, onMovieCardEnter} = props;
   return <div
     id="mock"
     onClick={onMovieCardClick}
     movie={movie}
-    onMouseEnter={() => onMouseEnter(movie)}
+    onMouseEnter={() => onMovieCardEnter(movie)}
   />;
 };
 MockComponent.propTypes = {
   onMovieCardClick: PropTypes.func.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
+  onMovieCardEnter: PropTypes.func.isRequired,
 };
 
 const WithActiveMovie = withActiveMovie(MockComponent);

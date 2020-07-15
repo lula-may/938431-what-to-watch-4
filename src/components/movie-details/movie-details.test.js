@@ -11,6 +11,7 @@ it(`should render correctly MovieDetailsComponent`, () => {
         movie={movie}
         allMovies={testMovies}
         onMovieCardClick={() => {}}
+        onPlayButtonClick={() => {}}
       />
   )
   .toJSON();

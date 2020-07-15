@@ -8,7 +8,7 @@ const withActiveItem = (Component) => {
       this.state = {
         activeItem: props.activeItem,
       };
-      this._handleLinkClick = this._handleLinkClick.bind(this);
+      this._handleItemClick = this._handleItemClick.bind(this);
     }
 
     render() {
@@ -18,12 +18,12 @@ const withActiveItem = (Component) => {
         <Component
           {...this.props}
           activeItem={activeItem}
-          onClick={this._handleLinkClick}
+          onClick={this._handleItemClick}
         />
       );
     }
 
-    _handleLinkClick(evt) {
+    _handleItemClick(evt) {
       const {onActiveChange} = this.props;
       const {activeItem} = this.state;
       evt.preventDefault();

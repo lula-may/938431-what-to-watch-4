@@ -23,8 +23,8 @@ const withVideoPlayer = (Component) => {
       return (
         <Component
           {...this.props}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
+          onCardEnter={this.handleMouseEnter}
+          onCardLeave={this.handleMouseLeave}
         >
           <video
             width={PREVIEW.width}
@@ -62,11 +62,11 @@ const withVideoPlayer = (Component) => {
     }
 
     handleMouseEnter() {
-      const {movie, onMouseEnter} = this.props;
+      const {movie, onCardEnter} = this.props;
       this.timeOut = setTimeout(() => {
         this.setState({isPlaying: true});
       }, PLAYER_DELAY);
-      onMouseEnter(movie);
+      onCardEnter(movie);
     }
 
 
@@ -78,7 +78,7 @@ const withVideoPlayer = (Component) => {
 
   WithVideoPlayer.propTypes = {
     movie: PropTypes.shape(movieShape).isRequired,
-    onMouseEnter: PropTypes.func.isRequired,
+    onCardEnter: PropTypes.func.isRequired,
   };
 
   return WithVideoPlayer;

@@ -9,7 +9,7 @@ configure({
 });
 
 describe(`GenresList Component`, () => {
-  it(`should pass "War" genre to callback on War tab click`, () => {
+  it(`should run callback on War tab click`, () => {
     const onClick = jest.fn();
     const genresList = shallow(
         <GenresList

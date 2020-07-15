@@ -24,10 +24,6 @@ const tabsWithIds = [
 
 
 class Tabs extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {activeItem, onClick} = this.props;
     return (
