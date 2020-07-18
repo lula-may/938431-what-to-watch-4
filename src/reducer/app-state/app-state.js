@@ -1,11 +1,9 @@
-import {extend} from "./utils.js";
-import {movies} from "./mocks/films.js";
-import {DEFAULT_GENRE, SHOWED_MOVIES_ON_START_COUNT} from "./const.js";
+import {extend} from "../../utils.js";
+import {DEFAULT_GENRE, SHOWED_MOVIES_ON_START_COUNT} from "../../const.js";
 
 const initialState = {
   moviesCount: SHOWED_MOVIES_ON_START_COUNT,
   genre: DEFAULT_GENRE,
-  movies,
 };
 
 const ActionType = {

@@ -1,33 +1,30 @@
-import {ActionType, reducer, ActionCreator} from "./reducer.js";
-import {movies} from "./mocks/films.js";
+import {ActionType, reducer, ActionCreator} from "./app-state.js";
 
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
       moviesCount: 8,
-      movies,
       genre: `All genres`,
     });
   });
 
   it(`should set genre "Comedy" when action SET_GENRE with value "Comedy" passed`, () => {
     expect(reducer({
-      movies,
       genre: `All genres`,
+      moviesCount: 8,
     }, {
       type: ActionType.SET_GENRE,
       payload: `Comedy`,
     }
     )).toEqual({
-      movies,
       genre: `Comedy`,
+      moviesCount: 8,
     });
   });
 
   it(`should set count to 10`, () => {
     expect(reducer({
       moviesCount: 2,
-      movies,
       genre: `Sport`,
     }, {
       type: ActionType.INCREMENT_MOVIES_COUNT,
@@ -35,7 +32,6 @@ describe(`Reducer`, () => {
     }
     )).toEqual({
       moviesCount: 10,
-      movies,
       genre: `Sport`,
     });
   });
@@ -43,13 +39,11 @@ describe(`Reducer`, () => {
   it(`should set count to initialState when action "RESET_COUNT" passed`, () => {
     expect(reducer({
       moviesCount: 20,
-      movies,
       genre: `Sport`,
     }, {
       type: ActionType.RESET_COUNT,
     })).toEqual({
       moviesCount: 8,
-      movies,
       genre: `Sport`,
     });
   });
