@@ -1,12 +1,11 @@
 import {ActionCreator, ActionType, Operation, reducer} from "./data.js";
 import MockAdapter from "axios-mock-adapter";
 import {movies} from "../../mocks/films.js";
-import { createApi } from "../../api.js";
+import {createApi} from "../../api.js";
 
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
-      error: undefined,
       hasErrors: false,
       isLoading: false,
       movies: [],
@@ -29,15 +28,12 @@ describe(`Reducer`, () => {
       movies: [],
       isLoading: false,
       hasErrors: false,
-      error: undefined,
     }, {
       type: ActionType.START_LOADING,
-      payload: null,
     })).toEqual({
       movies: [],
       isLoading: true,
       hasErrors: false,
-      error: undefined,
     });
   });
 
@@ -46,15 +42,12 @@ describe(`Reducer`, () => {
       movies: [],
       isLoading: true,
       hasErrors: false,
-      error: undefined,
     }, {
       type: ActionType.END_LOADING,
-      payload: null,
     })).toEqual({
       movies: [],
       isLoading: false,
       hasErrors: false,
-      error: undefined,
     });
   });
 
@@ -63,15 +56,13 @@ describe(`Reducer`, () => {
       movies: [],
       isLoading: false,
       hasErrors: false,
-      error: undefined,
     }, {
       type: ActionType.SET_ERROR,
-      payload: `error message`,
+      payload: true,
     })).toEqual({
       movies: [],
       isLoading: false,
       hasErrors: true,
-      error: `error message`,
     });
   });
 });
@@ -87,24 +78,19 @@ describe(`ActionCreator`, () => {
   it(`should return correct action for start loading`, () => {
     expect(ActionCreator.startLoading()).toEqual({
       type: ActionType.START_LOADING,
-      payload: null,
     });
   });
 
   it(`should return correct action for end loading`, () => {
     expect(ActionCreator.endLoading()).toEqual({
       type: ActionType.END_LOADING,
-      payload: null,
     });
   });
 
   it(`should return correct action for error setting`, () => {
-    const error = {
-      message: `error message`,
-    };
-    expect(ActionCreator.setError(error)).toEqual({
+    expect(ActionCreator.setError(true)).toEqual({
       type: ActionType.SET_ERROR,
-      payload: `error message`,
+      payload: true,
     });
   });
 });
@@ -121,18 +107,20 @@ describe(`Operation`, () => {
 
     return moviesLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch.mock.calls[0][0]).toEqual({
           type: ActionType.START_LOADING,
-          payload: null,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
+          type: ActionType.SET_ERROR,
+          payload: false,
+        });
+        expect(dispatch.mock.calls[2][0]).toEqual({
           type: ActionType.LOAD_MOVIES,
           payload: [{fake: true}],
         });
-        expect(dispatch.mock.calls[2][0]).toEqual({
+        expect(dispatch.mock.calls[3][0]).toEqual({
           type: ActionType.END_LOADING,
-          payload: null,
         });
       });
   });
@@ -148,18 +136,20 @@ describe(`Operation`, () => {
 
     return moviesLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch.mock.calls[0][0]).toEqual({
           type: ActionType.START_LOADING,
-          payload: null,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
-          type: ActionType.END_LOADING,
-          payload: null,
+          type: ActionType.SET_ERROR,
+          payload: false,
         });
         expect(dispatch.mock.calls[2][0]).toEqual({
+          type: ActionType.END_LOADING,
+        });
+        expect(dispatch.mock.calls[3][0]).toEqual({
           type: ActionType.SET_ERROR,
-          payload: `Request failed with status code 404`,
+          payload: true,
         });
       });
   });

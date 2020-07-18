@@ -1,7 +1,6 @@
 import {extend} from "../../utils.js";
 
 const initialState = {
-  error: undefined,
   hasErrors: false,
   isLoading: false,
   movies: [],
@@ -22,23 +21,22 @@ const ActionCreator = {
 
   startLoading: () => ({
     type: ActionType.START_LOADING,
-    payload: null,
   }),
 
   endLoading: () => ({
     type: ActionType.END_LOADING,
-    payload: null,
   }),
 
-  setError: (err) => ({
+  setError: (hasErrors) => ({
     type: ActionType.SET_ERROR,
-    payload: err.message,
+    payload: hasErrors,
   })
 };
 
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     dispatch(ActionCreator.startLoading());
+    dispatch(ActionCreator.setError(false));
     return api.get(`/films`)
     .then((response) => {
       dispatch(ActionCreator.loadMovies(response.data));
@@ -46,7 +44,8 @@ const Operation = {
     })
     .catch((err) => {
       dispatch(ActionCreator.endLoading());
-      dispatch(ActionCreator.setError(err));
+      dispatch(ActionCreator.setError(true));
+      return err;
     });
   },
 };
@@ -67,8 +66,7 @@ const reducer = (state = initialState, action) => {
       });
     case ActionType.SET_ERROR:
       return extend(state, {
-        error: action.payload,
-        hasErrors: true,
+        hasErrors: action.payload,
       });
   }
   return state;

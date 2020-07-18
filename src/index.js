@@ -6,17 +6,17 @@ import thunk from "redux-thunk";
 
 import App from "./components/app/app.jsx";
 import {promoMovie} from "./mocks/films";
-import {reducer} from "./reducer.js";
 import {createApi} from "./api.js";
+import reducer from "./reducer/reducer.js";
+import {Operation as DataOperation} from "./reducer/data/data.js";
 
+const api = createApi(() => {});
 const store = createStore(reducer,
     compose(
         applyMiddleware(thunk.withExtraArgument(api)),
         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
 );
-
-const api = createApi(() => {});
 
 const init = () => {
   ReactDom.render(
@@ -28,5 +28,7 @@ const init = () => {
       document.querySelector(`#root`)
   );
 };
+
+store.dispatch(DataOperation.loadMovies());
 
 init();
