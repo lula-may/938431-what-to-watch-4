@@ -7,7 +7,9 @@ import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 import {movieShape} from "../shapes.js";
-import {ActionCreator} from "../../reducer.js";
+import {ActionCreator} from "../../reducer/app-state/app-state.js";
+import {getMovies} from "../../reducer/data/selectors.js";
+import {getGenre, getMoviesCount} from "../../reducer/app-state/selectors.js";
 
 const Page = {
   MAIN: `main`,
@@ -134,9 +136,9 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: state.genre,
-  movies: state.movies,
-  moviesCount: state.moviesCount,
+  activeGenre: getGenre(state),
+  movies: getMovies(state),
+  moviesCount: getMoviesCount(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
