@@ -1,10 +1,10 @@
 import {ActionCreator, ActionType, Operation, reducer} from "./data.js";
 import MockAdapter from "axios-mock-adapter";
-import {movies} from "../../mocks/films.js";
+import {testMovies} from "../../test-mocks/test-films.js";
 import {createApi} from "../../api.js";
 import {adaptMovie, adaptMovies} from "../../adapter.js";
 
-const movie = movies[0];
+const movie = testMovies[0];
 
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
@@ -23,9 +23,9 @@ describe(`Reducer`, () => {
       movies: [],
     }, {
       type: ActionType.LOAD_MOVIES,
-      payload: movies,
+      payload: testMovies,
     })).toEqual({
-      movies,
+      movies: testMovies,
     });
   });
 
@@ -112,9 +112,9 @@ describe(`Reducer`, () => {
 
 describe(`ActionCreator`, () => {
   it(`should return correct action for movies loading`, () => {
-    expect(ActionCreator.loadMovies(movies)).toEqual({
+    expect(ActionCreator.loadMovies(testMovies)).toEqual({
       type: ActionType.LOAD_MOVIES,
-      payload: movies,
+      payload: testMovies,
     });
   });
 
