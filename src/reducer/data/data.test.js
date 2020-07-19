@@ -2,13 +2,19 @@ import {ActionCreator, ActionType, Operation, reducer} from "./data.js";
 import MockAdapter from "axios-mock-adapter";
 import {movies} from "../../mocks/films.js";
 import {createApi} from "../../api.js";
+import {adaptMovie, adaptMovies} from "../../adapter.js";
+
+const movie = movies[0];
 
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
+      activeMovie: {},
+      genre: `All genres`,
       hasErrors: false,
       isLoading: false,
       movies: [],
+      promoMovie: {},
     });
   });
 
@@ -65,6 +71,43 @@ describe(`Reducer`, () => {
       hasErrors: true,
     });
   });
+
+  it(`should set genre when set genre action supplied`, () => {
+    expect(reducer({
+      genre: `All movies`,
+      movies: [],
+      isLoading: false,
+      hasErrors: false,
+    }, {
+      type: ActionType.SET_GENRE,
+      payload: `Crime`,
+    })).toEqual({
+      genre: `Crime`,
+      movies: [],
+      isLoading: false,
+      hasErrors: false,
+    });
+  });
+
+  it(`should set active movie when set active movie action supplied`, () => {
+    expect(reducer({
+      genre: `All movies`,
+      activeMovie: {},
+      movies: [],
+      isLoading: false,
+      hasErrors: false,
+    }, {
+      type: ActionType.SET_ACTIVE_MOVIE,
+      payload: movie,
+    })).toEqual({
+      genre: `All movies`,
+      activeMovie: movie,
+      movies: [],
+      isLoading: false,
+      hasErrors: false,
+    });
+  });
+
 });
 
 describe(`ActionCreator`, () => {
@@ -74,6 +117,14 @@ describe(`ActionCreator`, () => {
       payload: movies,
     });
   });
+
+  it(`should return correct action for promo movie loading`, () => {
+    expect(ActionCreator.loadPromo(movie)).toEqual({
+      type: ActionType.LOAD_PROMO,
+      payload: movie,
+    });
+  });
+
 
   it(`should return correct action for start loading`, () => {
     expect(ActionCreator.startLoading()).toEqual({
@@ -102,12 +153,17 @@ describe(`Operation`, () => {
     const dispatch = jest.fn();
     const moviesLoader = Operation.loadMovies();
 
+    window.adaptMovie = (item) => item;
+
     MockApi.onGet(`/films`)
+    .reply(200, [{fake: true}]);
+
+    MockApi.onGet(`/films/promo`)
     .reply(200, [{fake: true}]);
 
     return moviesLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch).toHaveBeenCalledTimes(6);
         expect(dispatch.mock.calls[0][0]).toEqual({
           type: ActionType.START_LOADING,
         });
@@ -116,10 +172,18 @@ describe(`Operation`, () => {
           payload: false,
         });
         expect(dispatch.mock.calls[2][0]).toEqual({
-          type: ActionType.LOAD_MOVIES,
-          payload: [{fake: true}],
+          type: ActionType.LOAD_PROMO,
+          payload: adaptMovie({fake: true}),
         });
         expect(dispatch.mock.calls[3][0]).toEqual({
+          type: ActionType.SET_ACTIVE_MOVIE,
+          payload: adaptMovie({fake: true}),
+        });
+        expect(dispatch.mock.calls[4][0]).toEqual({
+          type: ActionType.LOAD_MOVIES,
+          payload: adaptMovies([{fake: true}]),
+        });
+        expect(dispatch.mock.calls[5][0]).toEqual({
           type: ActionType.END_LOADING,
         });
       });

@@ -1,6 +1,6 @@
 import {createSelector} from "reselect";
 import NameSpace from "../name-space.js";
-import DEFAULT_GENRE from "../../const.js";
+import {DEFAULT_GENRE} from "../../const.js";
 
 const NAME_SPACE = NameSpace.DATA;
 
@@ -8,9 +8,18 @@ export const getMovies = (state) => {
   return state[NAME_SPACE].movies;
 };
 
-const getGenre = (state) => {
-  return state[NameSpace.APP_STATE].genre;
-}
+export const getActiveMovie = (state) => {
+  return state[NAME_SPACE].activeMovie;
+};
+
+export const getPromoMovie = (state) => {
+  return state[NAME_SPACE].promoMovie;
+};
+
+export const getGenre = (state) => {
+  return state[NAME_SPACE].genre;
+};
+
 export const getLoadingState = (state) => {
   return state[NAME_SPACE].isLoading;
 };
