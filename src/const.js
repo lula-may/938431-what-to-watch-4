@@ -9,10 +9,24 @@ const SHOWED_MOVIES_ON_START_COUNT = 8;
 const DEFAULT_GENRE = `All genres`;
 const MAX_GENRES_COUNT = 9;
 
+const Page = {
+  MAIN: `main`,
+  DETAILS: `details`,
+  PLAYER: `player`,
+};
+
 const TabType = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
   REVIEWS: `Reviews`,
 };
 
-export {DEFAULT_GENRE, MAX_GENRES_COUNT, PREVIEW, PLAYER_DELAY, SIMILAR_MOVIES_COUNT, SHOWED_MOVIES_ON_START_COUNT, TabType};
+export {
+  DEFAULT_GENRE,
+  MAX_GENRES_COUNT,
+  Page,
+  PLAYER_DELAY,
+  PREVIEW,
+  SIMILAR_MOVIES_COUNT,
+  SHOWED_MOVIES_ON_START_COUNT,
+  TabType};

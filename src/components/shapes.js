@@ -9,7 +9,7 @@ const reviewShape = {
 
 const movieShape = {
   actors: PropTypes.arrayOf(PropTypes.string),
-  bgColor: PropTypes.string.isRequired,
+  bgColor: PropTypes.string,
   bgPoster: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,

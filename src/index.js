@@ -5,7 +5,6 @@ import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 
 import App from "./components/app/app.jsx";
-import {promoMovie} from "./mocks/films";
 import {createApi} from "./api.js";
 import reducer from "./reducer/reducer.js";
 import {Operation as DataOperation} from "./reducer/data/data.js";
@@ -21,9 +20,7 @@ const store = createStore(reducer,
 const init = () => {
   ReactDom.render(
       <Provider store={store}>
-        <App
-          headerMovie={promoMovie}
-        />
+        <App/>
       </Provider>,
       document.querySelector(`#root`)
   );
