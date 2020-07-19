@@ -9,7 +9,7 @@ Enzyme.configure({
   adapter: new Adapter()
 });
 
-const headerMovie = testMovies[0];
+const promoMovie = testMovies[0];
 const showedMovies = testMovies.slice(1);
 
 describe(`MainComponent`, () => {
@@ -18,7 +18,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
-          headerMovie={headerMovie}
+          promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={8}
           onGenreClick={() =>{}}
@@ -37,7 +37,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
-          headerMovie={headerMovie}
+          promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={8}
           onGenreClick={onGenreClick}
@@ -57,7 +57,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
-          headerMovie={headerMovie}
+          promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={4}
           onGenreClick={() => {}}
@@ -77,7 +77,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
-          headerMovie={headerMovie}
+          promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={4}
           onGenreClick={() => {}}

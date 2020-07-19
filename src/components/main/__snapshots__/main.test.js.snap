@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Main Component Should render Jurassik Park in header 1`] = `
+exports[`Main Component Should render correctly MainComponent 1`] = `
 Array [
   <section
     className="movie-card"

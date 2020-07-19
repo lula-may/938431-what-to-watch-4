@@ -16,7 +16,7 @@ const MoviesListWrapped = withActiveMovie(MoviesList);
 const Main = (props) => {
   const {
     activeGenre,
-    headerMovie,
+    promoMovie,
     movies,
     moviesCount,
     onGenreClick,
@@ -27,13 +27,13 @@ const Main = (props) => {
 
   const {
     bgPoster: bgSrc,
-    genre: headerMovieGenre,
+    genre: promoMovieGenre,
     poster: posterSrc,
-    releaseYear: headerMovieYear,
-    title: headerMovieTitle
-  } = headerMovie;
+    releaseYear: promoMovieYear,
+    title: promoMovieTitle
+  } = promoMovie;
 
-  const posterAlt = `${headerMovieTitle} poster`;
+  const posterAlt = `${promoMovieTitle} poster`;
   const currentMovies = getMoviesByGenre(activeGenre, movies);
   const showedMovies = currentMovies.slice(0, moviesCount);
   const hasHiddenMovies = (currentMovies.length > moviesCount);
@@ -41,7 +41,7 @@ const Main = (props) => {
   return <React.Fragment>
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={bgSrc} alt={headerMovieTitle} />
+        <img src={bgSrc} alt={promoMovieTitle} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -69,10 +69,10 @@ const Main = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{headerMovieTitle}</h2>
+            <h2 className="movie-card__title">{promoMovieTitle}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{headerMovieGenre}</span>
-              <span className="movie-card__year">{headerMovieYear}</span>
+              <span className="movie-card__genre">{promoMovieGenre}</span>
+              <span className="movie-card__year">{promoMovieYear}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -132,7 +132,7 @@ const Main = (props) => {
 
 Main.propTypes = {
   activeGenre: PropTypes.string.isRequired,
-  headerMovie: PropTypes.shape(movieShape).isRequired,
+  promoMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
