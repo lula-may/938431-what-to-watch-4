@@ -18,7 +18,8 @@ const MovieDetails = (props) => {
     onPlayButtonClick,
   } = props;
   const {
-    bigPoster,
+    bgColor,
+    bgPoster,
     genre,
     poster,
     releaseYear,
@@ -27,10 +28,10 @@ const MovieDetails = (props) => {
   const similarMovies = allMovies.filter((item) => (item.genre === movie.genre && item.id !== movie.id));
 
   return <React.Fragment>
-    <section className="movie-card movie-card--full">
+    <section className="movie-card movie-card--full" style={{backgroundColor: bgColor}}>
       <div className="movie-card__hero">
         <div className="movie-card__bg">
-          <img src={bigPoster} alt={title} />
+          <img src={bgPoster} alt={title} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>

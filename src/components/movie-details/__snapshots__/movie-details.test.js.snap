@@ -4,6 +4,11 @@ exports[`should render correctly MovieDetailsComponent 1`] = `
 Array [
   <section
     className="movie-card movie-card--full"
+    style={
+      Object {
+        "backgroundColor": "#000000",
+      }
+    }
   >
     <div
       className="movie-card__hero"
@@ -227,13 +232,7 @@ Array [
             className="movie-card__text"
           >
             <p>
-              bla-bla-bla
-            </p>
-            <p>
-              olya-lya-lya
-            </p>
-            <p>
-              wow-wow
+              bla-bla-bla, olya-lya-lya, wow-wow
             </p>
             <p
               className="movie-card__director"

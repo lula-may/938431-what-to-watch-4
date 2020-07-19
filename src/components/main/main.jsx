@@ -26,7 +26,7 @@ const Main = (props) => {
   } = props;
 
   const {
-    bigPoster: bgSrc,
+    bgPoster: bgSrc,
     genre: headerMovieGenre,
     poster: posterSrc,
     releaseYear: headerMovieYear,

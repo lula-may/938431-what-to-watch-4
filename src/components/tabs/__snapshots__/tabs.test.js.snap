@@ -214,13 +214,7 @@ exports[`Tabs Component should render Overview component inside 1`] = `
     className="movie-card__text"
   >
     <p>
-      bla-bla-bla
-    </p>
-    <p>
-      olya-lya-lya
-    </p>
-    <p>
-      wow-wow
+      bla-bla-bla, olya-lya-lya, wow-wow
     </p>
     <p
       className="movie-card__director"

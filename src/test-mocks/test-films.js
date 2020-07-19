@@ -49,18 +49,19 @@ const directors = [`Stiven Spielberg`, `Mr. Good`, `Mr. Bad`, `Mrs. Ugly`, `Ms. 
 const genres = [`Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 const testMovies = movieTitles.map((title, i) => {
-  const rating = (MAX_RATING - i).toFixed(1);
+  const rating = MAX_RATING - i;
   return {
     actors: actors[i],
-    bigPoster: `bip-poster-${i}.jpg`,
+    bgColor: `#000000`,
+    bgPoster: `bip-poster-${i}.jpg`,
     src: `video-${i}.mp3`,
-    description: {
-      paragraphs: [`bla-bla-bla`, `olya-lya-lya`, `wow-wow`]
-    },
+    description: `bla-bla-bla, olya-lya-lya, wow-wow`,
     director: directors[i],
     genre: genres[i],
-    id: i.toString(),
+    id: i,
+    isFavorite: true,
     poster: `poster-${i}.jpg`,
+    previewPoster: `poster-${i}.jpg`,
     rating: {
       count: RATING_COUNT,
       score: rating,

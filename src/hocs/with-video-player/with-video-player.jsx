@@ -19,7 +19,7 @@ const withVideoPlayer = (Component) => {
     }
 
     render() {
-      const {movie: {poster}} = this.props;
+      const {movie: {previewPoster}} = this.props;
       return (
         <Component
           {...this.props}
@@ -29,7 +29,7 @@ const withVideoPlayer = (Component) => {
           <video
             width={PREVIEW.width}
             height={PREVIEW.height}
-            poster={poster}
+            poster={previewPoster}
             ref={this._videoRef}
           />
         </Component>

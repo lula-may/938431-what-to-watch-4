@@ -23,7 +23,7 @@ const withFullVideo = (Component) => {
 
     render() {
       const {elapsedTime, isPlaying, progress} = this.state;
-      const {movie: {bigPoster}} = this.props;
+      const {movie: {bgPoster}} = this.props;
       const progressValue = Math.round(progress * 100 / this._duration);
       return (
         <Component
@@ -37,7 +37,7 @@ const withFullVideo = (Component) => {
           <video
             className="player__video"
             ref={this._videoRef}
-            poster={bigPoster}
+            poster={bgPoster}
           />
         </Component>
       );

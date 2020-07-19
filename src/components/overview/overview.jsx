@@ -19,9 +19,7 @@ const Overview = (props) => {
   const {movie} = props;
   const {actors, description, director, rating} = movie;
   const {count: ratingCount, score: ratingScore} = rating;
-  const {paragraphs} = description;
 
-  const paragraphsWithId = paragraphs.map((text, id) => ({id, text}));
   const actorsText = `${actors.join(`, `)} and others`;
   const ratingLevel = getRatingLevel(ratingScore);
 
@@ -36,7 +34,7 @@ const Overview = (props) => {
       </div>
 
       <div className="movie-card__text">
-        {paragraphsWithId.map((paragraph) => (<p key={paragraph.id}>{paragraph.text}</p>))}
+        <p>{description}</p>
 
         <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
