@@ -2,11 +2,12 @@ import React from "react";
 import {shallow, configure} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import GenresList from "./genres-list.jsx";
-import {testMovies} from "../../test-mocks/test-films.js";
 
 configure({
   adapter: new Adapter(),
 });
+
+const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 describe(`GenresList Component`, () => {
   it(`should run callback on War tab click`, () => {
@@ -14,7 +15,7 @@ describe(`GenresList Component`, () => {
     const genresList = shallow(
         <GenresList
           activeItem={`All genres`}
-          movies={testMovies}
+          genres={genres}
           onClick={onClick}
         />
     );

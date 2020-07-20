@@ -11,6 +11,7 @@ Enzyme.configure({
 
 const promoMovie = testMovies[0];
 const showedMovies = testMovies.slice(1);
+const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 describe(`MainComponent`, () => {
   it(`should run callback on every movie title click`, () => {
@@ -18,6 +19,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
+          genres={genres}
           promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={8}
@@ -37,6 +39,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
+          genres={genres}
           promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={8}
@@ -57,6 +60,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
+          genres={genres}
           promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={4}
@@ -77,6 +81,7 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Main
           activeGenre={`All genres`}
+          genres={genres}
           promoMovie={promoMovie}
           movies={showedMovies}
           moviesCount={4}

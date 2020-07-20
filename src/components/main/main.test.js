@@ -5,12 +5,14 @@ import Main from "./main.jsx";
 import {testMovies} from "../../test-mocks/test-films";
 
 const promoMovie = testMovies[0];
+const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 describe(`Main Component`, () => {
   it(`Should render correctly MainComponent`, () => {
     const tree = renderer.create(
         <Main
           activeGenre={`All genres`}
+          genres={genres}
           promoMovie={promoMovie}
           movies={testMovies}
           moviesCount={5}

@@ -9,6 +9,8 @@ import {testMovies} from "../../test-mocks/test-films";
 const mockStore = configureStore([]);
 
 const promoMovie = testMovies[0];
+const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
+const similarMovies = testMovies.slice(0, 2);
 
 describe(`App Component`, () => {
   it(`Should render MainComponent`, () => {
@@ -24,6 +26,7 @@ describe(`App Component`, () => {
           <App
             activeMovie={promoMovie}
             activeGenre={`All genres`}
+            genres={genres}
             hasErrors={false}
             isLoading={false}
             movies={testMovies}
@@ -35,6 +38,7 @@ describe(`App Component`, () => {
             onShowMoreButtonClick={() => {}}
             page={`main`}
             promoMovie={promoMovie}
+            similarMovies={similarMovies}
           />
         </Provider>
     )
@@ -55,6 +59,7 @@ describe(`App Component`, () => {
           <App
             activeMovie={promoMovie}
             activeGenre={`All genres`}
+            genres={genres}
             hasErrors={false}
             isLoading={false}
             movies={testMovies}
@@ -66,6 +71,7 @@ describe(`App Component`, () => {
             onShowMoreButtonClick={() => {}}
             page={`details`}
             promoMovie={promoMovie}
+            similarMovies={similarMovies}
           />
         </Provider>
     )
@@ -86,6 +92,7 @@ describe(`App Component`, () => {
           <App
             activeMovie={promoMovie}
             activeGenre={`All genres`}
+            genres={genres}
             hasErrors={false}
             isLoading={false}
             movies={testMovies}
@@ -97,6 +104,7 @@ describe(`App Component`, () => {
             onShowMoreButtonClick={() => {}}
             page={`player`}
             promoMovie={promoMovie}
+            similarMovies={similarMovies}
           />
         </Provider>, {createNodeMock: () => {
           return {};
