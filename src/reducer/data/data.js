@@ -77,19 +77,6 @@ const Operation = {
       return err;
     });
   },
-
-  // loadPromo: () => (dispatch, getState, api) => {
-  //   dispatch(ActionCreator.startLoading());
-  //   dispatch(ActionCreator.setError(false));
-  //     dispatch(ActionCreator.endLoading());
-  //   })
-  //   .catch((err) => {
-  //     dispatch(ActionCreator.endLoading());
-  //     dispatch(ActionCreator.setError(true));
-  //     return err;
-  //   });
-  // },
-
 };
 
 const reducer = (state = initialState, action) => {
