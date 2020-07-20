@@ -10,7 +10,16 @@ import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 import {movieShape} from "../shapes.js";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
-import {getActiveMovie, getGenre, getMovies, getPromoMovie, getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
+import {
+  getActiveMovie,
+  getGenre,
+  getPromoMovie,
+  getLoadingState,
+  getErrorState,
+  selectMoviesGenres,
+  selectMoviesByGenre,
+  selectSimilarMovies,
+} from "../../reducer/data/selectors.js";
 import {getPage, getMoviesCount} from "../../reducer/app-state/selectors.js";
 import {Page} from "../../const.js";
 
@@ -50,6 +59,7 @@ class App extends PureComponent {
     const {
       activeMovie,
       activeGenre,
+      genres,
       hasErrors,
       isLoading,
       movies,
@@ -61,8 +71,8 @@ class App extends PureComponent {
       onShowMoreButtonClick,
       page,
       promoMovie,
+      similarMovies,
     } = this.props;
-
     if (isLoading) {
       return <div style={{textAlign: `center`, marginTop: `300px`}}>Loading...</div>;
     }
@@ -77,6 +87,7 @@ class App extends PureComponent {
         case Page.MAIN:
           return <Main
             activeGenre={activeGenre}
+            genres={genres}
             promoMovie={promoMovie}
             movies={movies}
             moviesCount={moviesCount}
@@ -88,7 +99,7 @@ class App extends PureComponent {
         case Page.DETAILS:
           return <MovieDetails
             movie={activeMovie}
-            allMovies={movies}
+            allMovies={similarMovies}
             onMovieCardClick={onCardClick}
             onPlayButtonClick={onPlayButtonClick}
           />;
@@ -107,6 +118,7 @@ class App extends PureComponent {
 App.propTypes = {
   activeGenre: PropTypes.string.isRequired,
   activeMovie: PropTypes.shape(movieShape).isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
   hasErrors: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   movies: PropTypes.arrayOf(
@@ -120,17 +132,21 @@ App.propTypes = {
   onShowMoreButtonClick: PropTypes.func.isRequired,
   page: PropTypes.string.isRequired,
   promoMovie: PropTypes.shape(movieShape).isRequired,
+  similarMovies: PropTypes.arrayOf(
+      PropTypes.shape(movieShape)),
 };
 
 const mapStateToProps = (state) => ({
   activeGenre: getGenre(state),
   activeMovie: getActiveMovie(state),
+  genres: selectMoviesGenres(state),
   hasErrors: getErrorState(state),
   isLoading: getLoadingState(state),
-  movies: getMovies(state),
+  movies: selectMoviesByGenre(state),
   moviesCount: getMoviesCount(state),
   page: getPage(state),
   promoMovie: getPromoMovie(state),
+  similarMovies: selectSimilarMovies(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

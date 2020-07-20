@@ -8,7 +8,6 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 
 import {movieShape} from "../shapes.js";
-import {getMoviesByGenre} from "../utils.js";
 
 const GenresListWrapped = withActiveItem(GenresList);
 const MoviesListWrapped = withActiveMovie(MoviesList);
@@ -16,6 +15,7 @@ const MoviesListWrapped = withActiveMovie(MoviesList);
 const Main = (props) => {
   const {
     activeGenre,
+    genres,
     promoMovie,
     movies,
     moviesCount,
@@ -34,9 +34,8 @@ const Main = (props) => {
   } = promoMovie;
 
   const posterAlt = `${promoMovieTitle} poster`;
-  const currentMovies = getMoviesByGenre(activeGenre, movies);
-  const showedMovies = currentMovies.slice(0, moviesCount);
-  const hasHiddenMovies = (currentMovies.length > moviesCount);
+  const showedMovies = movies.slice(0, moviesCount);
+  const hasHiddenMovies = movies.length > moviesCount;
 
   return <React.Fragment>
     <section className="movie-card">
@@ -100,7 +99,7 @@ const Main = (props) => {
 
         <GenresListWrapped
           activeItem={activeGenre}
-          movies={movies}
+          genres={genres}
           onActiveChange={onGenreClick}
         />
 
@@ -132,6 +131,7 @@ const Main = (props) => {
 
 Main.propTypes = {
   activeGenre: PropTypes.string.isRequired,
+  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
   promoMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)

@@ -1,6 +1,6 @@
 import {createSelector} from "reselect";
 import NameSpace from "../name-space.js";
-import {DEFAULT_GENRE} from "../../const.js";
+import {DEFAULT_GENRE, MAX_GENRES_COUNT} from "../../const.js";
 
 const NAME_SPACE = NameSpace.DATA;
 
@@ -28,12 +28,30 @@ export const getErrorState = (state) => {
   return state[NAME_SPACE].hasErrors;
 };
 
-export const getMoviesByGenre = createSelector(
+export const selectMoviesByGenre = createSelector(
     [getMovies, getGenre],
     (movies, genre) => {
       if (genre === DEFAULT_GENRE) {
         return movies;
       }
       return movies.filter((movie) => movie.genre === genre);
+    }
+);
+
+export const selectSimilarMovies = createSelector(
+    [getMovies, getActiveMovie],
+    (movies, activeMovie) => {
+      return movies.filter((movie) => movie.genre === activeMovie.genre && movie.id !== activeMovie.id);
+    }
+);
+
+export const selectMoviesGenres = createSelector(
+    getMovies,
+    (movies) => {
+      const genres = movies.map((movie) => movie.genre)
+        .filter((item, i, items) => items.indexOf(item) === i)
+        .slice(0, MAX_GENRES_COUNT);
+      genres.unshift(DEFAULT_GENRE);
+      return genres;
     }
 );

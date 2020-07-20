@@ -30,7 +30,4 @@ const formatDate = (date) => date.toLocaleString(`en-US`, {day: `numeric`, month
 
 const formatDateTimeAttribute = (date) => date.toISOString().slice(0, DATE_STRING_LENGTH);
 
-const getUniqueItems = (elements) => elements.filter((item, i, items) => items.indexOf(item) === i);
-
-
-export {extend, formatDate, formatTime, formatDateTimeAttribute, formatElapsedTime, getUniqueItems};
+export {extend, formatDate, formatTime, formatDateTimeAttribute, formatElapsedTime};
