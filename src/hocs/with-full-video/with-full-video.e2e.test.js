@@ -1,7 +1,7 @@
 import React from "react";
 import {configure, mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import withFullVideo from "./with-full-video.jsx";
+import {withFullVideo} from "./with-full-video.jsx";
 import PropTypes from "prop-types";
 import {testMovies} from "../../test-mocks/test-films.js";
 

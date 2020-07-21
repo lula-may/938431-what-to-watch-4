@@ -1,6 +1,9 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
+
 import {movieShape} from "../../components/shapes";
+import {getActiveMovie} from "../../reducer/data/selectors.js";
 
 const withFullVideo = (Component) => {
   class WithFullVideo extends PureComponent {
@@ -117,4 +120,10 @@ const withFullVideo = (Component) => {
 
 };
 
-export default withFullVideo;
+const mapStateToProps = (state) => ({
+  movie: getActiveMovie(state),
+});
+
+export {withFullVideo};
+
+export default (Comp) => connect(mapStateToProps)(withFullVideo(Comp));

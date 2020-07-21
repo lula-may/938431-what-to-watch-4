@@ -1,4 +1,5 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import GenresList from "../genres-list/genres-list.jsx";
@@ -8,6 +9,11 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 
 import {movieShape} from "../shapes.js";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
+import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
+import {getGenre, getPromoMovie, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getMoviesCount} from "../../reducer/app-state/selectors.js";
+import {Page} from "../../const.js";
 
 const GenresListWrapped = withActiveItem(GenresList);
 const MoviesListWrapped = withActiveMovie(MoviesList);
@@ -132,7 +138,6 @@ const Main = (props) => {
 Main.propTypes = {
   activeGenre: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
-  promoMovie: PropTypes.shape(movieShape).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
@@ -141,6 +146,37 @@ Main.propTypes = {
   onMovieCardClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
+  promoMovie: PropTypes.shape(movieShape).isRequired,
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  activeGenre: getGenre(state),
+  genres: selectMoviesGenres(state),
+  movies: selectMoviesByGenre(state),
+  moviesCount: getMoviesCount(state),
+  promoMovie: getPromoMovie(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGenreClick(genre) {
+    dispatch(DataActionCreator.setGenre(genre));
+    dispatch(StateActionCreator.resetCount());
+  },
+
+  onMovieCardClick(movie) {
+    dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setPage(Page.DETAILS));
+  },
+
+  onPlayButtonClick() {
+    dispatch(StateActionCreator.saveCurrentPage());
+    dispatch(StateActionCreator.setPage(Page.PLAYER));
+  },
+
+  onShowMoreButtonClick() {
+    dispatch(StateActionCreator.incrementMoviesCount());
+  }
+});
+
+export {Main};
+export default connect(mapStateToProps, mapDispatchToProps)(Main);

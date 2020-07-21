@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import PropTypes from "prop-types";
-import withFullVideo from "./with-full-video.jsx";
+import {withFullVideo} from "./with-full-video.jsx";
 import {testMovies} from "../../test-mocks/test-films.js";
 
 const movie = testMovies[0];

@@ -5,40 +5,37 @@ import configureStore from "redux-mock-store";
 
 import {App} from "./app.jsx";
 import {testMovies} from "../../test-mocks/test-films";
+import NameSpace from "../../reducer/name-space.js";
 
 const mockStore = configureStore([]);
 
 const promoMovie = testMovies[0];
-const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
-const similarMovies = testMovies.slice(0, 2);
 
 describe(`App Component`, () => {
   it(`Should render MainComponent`, () => {
     const store = mockStore({
-      moviesCount: 4,
-      genre: `All movies`,
-      movies: testMovies,
-      page: `main`,
+      [NameSpace.DATA]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
+        hasErrors: false,
+        isLoading: false,
+        movies: testMovies,
+        promoMovie,
+      },
+      [NameSpace.APP_STATE]: {
+        moviesCount: 4,
+        page: `main`,
+        previousPage: undefined,
+      },
     });
 
     const tree = renderer.create(
         <Provider store={store}>
           <App
-            activeMovie={promoMovie}
-            activeGenre={`All genres`}
-            genres={genres}
             hasErrors={false}
             isLoading={false}
-            movies={testMovies}
-            moviesCount={4}
             onExitButtonClick={() => {}}
-            onGenreClick={() =>{}}
-            onCardClick={() => {}}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={() => {}}
             page={`main`}
-            promoMovie={promoMovie}
-            similarMovies={similarMovies}
           />
         </Provider>
     )
@@ -48,30 +45,28 @@ describe(`App Component`, () => {
 
   it(`Should render MovieDetailsComponent`, () => {
     const store = mockStore({
-      moviesCount: 4,
-      genre: `All movies`,
-      movies: testMovies,
-      page: `details`,
+      [NameSpace.DATA]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
+        hasErrors: false,
+        isLoading: false,
+        movies: testMovies,
+        promoMovie,
+      },
+      [NameSpace.APP_STATE]: {
+        moviesCount: 4,
+        page: `details`,
+        previousPage: undefined,
+      },
     });
 
     const tree = renderer.create(
         <Provider store={store}>
           <App
-            activeMovie={promoMovie}
-            activeGenre={`All genres`}
-            genres={genres}
             hasErrors={false}
             isLoading={false}
-            movies={testMovies}
-            moviesCount={4}
             onExitButtonClick={() => {}}
-            onGenreClick={() =>{}}
-            onCardClick={() => {}}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={() => {}}
             page={`details`}
-            promoMovie={promoMovie}
-            similarMovies={similarMovies}
           />
         </Provider>
     )
@@ -81,30 +76,28 @@ describe(`App Component`, () => {
 
   it(`Should render PlayerComponent`, () => {
     const store = mockStore({
-      moviesCount: 4,
-      genre: `All movies`,
-      movies: testMovies,
-      page: `player`,
+      [NameSpace.DATA]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
+        hasErrors: false,
+        isLoading: false,
+        movies: testMovies,
+        promoMovie,
+      },
+      [NameSpace.APP_STATE]: {
+        moviesCount: 4,
+        page: `player`,
+        previousPage: undefined,
+      },
     });
 
     const tree = renderer.create(
         <Provider store={store}>
           <App
-            activeMovie={promoMovie}
-            activeGenre={`All genres`}
-            genres={genres}
             hasErrors={false}
             isLoading={false}
-            movies={testMovies}
-            moviesCount={4}
             onExitButtonClick={() => {}}
-            onGenreClick={() =>{}}
-            onCardClick={() => {}}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={() => {}}
             page={`player`}
-            promoMovie={promoMovie}
-            similarMovies={similarMovies}
           />
         </Provider>, {createNodeMock: () => {
           return {};
@@ -113,5 +106,4 @@ describe(`App Component`, () => {
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
-
 });

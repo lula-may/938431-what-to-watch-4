@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 
-import Main from "./main.jsx";
+import {Main} from "./main.jsx";
 import {testMovies} from "../../test-mocks/test-films";
 
 const promoMovie = testMovies[0];
