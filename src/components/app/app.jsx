@@ -2,39 +2,24 @@ import React, {PureComponent} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
+
+import ErrorScreen from "../error-screen/error-screen.jsx";
+import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
-import {movieShape} from "../shapes.js";
-import {ActionCreator} from "../../reducer.js";
 
-const Page = {
-  MAIN: `main`,
-  DETAILS: `details`,
-  PLAYER: `player`,
-};
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
+import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
+import {getPage} from "../../reducer/app-state/selectors.js";
+import {Page} from "../../const.js";
 
 const PlayerWrapped = withFullVideo(Player);
 
 class App extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movie: this.props.headerMovie,
-      page: Page.MAIN,
-      previousPage: null,
-    };
-
-    this._handleCardClick = this._handleCardClick.bind(this);
-    this._handleExitPlayerButtonClick = this._handleExitPlayerButtonClick.bind(this);
-    this._handlePlayButtonClick = this._handlePlayButtonClick.bind(this);
-  }
-
   render() {
-    const {movie} = this.state;
-    const {movies} = this.props;
-
+    const {onExitButtonClick} = this.props;
     return (
       <BrowserRouter>
         <Switch>
@@ -42,17 +27,11 @@ class App extends PureComponent {
             {this._renderApp()}
           </Route>
           <Route exact path="/dev-film">
-            <MovieDetails
-              movie={movie}
-              allMovies={movies}
-              onMovieCardClick={this._handleCardClick}
-              onPlayButtonClick={this._handlePlayButtonClick}
-            />
+            <MovieDetails/>
           </Route>
           <Route exact path="/dev-player">
             <PlayerWrapped
-              movie={movie}
-              onExitButtonClick={this._handleExitPlayerButtonClick}
+              onExitButtonClick={onExitButtonClick}
             />
           </Route>
         </Switch>
@@ -61,93 +40,50 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {
-      activeGenre,
-      headerMovie,
-      movies,
-      moviesCount,
-      onGenreClick,
-      onShowMoreButtonClick,
-    } = this.props;
+    const {hasErrors, isLoading, onExitButtonClick, page} = this.props;
 
-    const {movie, page} = this.state;
+    if (isLoading) {
+      return (
+        <LoadingScreen/>
+      );
+    }
+    if (hasErrors) {
+      return (
+        <ErrorScreen/>
+      );
+    }
 
     switch (page) {
       case Page.MAIN:
-        return <Main
-          activeGenre={activeGenre}
-          headerMovie={headerMovie}
-          movies={movies}
-          moviesCount={moviesCount}
-          onGenreClick={onGenreClick}
-          onMovieCardClick={this._handleCardClick}
-          onPlayButtonClick={this._handlePlayButtonClick}
-          onShowMoreButtonClick={onShowMoreButtonClick}
-        />;
+        return <Main/>;
       case Page.DETAILS:
-        return <MovieDetails
-          movie={movie}
-          allMovies={movies}
-          onMovieCardClick={this._handleCardClick}
-          onPlayButtonClick={this._handlePlayButtonClick}
-        />;
+        return <MovieDetails/>;
       case Page.PLAYER:
         return <PlayerWrapped
-          movie={movie}
-          onExitButtonClick={this._handleExitPlayerButtonClick}
+          onExitButtonClick={onExitButtonClick}
         />;
       default: return null;
     }
   }
-
-  _handleCardClick(movie) {
-    this.setState({
-      page: Page.DETAILS,
-      movie
-    });
-  }
-
-  _handleExitPlayerButtonClick() {
-    this.setState((oldState) => ({
-      page: oldState.previousPage,
-      previousPage: null,
-    }));
-  }
-
-  _handlePlayButtonClick() {
-    this.setState((oldState) => ({
-      page: Page.PLAYER,
-      previousPage: oldState.page,
-    }));
-  }
 }
 
 App.propTypes = {
-  activeGenre: PropTypes.string.isRequired,
-  headerMovie: PropTypes.shape(movieShape).isRequired,
-  movies: PropTypes.arrayOf(
-      PropTypes.shape(movieShape)
-  ).isRequired,
-  moviesCount: PropTypes.number.isRequired,
-  onGenreClick: PropTypes.func.isRequired,
-  onShowMoreButtonClick: PropTypes.func.isRequired,
+  hasErrors: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  onExitButtonClick: PropTypes.func.isRequired,
+  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: state.genre,
-  movies: state.movies,
-  moviesCount: state.moviesCount,
+  hasErrors: getErrorState(state),
+  isLoading: getLoadingState(state),
+  page: getPage(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onGenreClick(genre) {
-    dispatch(ActionCreator.setGenre(genre));
-    dispatch(ActionCreator.resetCount());
+  onExitButtonClick() {
+    dispatch(StateActionCreator.returnToPreviousPage());
   },
-
-  onShowMoreButtonClick() {
-    dispatch(ActionCreator.incrementMoviesCount());
-  }
 });
 
 export {App};

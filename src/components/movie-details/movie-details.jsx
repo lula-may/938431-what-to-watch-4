@@ -1,36 +1,42 @@
 import React from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
+
 import MoviesList from "../movies-list/movies-list.jsx";
 import Tabs from "../tabs/tabs.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
+
 import {movieShape} from "../shapes";
-import {SIMILAR_MOVIES_COUNT, TabType} from "../../const";
+import {Page, SIMILAR_MOVIES_COUNT, TabType} from "../../const";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
+import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
+import {getActiveMovie, selectSimilarMovies} from "../../reducer/data/selectors.js";
 
 const MoviesListWrapped = withActiveMovie(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 const MovieDetails = (props) => {
   const {
-    allMovies,
+    similarMovies,
     movie,
     onMovieCardClick,
     onPlayButtonClick,
   } = props;
   const {
-    bigPoster,
+    bgColor,
+    bgPoster,
     genre,
     poster,
     releaseYear,
     title,
   } = movie;
-  const similarMovies = allMovies.filter((item) => (item.genre === movie.genre && item.id !== movie.id));
 
   return <React.Fragment>
-    <section className="movie-card movie-card--full">
+    <section className="movie-card movie-card--full" style={{backgroundColor: bgColor}}>
       <div className="movie-card__hero">
         <div className="movie-card__bg">
-          <img src={bigPoster} alt={title} />
+          <img src={bgPoster} alt={title} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -121,11 +127,29 @@ const MovieDetails = (props) => {
 
 MovieDetails.propTypes = {
   movie: PropTypes.shape(movieShape).isRequired,
-  allMovies: PropTypes.arrayOf(
+  similarMovies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
 };
 
-export default MovieDetails;
+const mapStateToProps = (state) => ({
+  movie: getActiveMovie(state),
+  similarMovies: selectSimilarMovies(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onMovieCardClick(movie) {
+    dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setPage(Page.DETAILS));
+  },
+
+  onPlayButtonClick() {
+    dispatch(StateActionCreator.saveCurrentPage());
+    dispatch(StateActionCreator.setPage(Page.PLAYER));
+  },
+});
+
+export {MovieDetails};
+export default connect(mapStateToProps, mapDispatchToProps)(MovieDetails);

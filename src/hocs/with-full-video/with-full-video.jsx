@@ -1,6 +1,9 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
+
 import {movieShape} from "../../components/shapes";
+import {getActiveMovie} from "../../reducer/data/selectors.js";
 
 const withFullVideo = (Component) => {
   class WithFullVideo extends PureComponent {
@@ -23,7 +26,7 @@ const withFullVideo = (Component) => {
 
     render() {
       const {elapsedTime, isPlaying, progress} = this.state;
-      const {movie: {bigPoster}} = this.props;
+      const {movie: {bgPoster}} = this.props;
       const progressValue = Math.round(progress * 100 / this._duration);
       return (
         <Component
@@ -37,7 +40,7 @@ const withFullVideo = (Component) => {
           <video
             className="player__video"
             ref={this._videoRef}
-            poster={bigPoster}
+            poster={bgPoster}
           />
         </Component>
       );
@@ -117,4 +120,10 @@ const withFullVideo = (Component) => {
 
 };
 
-export default withFullVideo;
+const mapStateToProps = (state) => ({
+  movie: getActiveMovie(state),
+});
+
+export {withFullVideo};
+
+export default (Comp) => connect(mapStateToProps)(withFullVideo(Comp));
