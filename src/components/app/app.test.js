@@ -106,4 +106,71 @@ describe(`App Component`, () => {
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
+
+  it(`Should render ErrorScreen Component`, () => {
+    const store = mockStore({
+      [NameSpace.DATA]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
+        hasErrors: true,
+        isLoading: false,
+        movies: testMovies,
+        promoMovie,
+      },
+      [NameSpace.APP_STATE]: {
+        moviesCount: 4,
+        page: `main`,
+        previousPage: undefined,
+      },
+    });
+
+    const tree = renderer.create(
+        <Provider store={store}>
+          <App
+            hasErrors={true}
+            isLoading={false}
+            onExitButtonClick={() => {}}
+            page={`main`}
+          />
+        </Provider>, {createNodeMock: () => {
+          return {};
+        }}
+    )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it(`Should render LoadingScreen Component`, () => {
+    const store = mockStore({
+      [NameSpace.DATA]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
+        hasErrors: false,
+        isLoading: true,
+        movies: testMovies,
+        promoMovie,
+      },
+      [NameSpace.APP_STATE]: {
+        moviesCount: 4,
+        page: `main`,
+        previousPage: undefined,
+      },
+    });
+
+    const tree = renderer.create(
+        <Provider store={store}>
+          <App
+            hasErrors={false}
+            isLoading={true}
+            onExitButtonClick={() => {}}
+            page={`main`}
+          />
+        </Provider>, {createNodeMock: () => {
+          return {};
+        }}
+    )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
 });
