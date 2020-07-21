@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ErrorComponent should render correctly Error component 1`] = `
+exports[`ErrorComponent should render correctly ErrorScreen component 1`] = `
 <div
   className="user-page"
 >

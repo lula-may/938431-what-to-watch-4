@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 
-const Error = () => {
+const ErrorScreen = () => {
   return (
     <Fragment>
       <div className="user-page">
@@ -42,4 +42,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default ErrorScreen;
