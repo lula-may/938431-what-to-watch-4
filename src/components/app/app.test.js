@@ -16,6 +16,7 @@ describe(`App Component`, () => {
     const store = mockStore({
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
+        authorizationStatus: `AUTH`,
         genre: `All movies`,
         hasErrors: false,
         isLoading: false,
@@ -27,6 +28,10 @@ describe(`App Component`, () => {
         page: `main`,
         previousPage: undefined,
       },
+      [NameSpace.USER]: {
+        authorizationStatus: `AUTH`,
+        avatarUrl: `img/avatar.jpg`,
+      }
     });
 
     const tree = renderer.create(
@@ -58,6 +63,10 @@ describe(`App Component`, () => {
         page: `details`,
         previousPage: undefined,
       },
+      [NameSpace.USER]: {
+        authorizationStatus: `AUTH`,
+        avatarUrl: `img/avatar.jpg`,
+      }
     });
 
     const tree = renderer.create(
@@ -88,6 +97,10 @@ describe(`App Component`, () => {
         moviesCount: 4,
         page: `player`,
         previousPage: undefined,
+      },
+      [NameSpace.USER]: {
+        authorizationStatus: `AUTH`,
+        avatarUrl: `img/avatar.jpg`,
       },
     });
 
@@ -122,6 +135,10 @@ describe(`App Component`, () => {
         page: `main`,
         previousPage: undefined,
       },
+      [NameSpace.USER]: {
+        authorizationStatus: `AUTH`,
+        avatarUrl: `img/avatar.jpg`,
+      }
     });
 
     const tree = renderer.create(
@@ -155,6 +172,10 @@ describe(`App Component`, () => {
         page: `main`,
         previousPage: undefined,
       },
+      [NameSpace.USER]: {
+        authorizationStatus: `AUTH`,
+        avatarUrl: `img/avatar.jpg`,
+      }
     });
 
     const tree = renderer.create(

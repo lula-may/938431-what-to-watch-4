@@ -31,6 +31,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -53,6 +55,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -76,6 +80,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -99,6 +105,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}

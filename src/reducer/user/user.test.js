@@ -6,6 +6,7 @@ describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
       authorizationStatus: `NO_AUTH`,
+      avatarUrl: ``,
     });
   });
 
@@ -46,6 +47,19 @@ describe(`Reducer`, () => {
       authorizationStatus: `AUTH`,
     });
   });
+
+  it(`should set a given url to user avatar`, () => {
+    expect(reducer({
+      authorizationStatus: AuthorizationStatus.AUTH,
+      avatarUrl: ``,
+    }, {
+      type: ActionType.SET_AVATAR_URL,
+      payload: `picture.jpg`,
+    })).toEqual({
+      authorizationStatus: `AUTH`,
+      avatarUrl: `picture.jpg`,
+    });
+  });
 });
 
 describe(`ActionCreator`, () => {
@@ -58,6 +72,13 @@ describe(`ActionCreator`, () => {
     expect(ActionCreator.requireAuthorization(AuthorizationStatus.NO_AUTH)).toEqual({
       type: ActionType.REQUIRE_AUTHORIZATION,
       payload: AuthorizationStatus.NO_AUTH,
+    });
+  });
+
+  it(`should return correct action for setting user avatar url`, () => {
+    expect(ActionCreator.setAvatarUrl(`picture.jpg`)).toEqual({
+      type: ActionType.SET_AVATAR_URL,
+      payload: `picture.jpg`,
     });
   });
 });
@@ -96,14 +117,18 @@ describe(`Operation`, () => {
     const authorizationChecker = Operation.checkAuth();
 
     MockApi.onGet(`/login`)
-    .reply(200);
+    .reply(200, {[`avatar_url`]: `/picture.jpg`});
 
     return authorizationChecker(dispatch, () => {}, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(1);
-      expect(dispatch).toHaveBeenCalledWith({
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch.mock.calls[0][0]).toEqual({
         type: ActionType.REQUIRE_AUTHORIZATION,
         payload: `AUTH`,
+      });
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_AVATAR_URL,
+        payload: `https://4.react.pages.academy/picture.jpg`,
       });
     });
   });
