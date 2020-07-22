@@ -8,6 +8,7 @@ import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
+import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
@@ -34,6 +35,12 @@ class App extends PureComponent {
               onExitButtonClick={onExitButtonClick}
             />
           </Route>
+          <Route exact path="/dev-sign-in">
+            <SignIn
+              onSubmit={() => {}}
+            />
+          </Route>
+
         </Switch>
       </BrowserRouter>
     );
