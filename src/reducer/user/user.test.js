@@ -132,4 +132,30 @@ describe(`Operation`, () => {
       });
     });
   });
+
+  it(`should make a correct API call on user loged in`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+    const loginMaker = Operation.login({
+      email: `email`,
+      password: `password`,
+    });
+
+    MockApi.onPost(`/login`)
+    .reply(200, {[`avatar_url`]: `/picture.jpg`});
+
+    return loginMaker(dispatch, () => {}, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.REQUIRE_AUTHORIZATION,
+        payload: `AUTH`,
+      });
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_AVATAR_URL,
+        payload: `https://4.react.pages.academy/picture.jpg`,
+      });
+    });
+  });
 });

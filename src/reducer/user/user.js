@@ -42,6 +42,16 @@ const Operation = {
     })
     .catch((err) => err);
   },
+
+  login: (authData) => (dispatch, getState, api) => {
+    return api.post(`/login`, authData)
+    .then((response) => {
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      const avatarUrl = `${BASE_URL}${response.data[`avatar_url`]}`;
+      dispatch(ActionCreator.setAvatarUrl(avatarUrl));
+    })
+    .catch((err) => err);
+  },
 };
 
 const reducer = (state = initialState, action) => {

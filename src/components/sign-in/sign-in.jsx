@@ -1,5 +1,7 @@
 import React, {PureComponent, createRef} from "react";
+import {connect} from "react-redux";
 import PropTypes from "prop-types";
+import {ActionCreator} from "../../reducer/user/user";
 
 class SignIn extends PureComponent {
   constructor(props) {
@@ -30,13 +32,13 @@ class SignIn extends PureComponent {
             <div className="sign-in__fields">
               <div className="sign-in__field">
                 <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"
-                  ref={this._emailRef}
+                  ref={this._emailRef} required
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
                 <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password"
-                  ref={this._passwordRef}
+                  ref={this._passwordRef} required
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
@@ -79,5 +81,12 @@ SignIn.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default SignIn;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit: (authData) => {
+    dispatch(ActionCreator.login(authData));
+  },
+});
+
+export {SignIn};
+export default connect(() => {}, mapDispatchToProps)(SignIn);
 
