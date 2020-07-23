@@ -33,6 +33,7 @@ const Main = (props) => {
     onMovieCardClick,
     onPlayButtonClick,
     onShowMoreButtonClick,
+    onSignInClick,
   } = props;
 
   const {
@@ -70,7 +71,7 @@ const Main = (props) => {
             ? <div className="user-block__avatar">
               <img src={avatar} alt="User avatar" width="63" height="63" />
             </div>
-            : <a href="sign-in.html" className="user-block__link">Sign in</a>
+            : <a href="sign-in.html" className="user-block__link" onClick={onSignInClick}>Sign in</a>
           }
         </div>
       </header>
@@ -156,6 +157,7 @@ Main.propTypes = {
   onMovieCardClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
+  onSignInClick: PropTypes.func.isRequired,
   promoMovie: PropTypes.shape(movieShape).isRequired,
 };
 
@@ -187,6 +189,11 @@ const mapDispatchToProps = (dispatch) => ({
 
   onShowMoreButtonClick() {
     dispatch(StateActionCreator.incrementMoviesCount());
+  },
+
+  onSignInClick(evt) {
+    evt.preventDefault();
+    dispatch(StateActionCreator.setPage(Page.SIGN_IN));
   }
 });
 

@@ -41,6 +41,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={onMovieCardClick}
             onPlayButtonClick={() => {}}
             onShowMoreButtonClick={() => {}}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -65,6 +66,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={() => {}}
             onPlayButtonClick={() => {}}
             onShowMoreButtonClick={() => {}}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -90,6 +92,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={() => {}}
             onPlayButtonClick={() => {}}
             onShowMoreButtonClick={onShowMoreButtonClick}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -115,6 +118,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={() => {}}
             onPlayButtonClick={onPlayButtonClick}
             onShowMoreButtonClick={() => {}}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -122,5 +126,4 @@ describe(`MainComponent`, () => {
     playButton.simulate(`click`, {preventDefault: () => {}});
     expect(onPlayButtonClick).toHaveBeenCalledTimes(1);
   });
-
 });

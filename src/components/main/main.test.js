@@ -22,6 +22,7 @@ describe(`Main Component`, () => {
           onMovieCardClick={() => {}}
           onPlayButtonClick={() => {}}
           onShowMoreButtonClick={() => {}}
+          onSignInClick={() => {}}
         />
     )
       .toJSON();
