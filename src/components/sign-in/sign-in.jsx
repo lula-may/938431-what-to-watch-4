@@ -1,7 +1,8 @@
 import React, {PureComponent, createRef} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {ActionCreator} from "../../reducer/user/user";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors.js";
 
 class SignIn extends PureComponent {
   constructor(props) {
@@ -13,6 +14,7 @@ class SignIn extends PureComponent {
   }
 
   render() {
+    const {hasLoginError, isInvalidEmail} = this.props;
     return (
       <div className="user-page">
         <header className="page-header user-page__head">
@@ -29,10 +31,11 @@ class SignIn extends PureComponent {
 
         <div className="sign-in user-page__content">
           <form action="#" className="sign-in__form" onSubmit={this._handleFormSubmit}>
+            {hasLoginError && this._renderMessage()}
             <div className="sign-in__fields">
-              <div className="sign-in__field">
+              <div className={`sign-in__field${isInvalidEmail ? ` sign-in__field--error` : ``}`}>
                 <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"
-                  ref={this._emailRef} required
+                  ref={this._emailRef}
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
@@ -66,6 +69,25 @@ class SignIn extends PureComponent {
     );
   }
 
+  _renderMessage() {
+    const {hasLoginError, isInvalidEmail} = this.props;
+    if (isInvalidEmail) {
+      return (
+        <div className="sign-in__message">
+          <p>Please enter a valid email address</p>
+        </div>
+      );
+    }
+    if (hasLoginError) {
+      return (
+        <div className="sign-in__message">
+          <p>We can&apos;t recognize this email <br/> and password combination. Please try again.</p>
+        </div>
+      );
+    }
+    return null;
+  }
+
   _handleFormSubmit(evt) {
     const {onSubmit} = this.props;
 
@@ -78,15 +100,23 @@ class SignIn extends PureComponent {
 }
 
 SignIn.propTypes = {
+  hasLoginError: PropTypes.bool.isRequired,
+  isInvalidEmail: PropTypes.bool.isRequired,
+  loginError: PropTypes.object,
   onSubmit: PropTypes.func.isRequired,
 };
 
+const mapStateToProps = (state) => ({
+  hasLoginError: getLoginErrorStatus(state),
+  isInvalidEmail: getEmailValidity(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   onSubmit: (authData) => {
-    dispatch(ActionCreator.login(authData));
+    dispatch(UserOperation.login(authData));
   },
 });
 
 export {SignIn};
-export default connect(() => {}, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
 

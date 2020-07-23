@@ -7,6 +7,8 @@ describe(`Reducer`, () => {
     expect(reducer(undefined, {})).toEqual({
       authorizationStatus: `NO_AUTH`,
       avatarUrl: ``,
+      hasLoginError: false,
+      loginError: null,
     });
   });
 
@@ -60,6 +62,40 @@ describe(`Reducer`, () => {
       avatarUrl: `picture.jpg`,
     });
   });
+
+  it(`should set a given error and set hasLoginError: true`, () => {
+    expect(reducer({
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      avatarUrl: ``,
+      hasLoginError: false,
+      loginError: null,
+    }, {
+      type: ActionType.SET_LOGIN_ERROR,
+      payload: {status: 400},
+    })).toEqual({
+      authorizationStatus: `NO_AUTH`,
+      avatarUrl: ``,
+      hasLoginError: true,
+      loginError: {status: 400},
+    });
+  });
+
+  it(`should clear error and set hasLoginError: false`, () => {
+    expect(reducer({
+      authorizationStatus: AuthorizationStatus.NO_AUTH,
+      avatarUrl: ``,
+      hasLoginError: true,
+      loginError: {status: 400},
+    }, {
+      type: ActionType.CLEAR_LOGIN_ERROR,
+    })).toEqual({
+      authorizationStatus: `NO_AUTH`,
+      avatarUrl: ``,
+      hasLoginError: false,
+      loginError: null,
+    });
+  });
+
 });
 
 describe(`ActionCreator`, () => {
@@ -81,6 +117,20 @@ describe(`ActionCreator`, () => {
       payload: `picture.jpg`,
     });
   });
+
+  it(`should return correct action for setting login error`, () => {
+    expect(ActionCreator.setLoginError({status: 400})).toEqual({
+      type: ActionType.SET_LOGIN_ERROR,
+      payload: {status: 400},
+    });
+  });
+
+  it(`should return correct action for error clearing`, () => {
+    expect(ActionCreator.clearLoginError()).toEqual({
+      type: ActionType.CLEAR_LOGIN_ERROR,
+    });
+  });
+
 });
 
 describe(`Operation`, () => {
@@ -147,14 +197,41 @@ describe(`Operation`, () => {
 
     return loginMaker(dispatch, () => {}, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(2);
+      expect(dispatch).toHaveBeenCalledTimes(3);
       expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.CLEAR_LOGIN_ERROR,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
         type: ActionType.REQUIRE_AUTHORIZATION,
         payload: `AUTH`,
       });
-      expect(dispatch.mock.calls[1][0]).toEqual({
+      expect(dispatch.mock.calls[2][0]).toEqual({
         type: ActionType.SET_AVATAR_URL,
         payload: `https://4.react.pages.academy/picture.jpg`,
+      });
+    });
+  });
+
+  it(`should pass a correct action when login call failed`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+    const loginMaker = Operation.login({
+      email: ``,
+      password: `password`,
+    });
+
+    MockApi.onPost(`/login`)
+    .reply(400, {status: 400});
+
+    return loginMaker(dispatch, () => {}, api)
+    .then((response) => response)
+    .catch(() => {
+      expect(dispatch).toHaveBeenCalledTimes(1);
+      expect(dispatch).toHaveBeenCalledWith({
+        type: ActionType.SET_LOGIN_ERROR,
+        payload: {status: 400},
       });
     });
   });

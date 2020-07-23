@@ -13,6 +13,8 @@ describe(`SignIn Component`, () => {
 
     const wrapper = mount(
         <SignIn
+          hasLoginError={false}
+          isInvalidEmail={false}
           onSubmit={onSubmit}
         />
     );
