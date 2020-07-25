@@ -238,4 +238,48 @@ describe(`App Component`, () => {
       .toJSON();
     expect(tree).toMatchSnapshot();
   });
+
+  it(`Should render AddReview Component`, () => {
+    const store = mockStore({
+      [NameSpace.DATA]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
+        hasCommentUploadingError: false,
+        hasFilmsLoadingError: false,
+        isLoading: false,
+        isUploading: false,
+        movies: testMovies,
+        promoMovie,
+      },
+      [NameSpace.APP_STATE]: {
+        moviesCount: 4,
+        page: `add-review`,
+        previousPage: undefined,
+      },
+      [NameSpace.USER]: {
+        authorizationStatus: `AUTH`,
+        avatarUrl: `img/avatar.jpg`,
+        hasCommentUploadingError: false,
+        hasLoginError: false,
+        isInvalidEmail: false,
+      }
+    });
+
+    const tree = renderer.create(
+        <Provider store={store}>
+          <App
+            authorizationStatus={`NO_AUTH`}
+            hasFilmsLoadingError={false}
+            isLoading={false}
+            onExitButtonClick={() => {}}
+            page={`add-review`}
+          />
+        </Provider>, {createNodeMock: () => {
+          return {};
+        }}
+    )
+      .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
 });
