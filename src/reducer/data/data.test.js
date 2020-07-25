@@ -1,17 +1,18 @@
 import {ActionCreator, ActionType, Operation, reducer} from "./data.js";
 import MockAdapter from "axios-mock-adapter";
-import {testMovies} from "../../test-mocks/test-films.js";
+import {reviews, testMovies} from "../../test-mocks/test-films.js";
 import {createApi} from "../../api.js";
-import {adaptMovie, adaptMovies} from "../../adapter.js";
+import {adaptMovie, adaptMovies, adaptComments} from "../../adapter.js";
 
 const movie = testMovies[0];
-
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
       activeMovie: {},
+      comments: [],
       genre: `All genres`,
-      hasErrors: false,
+      hasCommentUploadingError: false,
+      hasFilmsLoadingError: false,
       isLoading: false,
       movies: [],
       promoMovie: {},
@@ -33,13 +34,13 @@ describe(`Reducer`, () => {
     expect(reducer({
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     }, {
       type: ActionType.START_LOADING,
     })).toEqual({
       movies: [],
       isLoading: true,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     });
   });
 
@@ -47,37 +48,76 @@ describe(`Reducer`, () => {
     expect(reducer({
       movies: [],
       isLoading: true,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     }, {
       type: ActionType.END_LOADING,
     })).toEqual({
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     });
   });
 
-  it(`should set error when set error action supplied`, () => {
+  it(`should set movies loading error when set error action supplied`, () => {
     expect(reducer({
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     }, {
-      type: ActionType.SET_ERROR,
+      type: ActionType.SET_FILMS_LOADING_ERROR,
       payload: true,
     })).toEqual({
       movies: [],
       isLoading: false,
-      hasErrors: true,
+      hasFilmsLoadingError: true,
     });
   });
+
+  it(`should set comment uploading error when set comment uploading error action supplied`, () => {
+    expect(reducer({
+      movies: [],
+      isLoading: false,
+      hasFilmsLoadingError: false,
+      hasCommentUploadingError: false,
+    }, {
+      type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+      payload: true,
+    })).toEqual({
+      movies: [],
+      isLoading: false,
+      hasFilmsLoadingError: false,
+      hasCommentUploadingError: true,
+    });
+  });
+
+  it(`should set comments when set comments action supplied`, () => {
+    expect(reducer({
+      activeMovie: movie,
+      comments: [],
+      movies: [],
+      isLoading: false,
+      hasFilmsLoadingError: false,
+      hasCommentUploadingError: false,
+    }, {
+      type: ActionType.SET_MOVIE_COMMENTS,
+      payload: reviews,
+    })).toEqual({
+      activeMovie: movie,
+      comments: reviews,
+      movies: [],
+      isLoading: false,
+      hasFilmsLoadingError: false,
+      hasCommentUploadingError: false,
+    });
+  });
+
 
   it(`should set genre when set genre action supplied`, () => {
     expect(reducer({
       genre: `All movies`,
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     }, {
       type: ActionType.SET_GENRE,
       payload: `Crime`,
@@ -85,7 +125,7 @@ describe(`Reducer`, () => {
       genre: `Crime`,
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     });
   });
 
@@ -95,7 +135,7 @@ describe(`Reducer`, () => {
       activeMovie: {},
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     }, {
       type: ActionType.SET_ACTIVE_MOVIE,
       payload: movie,
@@ -104,7 +144,7 @@ describe(`Reducer`, () => {
       activeMovie: movie,
       movies: [],
       isLoading: false,
-      hasErrors: false,
+      hasFilmsLoadingError: false,
     });
   });
 
@@ -138,12 +178,20 @@ describe(`ActionCreator`, () => {
     });
   });
 
-  it(`should return correct action for error setting`, () => {
-    expect(ActionCreator.setError(true)).toEqual({
-      type: ActionType.SET_ERROR,
+  it(`should return correct action for movies loading error setting`, () => {
+    expect(ActionCreator.setFilmsLoadingError(true)).toEqual({
+      type: ActionType.SET_FILMS_LOADING_ERROR,
       payload: true,
     });
   });
+
+  it(`should return correct action for comment uploading error setting`, () => {
+    expect(ActionCreator.setCommentUploadingError(true)).toEqual({
+      type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+      payload: true,
+    });
+  });
+
 });
 
 describe(`Operation`, () => {
@@ -168,7 +216,7 @@ describe(`Operation`, () => {
           type: ActionType.START_LOADING,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
-          type: ActionType.SET_ERROR,
+          type: ActionType.SET_FILMS_LOADING_ERROR,
           payload: false,
         });
         expect(dispatch.mock.calls[2][0]).toEqual({
@@ -205,16 +253,113 @@ describe(`Operation`, () => {
           type: ActionType.START_LOADING,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
-          type: ActionType.SET_ERROR,
+          type: ActionType.SET_FILMS_LOADING_ERROR,
           payload: false,
         });
         expect(dispatch.mock.calls[2][0]).toEqual({
           type: ActionType.END_LOADING,
         });
         expect(dispatch.mock.calls[3][0]).toEqual({
-          type: ActionType.SET_ERROR,
+          type: ActionType.SET_FILMS_LOADING_ERROR,
           payload: true,
         });
       });
+  });
+
+  it(`should make a correct API call on comment sending`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+
+    const getState = () => ({
+      DATA: {
+        activeMovie: {id: 1},
+      },
+    });
+
+    const commentUploader = Operation.postComment({
+      rating: 4,
+      comment: `This is the house that Jack built. And this is the malt that lay in the house that Jack built.`,
+    });
+
+    const commentAnswer = [{
+      "id": 1,
+      "user": {
+        "id": 4,
+        "name": `Kate Muir`
+      },
+      "rating": 8.9,
+      "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
+      "date": `2019-05-08T14:13:56.569Z`
+    }];
+
+    MockApi.onPost(`/comments/1`)
+    .reply(200, commentAnswer);
+
+    return commentUploader(dispatch, getState, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(4);
+
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.START_LOADING,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: ActionType.SET_MOVIE_COMMENTS,
+        payload: adaptComments(commentAnswer),
+      });
+      expect(dispatch.mock.calls[3][0]).toEqual({
+        type: ActionType.END_LOADING,
+      });
+    });
+  });
+
+  it(`should pass a correct action when comment post call failed`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+
+    const getState = () => ({
+      DATA: {
+        activeMovie: {id: 1},
+      },
+    });
+
+    const commentUploader = Operation.postComment({
+      rating: 4,
+      comment: `This is the house that Jack built. And this is the malt that lay in the house that Jack built.`,
+    });
+
+    MockApi.onPost(`/comments/1`)
+    .reply(400);
+
+    return commentUploader(dispatch, getState, api)
+    .then((response) => response)
+    .catch(() => {
+      expect(dispatch).toHaveBeenCalledTimes(4);
+
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.START_LOADING,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: ActionType.END_LOADING,
+      });
+
+      expect(dispatch.mock.calls[3][0]).toEqual({
+        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        payload: true,
+      });
+    });
   });
 });

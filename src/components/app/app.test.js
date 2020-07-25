@@ -18,7 +18,7 @@ describe(`App Component`, () => {
         activeMovie: promoMovie,
         authorizationStatus: `AUTH`,
         genre: `All movies`,
-        hasErrors: false,
+        hasFilmsLoadingError: false,
         isLoading: false,
         movies: testMovies,
         promoMovie,
@@ -38,7 +38,7 @@ describe(`App Component`, () => {
         <Provider store={store}>
           <App
             authorizationStatus={`AUTH`}
-            hasErrors={false}
+            hasFilmsLoadingError={false}
             isLoading={false}
             onExitButtonClick={() => {}}
             page={`main`}
@@ -54,7 +54,7 @@ describe(`App Component`, () => {
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
         genre: `All movies`,
-        hasErrors: false,
+        hasFilmsLoadingError: false,
         isLoading: false,
         movies: testMovies,
         promoMovie,
@@ -74,7 +74,7 @@ describe(`App Component`, () => {
         <Provider store={store}>
           <App
             authorizationStatus={`AUTH`}
-            hasErrors={false}
+            hasFilmsLoadingError={false}
             isLoading={false}
             onExitButtonClick={() => {}}
             page={`details`}
@@ -90,7 +90,7 @@ describe(`App Component`, () => {
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
         genre: `All movies`,
-        hasErrors: false,
+        hasFilmsLoadingError: false,
         isLoading: false,
         movies: testMovies,
         promoMovie,
@@ -110,7 +110,7 @@ describe(`App Component`, () => {
         <Provider store={store}>
           <App
             authorizationStatus={`AUTH`}
-            hasErrors={false}
+            hasFilmsLoadingError={false}
             isLoading={false}
             onExitButtonClick={() => {}}
             page={`player`}
@@ -128,7 +128,7 @@ describe(`App Component`, () => {
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
         genre: `All movies`,
-        hasErrors: true,
+        hasFilmsLoadingError: true,
         isLoading: false,
         movies: testMovies,
         promoMovie,
@@ -148,7 +148,7 @@ describe(`App Component`, () => {
         <Provider store={store}>
           <App
             authorizationStatus={`NO_AUTH`}
-            hasErrors={true}
+            hasFilmsLoadingError={true}
             isLoading={false}
             onExitButtonClick={() => {}}
             page={`main`}
@@ -166,7 +166,7 @@ describe(`App Component`, () => {
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
         genre: `All movies`,
-        hasErrors: false,
+        hasFilmsLoadingError: false,
         isLoading: true,
         movies: testMovies,
         promoMovie,
@@ -186,7 +186,7 @@ describe(`App Component`, () => {
         <Provider store={store}>
           <App
             authorizationStatus={`NO_AUTH`}
-            hasErrors={false}
+            hasFilmsLoadingError={false}
             isLoading={true}
             onExitButtonClick={() => {}}
             page={`main`}
@@ -204,7 +204,7 @@ describe(`App Component`, () => {
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
         genre: `All movies`,
-        hasErrors: false,
+        hasFilmsLoadingError: false,
         isLoading: false,
         movies: testMovies,
         promoMovie,
@@ -226,7 +226,7 @@ describe(`App Component`, () => {
         <Provider store={store}>
           <App
             authorizationStatus={`NO_AUTH`}
-            hasErrors={false}
+            hasFilmsLoadingError={false}
             isLoading={false}
             onExitButtonClick={() => {}}
             page={`signIn`}

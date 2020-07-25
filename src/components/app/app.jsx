@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
+import AddReview from "../add-review/add-review.jsx";
 import ErrorScreen from "../error-screen/error-screen.jsx";
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
@@ -10,6 +11,7 @@ import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
+import withSendingMessage from "../../hocs/with-sending-message/with-sending-message.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
@@ -19,6 +21,7 @@ import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const PlayerWrapped = withFullVideo(Player);
+const AddReviewWrapped = withSendingMessage(AddReview);
 
 class App extends PureComponent {
   render() {
@@ -40,6 +43,9 @@ class App extends PureComponent {
           <Route exact path="/dev-sign-in">
             <SignIn/>
           </Route>
+          <Route exact path="/dev-review">
+            <AddReviewWrapped/>
+          </Route>
 
         </Switch>
       </BrowserRouter>
@@ -47,14 +53,14 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {authorizationStatus, hasErrors, isLoading, onExitButtonClick, page} = this.props;
+    const {authorizationStatus, hasFilmsLoadingError, isLoading, onExitButtonClick, page} = this.props;
 
     if (isLoading) {
       return (
         <LoadingScreen/>
       );
     }
-    if (hasErrors) {
+    if (hasFilmsLoadingError) {
       return (
         <ErrorScreen/>
       );
@@ -81,7 +87,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  hasErrors: PropTypes.bool.isRequired,
+  hasFilmsLoadingError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onExitButtonClick: PropTypes.func.isRequired,
   page: PropTypes.string.isRequired,
@@ -89,7 +95,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  hasErrors: getErrorState(state),
+  hasFilmsLoadingError: getErrorState(state),
   isLoading: getLoadingState(state),
   page: getPage(state),
 });

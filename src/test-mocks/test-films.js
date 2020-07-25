@@ -19,23 +19,26 @@ const actors = [
 const reviews = [
   {
     author: `Betty Boughter`,
+    authorId: 1,
     date: new Date(2019, 6, 15, 23, 50),
-    id: `Betty `,
-    rating: `6.6`,
+    id: 1,
+    rating: 6.6,
     text: `Betty Boughter bought some butter.`
   },
   {
     author: `Jack Daniels`,
+    authorId: 2,
     date: new Date(2020, 5, 2, 23, 50),
-    id: `jack`,
-    rating: `7.7`,
+    id: 2,
+    rating: 7.7,
     text: `Jack and Jill went up the hill.`
   },
   {
     author: `Robert Burns`,
+    authorId: 3,
     date: new Date(2020, 2, 2, 23, 50),
-    id: `burns`,
-    rating: `8.8`,
+    id: 3,
+    rating: 8.8,
     text: `Should old acquaintance be forgot and never brought to mind.`
   }
 ];
@@ -74,5 +77,5 @@ const testMovies = movieTitles.map((title, i) => {
 });
 
 
-export {testMovies};
+export {testMovies, reviews};
 
