@@ -1,11 +1,19 @@
 import {extend} from "../../utils.js";
-import {adaptMovie, adaptMovies} from "../../adapter.js";
+import {adaptComments, adaptMovie, adaptMovies} from "../../adapter.js";
 import {DEFAULT_GENRE} from "../../const.js";
+
+const Url = {
+  FILMS: `/films`,
+  PROMO: `/films/promo`,
+  COMMENTS: `/comments`,
+};
 
 const initialState = {
   activeMovie: {},
+  comments: [],
   genre: DEFAULT_GENRE,
-  hasErrors: false,
+  hasFilmsLoadingError: false,
+  hasCommentUploadingError: false,
   isLoading: false,
   movies: [],
   promoMovie: {},
@@ -15,9 +23,12 @@ const ActionType = {
   END_LOADING: `END_LOADING`,
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
+  POST_COMMENT: `POST_COMMENT`,
   SET_ACTIVE_MOVIE: `SET_ACTIVE_MOVIE`,
-  SET_ERROR: `SET_ERROR`,
+  SET_COMMENT_UPLOADING_ERROR: `SET_COMMENT_UPLOADING_ERROR`,
+  SET_FILMS_LOADING_ERROR: `SET_FILMS_LOADING_ERROR`,
   SET_GENRE: `SET_GENRE`,
+  SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
 };
 
@@ -46,9 +57,19 @@ const ActionCreator = {
     payload: genre,
   }),
 
-  setError: (hasErrors) => ({
-    type: ActionType.SET_ERROR,
-    payload: hasErrors,
+  setCommentUploadingError: (hasError) => ({
+    type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+    payload: hasError,
+  }),
+
+  setFilmsLoadingError: (hasError) => ({
+    type: ActionType.SET_FILMS_LOADING_ERROR,
+    payload: hasError,
+  }),
+
+  setMovieComments: (comments) => ({
+    type: ActionType.SET_MOVIE_COMMENTS,
+    payload: comments,
   }),
 
   startLoading: () => ({
@@ -59,24 +80,40 @@ const ActionCreator = {
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     dispatch(ActionCreator.startLoading());
-    dispatch(ActionCreator.setError(false));
-    return api.get(`/films/promo`)
+    dispatch(ActionCreator.setFilmsLoadingError(false));
+    return api.get(Url.PROMO)
     .then((response) => {
       const promoMovie = adaptMovie(response.data);
       dispatch(ActionCreator.loadPromo(promoMovie));
       dispatch(ActionCreator.setActiveMovie(promoMovie));
     })
-    .then(() => api.get(`/films`))
+    .then(() => api.get(Url.FILMS))
     .then((response) => {
       dispatch(ActionCreator.loadMovies(adaptMovies(response.data)));
       dispatch(ActionCreator.endLoading());
     })
     .catch((err) => {
       dispatch(ActionCreator.endLoading());
-      dispatch(ActionCreator.setError(true));
+      dispatch(ActionCreator.setFilmsLoadingError(true));
       return err;
     });
   },
+
+  postComment: (comment) => (dispatch, getState, api) => {
+    const {DATA: {activeMovie: {id}}} = getState();
+    dispatch(ActionCreator.startLoading());
+    dispatch(ActionCreator.setCommentUploadingError(false));
+    return api.post(`${Url.COMMENTS}/${id}`, comment)
+    .then((response) => {
+      dispatch(ActionCreator.setMovieComments(adaptComments(response.data)));
+      dispatch(ActionCreator.endLoading());
+    })
+    .catch((err) => {
+      dispatch(ActionCreator.setCommentUploadingError(true));
+      dispatch(ActionCreator.endLoading());
+      return err;
+    });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -101,13 +138,21 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         activeMovie: action.payload,
       });
+    case ActionType.SET_MOVIE_COMMENTS:
+      return extend(state, {
+        comments: action.payload,
+      });
+    case ActionType.SET_COMMENT_UPLOADING_ERROR:
+      return extend(state, {
+        hasCommentUploadingError: action.payload,
+      });
     case ActionType.SET_GENRE:
       return extend(state, {
         genre: action.payload,
       });
-    case ActionType.SET_ERROR:
+    case ActionType.SET_FILMS_LOADING_ERROR:
       return extend(state, {
-        hasErrors: action.payload,
+        hasFilmsLoadingError: action.payload,
       });
   }
   return state;

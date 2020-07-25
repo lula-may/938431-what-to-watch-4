@@ -8,15 +8,15 @@ const REVIEW_LENGTH_MAX = 400;
 const starsIds = [1, 2, 3, 4, 5];
 
 const AddReview = (props) => {
-  const {isFormBlocked, movie: {bgPoster, poster, title}, onSubmit} = props;
+  const {avatar, children, isFormBlocked, movie: {bgPoster, poster, title}, onSubmit} = props;
   const formRef = createRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const formData = new FormData(formRef.current);
-    const rating = formData.get(`rating`) || MAX_RATING;
-    const review = formData.get(`review-text`);
-    onSubmit({rating, review});
+    const rating = parseInt(formData.get(`rating`), 10) || MAX_RATING;
+    const comment = formData.get(`review-text`);
+    onSubmit({rating, comment});
   };
 
   return (
@@ -50,7 +50,7 @@ const AddReview = (props) => {
 
           <div className="user-block">
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <img src={avatar} alt="User avatar" width="63" height="63" />
             </div>
           </div>
         </header>
@@ -92,12 +92,18 @@ const AddReview = (props) => {
           </div>
         </form>
       </div>
+      {children}
     </section>
   );
 };
 
 
 AddReview.propTypes = {
+  avatar: PropTypes.string.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   isFormBlocked: PropTypes.bool.isRequired,
   movie: PropTypes.shape(movieShape).isRequired,
   onSubmit: PropTypes.func.isRequired,

@@ -10,9 +10,11 @@ configure({
 
 describe(`AddReview Component`, () => {
   it(`should run callback on form submit`, () => {
+    const avatar = `img/avatar.jpg`;
     const onSubmit = jest.fn();
     const wrapper = mount(
         <AddReview
+          avatar={avatar}
           movie={testMovies[0]}
           isFormBlocked={false}
           onSubmit={onSubmit}

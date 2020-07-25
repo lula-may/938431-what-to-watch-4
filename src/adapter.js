@@ -25,11 +25,24 @@ export const adaptMovie = (movie) => {
       score: movie[`rating`],
     },
     releaseYear: released,
-    reviews: [],
     runTime: movie[`run_time`],
     src: movie[`video_link`],
     title: name,
   };
 };
+
+const adaptComment = (review) => {
+  const {id, user, rating, comment, date} = review;
+  return {
+    id,
+    author: user.name,
+    authorId: user.id,
+    date: new Date(date),
+    rating,
+    text: comment,
+  };
+};
+
+export const adaptComments = (comments) => comments.map((comment) => adaptComment(comment));
 
 export const adaptMovies = (movies) => movies.map((movie) => adaptMovie(movie));
