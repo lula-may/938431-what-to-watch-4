@@ -25,6 +25,7 @@ export const adaptMovie = (movie) => {
       score: movie[`rating`],
     },
     releaseYear: released,
+    reviews: [],
     runTime: movie[`run_time`],
     src: movie[`video_link`],
     title: name,

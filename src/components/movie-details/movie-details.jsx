@@ -11,15 +11,20 @@ import {movieShape} from "../shapes";
 import {Page, SIMILAR_MOVIES_COUNT, TabType} from "../../const";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getActiveMovie, selectSimilarMovies} from "../../reducer/data/selectors.js";
+import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 
 const MoviesListWrapped = withActiveMovie(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 const MovieDetails = (props) => {
   const {
+    authorizationStatus,
+    avatar,
     similarMovies,
     movie,
+    onAddReviewButtonClick,
     onMovieCardClick,
     onPlayButtonClick,
   } = props;
@@ -31,6 +36,8 @@ const MovieDetails = (props) => {
     releaseYear,
     title,
   } = movie;
+
+  const isUserAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
 
   return <React.Fragment>
     <section className="movie-card movie-card--full" style={{backgroundColor: bgColor}}>
@@ -50,11 +57,11 @@ const MovieDetails = (props) => {
             </a>
           </div>
 
-          <div className="user-block">
+          {isUserAuthorized && <div className="user-block">
             <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+              <img src={avatar} alt="User avatar" width="63" height="63" />
             </div>
-          </div>
+          </div>}
         </header>
 
         <div className="movie-card__wrap">
@@ -78,7 +85,7 @@ const MovieDetails = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <a href="add-review.html" className="btn movie-card__button">Add review</a>
+              {isUserAuthorized && <a href="add-review.html" className="btn movie-card__button" onClick={onAddReviewButtonClick}>Add review</a>}
             </div>
           </div>
         </div>
@@ -126,20 +133,30 @@ const MovieDetails = (props) => {
 };
 
 MovieDetails.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
   movie: PropTypes.shape(movieShape).isRequired,
   similarMovies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
+  onAddReviewButtonClick: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
+  avatar: getAvatarUrl(state),
   movie: getActiveMovie(state),
   similarMovies: selectSimilarMovies(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  onAddReviewButtonClick(evt) {
+    evt.preventDefault();
+    dispatch(StateActionCreator.setPage(Page.ADD_REVIEW));
+  },
+
   onMovieCardClick(movie) {
     dispatch(DataActionCreator.setActiveMovie(movie));
     dispatch(StateActionCreator.setPage(Page.DETAILS));

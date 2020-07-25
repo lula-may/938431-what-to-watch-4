@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getActiveMovie, getCommentUploadingError, getLoadingState} from "../../reducer/data/selectors.js";
+import {getActiveMovie, getCommentUploadingError, getCommentUploadingState} from "../../reducer/data/selectors.js";
 import {getAvatarUrl} from "../../reducer/user/selectors.js";
 import {Operation} from "../../reducer/data/data.js";
 import {movieShape} from "../../components/shapes.js";
@@ -64,7 +64,7 @@ const mapStateToProps = (state) => ({
   avatar: getAvatarUrl(state),
   movie: getActiveMovie(state),
   hasError: getCommentUploadingError(state),
-  isFormBlocked: getLoadingState(state),
+  isFormBlocked: getCommentUploadingState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

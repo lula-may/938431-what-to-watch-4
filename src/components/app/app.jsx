@@ -76,10 +76,9 @@ class App extends PureComponent {
           onExitButtonClick={onExitButtonClick}
         />;
       case Page.SIGN_IN:
-        if (authorizationStatus === AuthorizationStatus.AUTH) {
-          return <Main/>;
-        }
-        return <SignIn/>;
+        return (authorizationStatus === AuthorizationStatus.AUTH) ? <Main/> : <SignIn/>;
+      case Page.ADD_REVIEW:
+        return <AddReviewWrapped/>;
       default: return null;
     }
   }

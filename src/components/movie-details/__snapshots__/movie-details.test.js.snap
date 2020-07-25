@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly MovieDetailsComponent 1`] = `
+exports[`MovieDetails Component should render correctly MovieDetailsComponent 1`] = `
 Array [
   <section
     className="movie-card movie-card--full"
@@ -134,6 +134,7 @@ Array [
             <a
               className="btn movie-card__button"
               href="add-review.html"
+              onClick={[Function]}
             >
               Add review
             </a>
