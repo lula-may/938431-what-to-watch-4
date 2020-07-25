@@ -12,6 +12,8 @@ describe(`Main Component`, () => {
     const tree = renderer.create(
         <Main
           activeGenre={`All genres`}
+          authorizationStatus={`AUTH`}
+          avatar={`img/avatar.jpg`}
           genres={genres}
           promoMovie={promoMovie}
           movies={testMovies}
@@ -20,6 +22,7 @@ describe(`Main Component`, () => {
           onMovieCardClick={() => {}}
           onPlayButtonClick={() => {}}
           onShowMoreButtonClick={() => {}}
+          onSignInClick={() => {}}
         />
     )
       .toJSON();

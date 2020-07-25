@@ -15,12 +15,6 @@ const LoadingScreen = () => {
               <span className="logo__letter logo__letter--3">W</span>
             </a>
           </div>
-
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
         </header>
 
         <h3 style={{textAlign: `center`, marginTop: `180px`, marginBottom: `160px`}}>Loading...</h3>

@@ -11,8 +11,10 @@ import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx"
 import {movieShape} from "../shapes.js";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getGenre, getPromoMovie, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";
 import {getMoviesCount} from "../../reducer/app-state/selectors.js";
+import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 import {Page} from "../../const.js";
 
 const GenresListWrapped = withActiveItem(GenresList);
@@ -21,6 +23,8 @@ const MoviesListWrapped = withActiveMovie(MoviesList);
 const Main = (props) => {
   const {
     activeGenre,
+    authorizationStatus,
+    avatar,
     genres,
     promoMovie,
     movies,
@@ -29,6 +33,7 @@ const Main = (props) => {
     onMovieCardClick,
     onPlayButtonClick,
     onShowMoreButtonClick,
+    onSignInClick,
   } = props;
 
   const {
@@ -39,6 +44,7 @@ const Main = (props) => {
     title: promoMovieTitle
   } = promoMovie;
 
+  const isAuthorized = authorizationStatus === AuthorizationStatus.AUTH;
   const posterAlt = `${promoMovieTitle} poster`;
   const showedMovies = movies.slice(0, moviesCount);
   const hasHiddenMovies = movies.length > moviesCount;
@@ -61,9 +67,12 @@ const Main = (props) => {
         </div>
 
         <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
+          {isAuthorized
+            ? <div className="user-block__avatar">
+              <img src={avatar} alt="User avatar" width="63" height="63" />
+            </div>
+            : <a href="sign-in.html" className="user-block__link" onClick={onSignInClick}>Sign in</a>
+          }
         </div>
       </header>
 
@@ -137,6 +146,8 @@ const Main = (props) => {
 
 Main.propTypes = {
   activeGenre: PropTypes.string.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
   genres: PropTypes.arrayOf(PropTypes.string).isRequired,
   movies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
@@ -146,11 +157,14 @@ Main.propTypes = {
   onMovieCardClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
+  onSignInClick: PropTypes.func.isRequired,
   promoMovie: PropTypes.shape(movieShape).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   activeGenre: getGenre(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  avatar: getAvatarUrl(state),
   genres: selectMoviesGenres(state),
   movies: selectMoviesByGenre(state),
   moviesCount: getMoviesCount(state),
@@ -175,6 +189,11 @@ const mapDispatchToProps = (dispatch) => ({
 
   onShowMoreButtonClick() {
     dispatch(StateActionCreator.incrementMoviesCount());
+  },
+
+  onSignInClick(evt) {
+    evt.preventDefault();
+    dispatch(StateActionCreator.setPage(Page.SIGN_IN));
   }
 });
 

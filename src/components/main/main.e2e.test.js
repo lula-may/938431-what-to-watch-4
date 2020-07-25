@@ -31,6 +31,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -39,6 +41,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={onMovieCardClick}
             onPlayButtonClick={() => {}}
             onShowMoreButtonClick={() => {}}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -53,6 +56,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -61,6 +66,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={() => {}}
             onPlayButtonClick={() => {}}
             onShowMoreButtonClick={() => {}}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -76,6 +82,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -84,6 +92,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={() => {}}
             onPlayButtonClick={() => {}}
             onShowMoreButtonClick={onShowMoreButtonClick}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -99,6 +108,8 @@ describe(`MainComponent`, () => {
         <Provider store={store}>
           <Main
             activeGenre={`All genres`}
+            authorizationStatus={`AUTH`}
+            avatar={`img/avatar.jpg`}
             genres={genres}
             promoMovie={promoMovie}
             movies={showedMovies}
@@ -107,6 +118,7 @@ describe(`MainComponent`, () => {
             onMovieCardClick={() => {}}
             onPlayButtonClick={onPlayButtonClick}
             onShowMoreButtonClick={() => {}}
+            onSignInClick={() => {}}
           />
         </Provider>
     );
@@ -114,5 +126,4 @@ describe(`MainComponent`, () => {
     playButton.simulate(`click`, {preventDefault: () => {}});
     expect(onPlayButtonClick).toHaveBeenCalledTimes(1);
   });
-
 });

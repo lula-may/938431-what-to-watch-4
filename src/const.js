@@ -13,6 +13,7 @@ const Page = {
   MAIN: `main`,
   DETAILS: `details`,
   PLAYER: `player`,
+  SIGN_IN: `signIn`,
 };
 
 const TabType = {

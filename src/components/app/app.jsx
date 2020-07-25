@@ -8,12 +8,15 @@ import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
+import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
 import {getPage} from "../../reducer/app-state/selectors.js";
 import {Page} from "../../const.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const PlayerWrapped = withFullVideo(Player);
 
@@ -34,13 +37,17 @@ class App extends PureComponent {
               onExitButtonClick={onExitButtonClick}
             />
           </Route>
+          <Route exact path="/dev-sign-in">
+            <SignIn/>
+          </Route>
+
         </Switch>
       </BrowserRouter>
     );
   }
 
   _renderApp() {
-    const {hasErrors, isLoading, onExitButtonClick, page} = this.props;
+    const {authorizationStatus, hasErrors, isLoading, onExitButtonClick, page} = this.props;
 
     if (isLoading) {
       return (
@@ -62,12 +69,18 @@ class App extends PureComponent {
         return <PlayerWrapped
           onExitButtonClick={onExitButtonClick}
         />;
+      case Page.SIGN_IN:
+        if (authorizationStatus === AuthorizationStatus.AUTH) {
+          return <Main/>;
+        }
+        return <SignIn/>;
       default: return null;
     }
   }
 }
 
 App.propTypes = {
+  authorizationStatus: PropTypes.string.isRequired,
   hasErrors: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onExitButtonClick: PropTypes.func.isRequired,
@@ -75,6 +88,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
   hasErrors: getErrorState(state),
   isLoading: getLoadingState(state),
   page: getPage(state),
