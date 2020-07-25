@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WithSendingMessage HOC should render error message inside  MockComponent 1`] = `
+<div>
+  <div
+    style={
+      Object {
+        "color": "black",
+        "textAlign": "center",
+      }
+    }
+  >
+    <p>
+      Sorry, we can't post your review.
+    </p>
+    <p>
+      Please, check the Internet connection and try again later.
+    </p>
+  </div>
+</div>
+`;
+
+exports[`WithSendingMessage HOC should render loading message inside  MockComponent 1`] = `
+<div>
+  <p
+    style={
+      Object {
+        "color": "black",
+        "textAlign": "center",
+      }
+    }
+  >
+    Sending your review...
+  </p>
+</div>
+`;

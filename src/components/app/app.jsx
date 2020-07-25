@@ -11,7 +11,7 @@ import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
-import withFormValidation from "../../hocs/with-form-validation/with-form-validation.jsx";
+import withSendingMessage from "../../hocs/with-sending-message/with-sending-message.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
@@ -21,7 +21,7 @@ import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const PlayerWrapped = withFullVideo(Player);
-const AddReviewWrapped = withFormValidation(AddReview);
+const AddReviewWrapped = withSendingMessage(AddReview);
 
 class App extends PureComponent {
   render() {

@@ -11,8 +11,8 @@ const MESSAGE_STYLE = {
   textAlign: `center`,
 };
 
-const withFormValidation = (Component) => {
-  class WithFormValidation extends PureComponent {
+const withSendingMessage = (Component) => {
+  class WithSendingMessage extends PureComponent {
     render() {
       const {avatar, isFormBlocked, movie, onSubmit} = this.props;
 
@@ -48,7 +48,7 @@ const withFormValidation = (Component) => {
     }
   }
 
-  WithFormValidation.propTypes = {
+  WithSendingMessage.propTypes = {
     avatar: PropTypes.string.isRequired,
     hasError: PropTypes.bool.isRequired,
     isFormBlocked: PropTypes.bool.isRequired,
@@ -56,7 +56,7 @@ const withFormValidation = (Component) => {
     onSubmit: PropTypes.func.isRequired,
   };
 
-  return WithFormValidation;
+  return WithSendingMessage;
 
 };
 
@@ -72,5 +72,5 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(Operation.postComment(formData));
   }
 });
-export {withFormValidation};
-export default (Comp) => connect(mapStateToProps, mapDispatchToProps)(withFormValidation(Comp));
+export {withSendingMessage};
+export default (Comp) => connect(mapStateToProps, mapDispatchToProps)(withSendingMessage(Comp));

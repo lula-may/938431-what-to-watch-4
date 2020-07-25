@@ -2,7 +2,7 @@ import {ActionCreator, ActionType, Operation, reducer} from "./data.js";
 import MockAdapter from "axios-mock-adapter";
 import {reviews, testMovies} from "../../test-mocks/test-films.js";
 import {createApi} from "../../api.js";
-import {adaptMovie, adaptMovies} from "../../adapter.js";
+import {adaptMovie, adaptMovies, adaptComments} from "../../adapter.js";
 
 const movie = testMovies[0];
 describe(`Reducer`, () => {
@@ -264,5 +264,102 @@ describe(`Operation`, () => {
           payload: true,
         });
       });
+  });
+
+  it(`should make a correct API call on comment sending`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+
+    const getState = () => ({
+      DATA: {
+        activeMovie: {id: 1},
+      },
+    });
+
+    const commentUploader = Operation.postComment({
+      rating: 4,
+      comment: `This is the house that Jack built. And this is the malt that lay in the house that Jack built.`,
+    });
+
+    const commentAnswer = [{
+      "id": 1,
+      "user": {
+        "id": 4,
+        "name": `Kate Muir`
+      },
+      "rating": 8.9,
+      "comment": `Discerning travellers and Wes Anderson fans will luxuriate in the glorious Mittel-European kitsch of one of the director's funniest and most exquisitely designed movies in years.`,
+      "date": `2019-05-08T14:13:56.569Z`
+    }];
+
+    MockApi.onPost(`/comments/1`)
+    .reply(200, commentAnswer);
+
+    return commentUploader(dispatch, getState, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(4);
+
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.START_LOADING,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: ActionType.SET_MOVIE_COMMENTS,
+        payload: adaptComments(commentAnswer),
+      });
+      expect(dispatch.mock.calls[3][0]).toEqual({
+        type: ActionType.END_LOADING,
+      });
+    });
+  });
+
+  it(`should pass a correct action when comment post call failed`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+
+    const getState = () => ({
+      DATA: {
+        activeMovie: {id: 1},
+      },
+    });
+
+    const commentUploader = Operation.postComment({
+      rating: 4,
+      comment: `This is the house that Jack built. And this is the malt that lay in the house that Jack built.`,
+    });
+
+    MockApi.onPost(`/comments/1`)
+    .reply(400);
+
+    return commentUploader(dispatch, getState, api)
+    .then((response) => response)
+    .catch(() => {
+      expect(dispatch).toHaveBeenCalledTimes(4);
+
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.START_LOADING,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: ActionType.END_LOADING,
+      });
+
+      expect(dispatch.mock.calls[3][0]).toEqual({
+        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        payload: true,
+      });
+    });
   });
 });
