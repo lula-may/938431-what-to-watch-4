@@ -3,6 +3,7 @@ import MockAdapter from "axios-mock-adapter";
 import {reviews, testMovies} from "../../test-mocks/test-films.js";
 import {createApi} from "../../api.js";
 import {adaptMovie, adaptMovies, adaptComments} from "../../adapter.js";
+import {ActionType as StateActionType} from "../app-state/app-state.js";
 
 const movie = testMovies[0];
 describe(`Reducer`, () => {
@@ -14,6 +15,7 @@ describe(`Reducer`, () => {
       hasCommentUploadingError: false,
       hasFilmsLoadingError: false,
       isLoading: false,
+      isUploading: false,
       movies: [],
       promoMovie: {},
     });
@@ -70,6 +72,34 @@ describe(`Reducer`, () => {
       movies: [],
       isLoading: false,
       hasFilmsLoadingError: true,
+    });
+  });
+
+  it(`should set isUploading: true when start uploading action supplied`, () => {
+    expect(reducer({
+      movies: [],
+      isUploading: false,
+      hasCommentUploadingError: false,
+    }, {
+      type: ActionType.START_UPLOADING,
+    })).toEqual({
+      movies: [],
+      isUploading: true,
+      hasCommentUploadingError: false,
+    });
+  });
+
+  it(`should set isUploading: false when end uploading action supplied`, () => {
+    expect(reducer({
+      movies: [],
+      isUploading: true,
+      hasCommentUploadingError: false,
+    }, {
+      type: ActionType.END_UPLOADING,
+    })).toEqual({
+      movies: [],
+      isUploading: false,
+      hasCommentUploadingError: false,
     });
   });
 
@@ -182,6 +212,18 @@ describe(`ActionCreator`, () => {
     expect(ActionCreator.setFilmsLoadingError(true)).toEqual({
       type: ActionType.SET_FILMS_LOADING_ERROR,
       payload: true,
+    });
+  });
+
+  it(`should return correct action for start comment uploading`, () => {
+    expect(ActionCreator.startUploading()).toEqual({
+      type: ActionType.START_UPLOADING,
+    });
+  });
+
+  it(`should return correct action for end loading`, () => {
+    expect(ActionCreator.endUploading()).toEqual({
+      type: ActionType.END_UPLOADING,
     });
   });
 
@@ -298,10 +340,10 @@ describe(`Operation`, () => {
 
     return commentUploader(dispatch, getState, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(4);
+      expect(dispatch).toHaveBeenCalledTimes(5);
 
       expect(dispatch.mock.calls[0][0]).toEqual({
-        type: ActionType.START_LOADING,
+        type: ActionType.START_UPLOADING,
       });
 
       expect(dispatch.mock.calls[1][0]).toEqual({
@@ -314,7 +356,11 @@ describe(`Operation`, () => {
         payload: adaptComments(commentAnswer),
       });
       expect(dispatch.mock.calls[3][0]).toEqual({
-        type: ActionType.END_LOADING,
+        type: ActionType.END_UPLOADING,
+      });
+      expect(dispatch.mock.calls[4][0]).toEqual({
+        type: StateActionType.SET_PAGE,
+        payload: `details`,
       });
     });
   });
@@ -344,7 +390,7 @@ describe(`Operation`, () => {
       expect(dispatch).toHaveBeenCalledTimes(4);
 
       expect(dispatch.mock.calls[0][0]).toEqual({
-        type: ActionType.START_LOADING,
+        type: ActionType.START_UPLOADING,
       });
 
       expect(dispatch.mock.calls[1][0]).toEqual({
@@ -353,7 +399,7 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[2][0]).toEqual({
-        type: ActionType.END_LOADING,
+        type: ActionType.END_UPLOADING,
       });
 
       expect(dispatch.mock.calls[3][0]).toEqual({

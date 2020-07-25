@@ -32,6 +32,10 @@ export const getCommentUploadingError = (state) => {
   return state[NAME_SPACE].hasCommentUploadingError;
 };
 
+export const getCommentUploadingState = (state) => {
+  return state[NAME_SPACE].isUploading;
+};
+
 export const selectMoviesByGenre = createSelector(
     [getMovies, getGenre],
     (movies, genre) => {

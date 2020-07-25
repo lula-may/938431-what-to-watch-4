@@ -1,6 +1,8 @@
 import {extend} from "../../utils.js";
 import {adaptComments, adaptMovie, adaptMovies} from "../../adapter.js";
 import {DEFAULT_GENRE} from "../../const.js";
+import {ActionCreator as StateActionCreator} from "../app-state/app-state.js";
+import {Page} from "../../const.js";
 
 const Url = {
   FILMS: `/films`,
@@ -15,12 +17,14 @@ const initialState = {
   hasFilmsLoadingError: false,
   hasCommentUploadingError: false,
   isLoading: false,
+  isUploading: false,
   movies: [],
   promoMovie: {},
 };
 
 const ActionType = {
   END_LOADING: `END_LOADING`,
+  END_UPLOADING: `END_UPLOADING`,
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
   POST_COMMENT: `POST_COMMENT`,
@@ -30,11 +34,16 @@ const ActionType = {
   SET_GENRE: `SET_GENRE`,
   SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
+  START_UPLOADING: `START_UPLOADING`,
 };
 
 const ActionCreator = {
   endLoading: () => ({
     type: ActionType.END_LOADING,
+  }),
+
+  endUploading: () => ({
+    type: ActionType.END_UPLOADING,
   }),
 
   loadMovies: (movies) => ({
@@ -75,6 +84,10 @@ const ActionCreator = {
   startLoading: () => ({
     type: ActionType.START_LOADING,
   }),
+
+  startUploading: () => ({
+    type: ActionType.START_UPLOADING,
+  })
 };
 
 const Operation = {
@@ -101,16 +114,17 @@ const Operation = {
 
   postComment: (comment) => (dispatch, getState, api) => {
     const {DATA: {activeMovie: {id}}} = getState();
-    dispatch(ActionCreator.startLoading());
+    dispatch(ActionCreator.startUploading());
     dispatch(ActionCreator.setCommentUploadingError(false));
     return api.post(`${Url.COMMENTS}/${id}`, comment)
     .then((response) => {
       dispatch(ActionCreator.setMovieComments(adaptComments(response.data)));
-      dispatch(ActionCreator.endLoading());
+      dispatch(ActionCreator.endUploading());
+      dispatch(StateActionCreator.setPage(Page.DETAILS));
     })
     .catch((err) => {
       dispatch(ActionCreator.setCommentUploadingError(true));
-      dispatch(ActionCreator.endLoading());
+      dispatch(ActionCreator.endUploading());
       return err;
     });
   }
@@ -141,6 +155,14 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_MOVIE_COMMENTS:
       return extend(state, {
         comments: action.payload,
+      });
+    case ActionType.START_UPLOADING:
+      return extend(state, {
+        isUploading: true,
+      });
+    case ActionType.END_UPLOADING:
+      return extend(state, {
+        isUploading: false,
       });
     case ActionType.SET_COMMENT_UPLOADING_ERROR:
       return extend(state, {
