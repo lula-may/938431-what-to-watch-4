@@ -7,7 +7,7 @@ const movie = testMovies[1];
 const avatar = `img/avatar.jpg`;
 
 describe(`MovieDetails Component`, () => {
-  it(`should render correctly MovieDetailsComponent`, () => {
+  it(`should render correctly MovieDetailsComponent with AddReview Button`, () => {
     const tree = renderer.create(
         <MovieDetails
           authorizationStatus={`AUTH`}
@@ -22,4 +22,21 @@ describe(`MovieDetails Component`, () => {
     .toJSON();
     expect(tree).toMatchSnapshot();
   });
+
+  it(`should render MovieDetailsComponent without AddReview Button for unauthorized user`, () => {
+    const tree = renderer.create(
+        <MovieDetails
+          authorizationStatus={`NO_AUTH`}
+          avatar={avatar}
+          movie={movie}
+          similarMovies={testMovies}
+          onMovieCardClick={() => {}}
+          onPlayButtonClick={() => {}}
+          onAddReviewButtonClick={() => {}}
+        />
+    )
+    .toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
 });
