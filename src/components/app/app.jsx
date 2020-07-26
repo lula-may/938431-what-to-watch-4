@@ -11,7 +11,6 @@ import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
-import withSendingMessage from "../../hocs/with-sending-message/with-sending-message.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
@@ -21,7 +20,6 @@ import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const PlayerWrapped = withFullVideo(Player);
-const AddReviewWrapped = withSendingMessage(AddReview);
 
 class App extends PureComponent {
   render() {
@@ -44,7 +42,7 @@ class App extends PureComponent {
             <SignIn/>
           </Route>
           <Route exact path="/dev-review">
-            <AddReviewWrapped/>
+            <AddReview/>
           </Route>
 
         </Switch>
@@ -78,7 +76,7 @@ class App extends PureComponent {
       case Page.SIGN_IN:
         return (authorizationStatus === AuthorizationStatus.AUTH) ? <Main/> : <SignIn/>;
       case Page.ADD_REVIEW:
-        return <AddReviewWrapped/>;
+        return <AddReview/>;
       default: return null;
     }
   }
