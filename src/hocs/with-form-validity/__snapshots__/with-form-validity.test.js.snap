@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`WithSendingMessage HOC should render error message inside  MockComponent 1`] = `
+exports[`WithFormValidity HOC should render error message inside  MockComponent 1`] = `
 <div>
   <div
     style={
@@ -20,7 +20,7 @@ exports[`WithSendingMessage HOC should render error message inside  MockComponen
 </div>
 `;
 
-exports[`WithSendingMessage HOC should render loading message inside  MockComponent 1`] = `
+exports[`WithFormValidity HOC should render loading message inside  MockComponent 1`] = `
 <div>
   <p
     style={

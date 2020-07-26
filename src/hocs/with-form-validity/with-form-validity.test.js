@@ -1,8 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import PropTypes from "prop-types";
-import {withSendingMessage} from "./with-sending-message.jsx";
-import {testMovies} from "../../test-mocks/test-films.js";
+import {withFormValidity} from "./with-form-validity.jsx";
 const MockComponent = (props) => {
   const {children} = props;
   return (
@@ -15,20 +14,17 @@ const MockComponent = (props) => {
 MockComponent.propTypes = {
   children: PropTypes.node.isRequired,
 };
-const avatar = `avatar.jpg`;
-const movie = testMovies[0];
+const MockComponentWrapped = withFormValidity(MockComponent);
 
-const MockComponentWrapped = withSendingMessage(MockComponent);
-
-describe(`WithSendingMessage HOC`, () => {
+describe(`WithFormValidity HOC`, () => {
   it(`should render loading message inside  MockComponent`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
-          avatar={avatar}
           hasError={false}
           isFormBlocked={true}
-          movie={movie}
           onSubmit={() => {}}
+          onRatingChange={() => {}}
+          onTextChange={() => {}}
         />
     ).toJSON();
 
@@ -38,10 +34,10 @@ describe(`WithSendingMessage HOC`, () => {
   it(`should render error message inside  MockComponent`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
-          avatar={avatar}
           isFormBlocked={false}
           hasError={true}
-          movie={movie}
+          onRatingChange={() => {}}
+          onTextChange={() => {}}
           onSubmit={() => {}}
         />
     ).toJSON();
