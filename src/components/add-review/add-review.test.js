@@ -1,23 +1,39 @@
-import React, {createRef} from "react";
+import React from "react";
 import renderer from "react-test-renderer";
-import AddReview from "./add-review.jsx";
-import {testMovies} from "../../test-mocks/test-films.js";
+import {Provider} from "react-redux";
+import configureStore from "redux-mock-store";
 
-const movie = testMovies[0];
+import {AddReview} from "./add-review.jsx";
+import {testMovies} from "../../test-mocks/test-films.js";
+import NameSpace from "../../reducer/name-space.js";
+
+const mockStore = configureStore([]);
+
+const movie = testMovies[1];
 const avatar = `img/avatar.jpg`;
+
+const store = mockStore({
+  [NameSpace.DATA]: {
+    activeMovie: movie,
+    hasCommentUploadingError: false,
+    isUploading: false,
+  },
+  [NameSpace.USER]: {
+    authorizationStatus: `AUTH`,
+    avatarUrl: avatar,
+  }
+});
+
 
 describe(`AddReview Component`, () => {
   it(`should render correctly AddReview Component`, () => {
-    const formRef = createRef();
     const tree = renderer.create(
-        <AddReview
-          avatar={avatar}
-          formRef={formRef}
-          isFormBlocked={false}
-          movie={movie}
-          onSubmit={() => {}}
-        />, {createNodeMock: () => {}}
-
+        <Provider store={store}>
+          <AddReview
+            avatar={avatar}
+            movie={movie}
+          />
+        </Provider>
     ).toJSON();
 
     expect(tree).toMatchSnapshot();
