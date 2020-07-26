@@ -21,7 +21,7 @@ describe(`WithFormValidity HOC`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
           hasError={false}
-          isFormBlocked={true}
+          isCommentLoading={true}
           onSubmit={() => {}}
           onRatingChange={() => {}}
           onTextChange={() => {}}
@@ -34,7 +34,7 @@ describe(`WithFormValidity HOC`, () => {
   it(`should render error message inside  MockComponent`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
-          isFormBlocked={false}
+          isCommentLoading={false}
           hasError={true}
           onRatingChange={() => {}}
           onTextChange={() => {}}

@@ -14,6 +14,8 @@ const isValidComment = (comment) => {
   return comment.length >= 50 && comment.length <= 400;
 };
 
+const isValidFormData = (comment, rating) => isValidComment(comment) && (rating !== DEFAULT_RATING);
+
 const withFormValidity = (Component) => {
   class WithFormValidity extends PureComponent {
     constructor(props) {
@@ -22,6 +24,7 @@ const withFormValidity = (Component) => {
       this.state = {
         rating: DEFAULT_RATING,
         comment: ``,
+        isFormValid: false,
       };
 
       this._handleRatingChange = this._handleRatingChange.bind(this);
@@ -29,15 +32,13 @@ const withFormValidity = (Component) => {
       this._handleSubmit = this._handleSubmit.bind(this);
     }
     render() {
-      const {isFormBlocked} = this.props;
-      const {comment, rating} = this.state;
-
-      const isFormValid = isValidComment(comment) && (rating !== DEFAULT_RATING);
+      const {isCommentLoading} = this.props;
+      const {isFormValid, rating} = this.state;
 
       return (
         <Component
           {...this.props}
-          isFormBlocked={isFormBlocked}
+          isFormBlocked={isCommentLoading}
           isFormValid={isFormValid}
           onRatingChange={this._handleRatingChange}
           onTextChange={this._handleTextChange}
@@ -50,8 +51,8 @@ const withFormValidity = (Component) => {
     }
 
     renderMessage() {
-      const {hasError, isFormBlocked} = this.props;
-      if (isFormBlocked) {
+      const {hasError, isCommentLoading} = this.props;
+      if (isCommentLoading) {
         return (
           <p style={MESSAGE_STYLE}>Sending your review...</p>
         );
@@ -69,16 +70,18 @@ const withFormValidity = (Component) => {
 
     _handleRatingChange(evt) {
       const rating = parseInt(evt.target.value, 10);
-      this.setState({
+      this.setState((oldState) => ({
         rating,
-      });
+        isFormValid: isValidFormData(oldState.comment, rating),
+      }));
     }
 
     _handleTextChange(evt) {
       const text = evt.target.value;
-      this.setState({
+      this.setState((oldState) => ({
         comment: text,
-      });
+        isFormValid: isValidFormData(text, oldState.rating),
+      }));
     }
 
     _handleSubmit(evt) {
@@ -91,7 +94,7 @@ const withFormValidity = (Component) => {
 
   WithFormValidity.propTypes = {
     hasError: PropTypes.bool.isRequired,
-    isFormBlocked: PropTypes.bool.isRequired,
+    isCommentLoading: PropTypes.bool.isRequired,
     onSubmit: PropTypes.func.isRequired,
   };
 
@@ -101,7 +104,7 @@ const withFormValidity = (Component) => {
 
 const mapStateToProps = (state) => ({
   hasError: getCommentUploadingError(state),
-  isFormBlocked: getCommentUploadingState(state),
+  isCommentLoading: getCommentUploadingState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
