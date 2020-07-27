@@ -10,8 +10,9 @@ const DEFAULT_GENRE = `All genres`;
 const MAX_GENRES_COUNT = 9;
 
 const Page = {
-  MAIN: `main`,
+  ADD_REVIEW: `add-review`,
   DETAILS: `details`,
+  MAIN: `main`,
   PLAYER: `player`,
   SIGN_IN: `signIn`,
 };

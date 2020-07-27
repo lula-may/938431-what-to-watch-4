@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 const reviewShape = {
   author: PropTypes.string.isRequired,
+  authorId: PropTypes.number.isRequired,
   date: PropTypes.instanceOf(Date).isRequired,
-  id: PropTypes.string.isRequired,
-  rating: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  rating: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
 };
 
@@ -24,11 +25,9 @@ const movieShape = {
     score: PropTypes.number.isRequired,
   }).isRequired,
   releaseYear: PropTypes.number.isRequired,
-  reviews: PropTypes.array,
   runTime: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
 };
-
 
 const videoPlayerShape = {
   areControlsShown: PropTypes.bool.isRequired,

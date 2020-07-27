@@ -25,7 +25,15 @@ export const getLoadingState = (state) => {
 };
 
 export const getErrorState = (state) => {
-  return state[NAME_SPACE].hasErrors;
+  return state[NAME_SPACE].hasFilmsLoadingError;
+};
+
+export const getCommentUploadingError = (state) => {
+  return state[NAME_SPACE].hasCommentUploadingError;
+};
+
+export const getCommentUploadingState = (state) => {
+  return state[NAME_SPACE].isUploading;
 };
 
 export const selectMoviesByGenre = createSelector(

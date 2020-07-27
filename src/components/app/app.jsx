@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
+import AddReview from "../add-review/add-review.jsx";
 import ErrorScreen from "../error-screen/error-screen.jsx";
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
@@ -40,6 +41,9 @@ class App extends PureComponent {
           <Route exact path="/dev-sign-in">
             <SignIn/>
           </Route>
+          <Route exact path="/dev-review">
+            <AddReview/>
+          </Route>
 
         </Switch>
       </BrowserRouter>
@@ -47,14 +51,14 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {authorizationStatus, hasErrors, isLoading, onExitButtonClick, page} = this.props;
+    const {authorizationStatus, hasFilmsLoadingError, isLoading, onExitButtonClick, page} = this.props;
 
     if (isLoading) {
       return (
         <LoadingScreen/>
       );
     }
-    if (hasErrors) {
+    if (hasFilmsLoadingError) {
       return (
         <ErrorScreen/>
       );
@@ -70,10 +74,9 @@ class App extends PureComponent {
           onExitButtonClick={onExitButtonClick}
         />;
       case Page.SIGN_IN:
-        if (authorizationStatus === AuthorizationStatus.AUTH) {
-          return <Main/>;
-        }
-        return <SignIn/>;
+        return (authorizationStatus === AuthorizationStatus.AUTH) ? <Main/> : <SignIn/>;
+      case Page.ADD_REVIEW:
+        return <AddReview/>;
       default: return null;
     }
   }
@@ -81,7 +84,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  hasErrors: PropTypes.bool.isRequired,
+  hasFilmsLoadingError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onExitButtonClick: PropTypes.func.isRequired,
   page: PropTypes.string.isRequired,
@@ -89,7 +92,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  hasErrors: getErrorState(state),
+  hasFilmsLoadingError: getErrorState(state),
   isLoading: getLoadingState(state),
   page: getPage(state),
 });
