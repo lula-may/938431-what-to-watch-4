@@ -578,4 +578,49 @@ describe(`Operation`, () => {
     });
   });
 
+  it(`should pass a correct action when add to favoriteList post call failed`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+
+    const getState = () => ({
+      DATA: {
+        favoriteMovies: [{id: 1}, {id: 3}, {id: 5}],
+        promoMovie: {id: 1},
+      },
+    });
+
+    const favoriteUpdater = Operation.updateFavoriteMovies({
+      id: 1,
+      isFavorite: true,
+    });
+
+    MockApi.onPost(`/favorite/1/0`)
+    .reply(400);
+
+    return favoriteUpdater(dispatch, getState, api)
+    .then((response) => response)
+    .catch(() => {
+      expect(dispatch).toHaveBeenCalledTimes(4);
+
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.START_UPLOADING,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_UPLOADING_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: ActionType.SET_UPLOADING_ERROR,
+        payload: true,
+      });
+
+      expect(dispatch.mock.calls[3][0]).toEqual({
+        type: ActionType.END_UPLOADING,
+      });
+    });
+  });
+
 });
