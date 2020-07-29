@@ -47,16 +47,22 @@ Array [
       <div
         className="user-block"
       >
-        <div
-          className="user-block__avatar"
+        <a
+          className="user-block__link"
+          href="/mylist"
+          onClick={[Function]}
         >
-          <img
-            alt="User avatar"
-            height="63"
-            src="img/avatar.jpg"
-            width="63"
-          />
-        </div>
+          <div
+            className="user-block__avatar"
+          >
+            <img
+              alt="User avatar"
+              height="63"
+              src="img/avatar.jpg"
+              width="63"
+            />
+          </div>
+        </a>
       </div>
     </header>
     <div
@@ -120,6 +126,9 @@ Array [
             </button>
             <button
               className="btn btn--list movie-card__button"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
               type="button"
             >
               <svg

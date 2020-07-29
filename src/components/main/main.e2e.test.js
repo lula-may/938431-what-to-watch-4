@@ -3,7 +3,9 @@ import Enzyme, {mount} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import {Provider} from "react-redux";
 import configureStore from "redux-mock-store";
+import {Router} from "react-router-dom";
 
+import history from "../../history.js";
 import {Main} from "./main.jsx";
 import {testMovies} from "../../test-mocks/test-films";
 
@@ -28,22 +30,26 @@ describe(`MainComponent`, () => {
   it(`should run callback on every movie title click`, () => {
     const onMovieCardClick = jest.fn();
     const mainElement = mount(
-        <Provider store={store}>
-          <Main
-            activeGenre={`All genres`}
-            authorizationStatus={`AUTH`}
-            avatar={`img/avatar.jpg`}
-            genres={genres}
-            promoMovie={promoMovie}
-            movies={showedMovies}
-            moviesCount={8}
-            onGenreClick={() =>{}}
-            onMovieCardClick={onMovieCardClick}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={() => {}}
-            onSignInClick={() => {}}
-          />
-        </Provider>
+        <Router history={history}>
+          <Provider store={store}>
+            <Main
+              activeGenre={`All genres`}
+              authorizationStatus={`AUTH`}
+              avatar={`img/avatar.jpg`}
+              genres={genres}
+              hasUploadingError={false}
+              isUploading={false}
+              movies={showedMovies}
+              moviesCount={8}
+              onGenreClick={() =>{}}
+              onMovieCardClick={onMovieCardClick}
+              onPlayButtonClick={() => {}}
+              onShowMoreButtonClick={() => {}}
+              onMyListButtonClick={() => {}}
+              promoMovie={promoMovie}
+            />
+          </Provider>
+        </Router>
     );
     const titleElements = mainElement.find(`h3.small-movie-card__title`);
     titleElements.forEach((element) => element.simulate(`click`, {}));
@@ -53,22 +59,26 @@ describe(`MainComponent`, () => {
   it(`should run callback on tab click`, () => {
     const onGenreClick = jest.fn();
     const mainElement = mount(
-        <Provider store={store}>
-          <Main
-            activeGenre={`All genres`}
-            authorizationStatus={`AUTH`}
-            avatar={`img/avatar.jpg`}
-            genres={genres}
-            promoMovie={promoMovie}
-            movies={showedMovies}
-            moviesCount={8}
-            onGenreClick={onGenreClick}
-            onMovieCardClick={() => {}}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={() => {}}
-            onSignInClick={() => {}}
-          />
-        </Provider>
+        <Router history={history}>
+          <Provider store={store}>
+            <Main
+              activeGenre={`All genres`}
+              authorizationStatus={`AUTH`}
+              avatar={`img/avatar.jpg`}
+              genres={genres}
+              hasUploadingError={false}
+              isUploading={false}
+              movies={showedMovies}
+              moviesCount={8}
+              onGenreClick={onGenreClick}
+              onMovieCardClick={() => {}}
+              onPlayButtonClick={() => {}}
+              onShowMoreButtonClick={() => {}}
+              onMyListButtonClick={() => {}}
+              promoMovie={promoMovie}
+            />
+          </Provider>
+        </Router>
     );
     const genreLink = mainElement.find(`.catalog__genres-link`).at(1);
 
@@ -79,22 +89,26 @@ describe(`MainComponent`, () => {
   it(`should run callback on Show More button click`, () => {
     const onShowMoreButtonClick = jest.fn();
     const mainElement = mount(
-        <Provider store={store}>
-          <Main
-            activeGenre={`All genres`}
-            authorizationStatus={`AUTH`}
-            avatar={`img/avatar.jpg`}
-            genres={genres}
-            promoMovie={promoMovie}
-            movies={showedMovies}
-            moviesCount={4}
-            onGenreClick={() => {}}
-            onMovieCardClick={() => {}}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={onShowMoreButtonClick}
-            onSignInClick={() => {}}
-          />
-        </Provider>
+        <Router history={history}>
+          <Provider store={store}>
+            <Main
+              activeGenre={`All genres`}
+              authorizationStatus={`AUTH`}
+              avatar={`img/avatar.jpg`}
+              genres={genres}
+              hasUploadingError={false}
+              isUploading={false}
+              movies={showedMovies}
+              moviesCount={4}
+              onGenreClick={() => {}}
+              onMovieCardClick={() => {}}
+              onPlayButtonClick={() => {}}
+              onShowMoreButtonClick={onShowMoreButtonClick}
+              onMyListButtonClick={() => {}}
+              promoMovie={promoMovie}
+            />
+          </Provider>
+        </Router>
     );
     const showMoreButton = mainElement.find(`.catalog__button`);
 
@@ -105,22 +119,26 @@ describe(`MainComponent`, () => {
   it(`should run callback on Play button click`, () => {
     const onPlayButtonClick = jest.fn();
     const mainElement = mount(
-        <Provider store={store}>
-          <Main
-            activeGenre={`All genres`}
-            authorizationStatus={`AUTH`}
-            avatar={`img/avatar.jpg`}
-            genres={genres}
-            promoMovie={promoMovie}
-            movies={showedMovies}
-            moviesCount={4}
-            onGenreClick={() => {}}
-            onMovieCardClick={() => {}}
-            onPlayButtonClick={onPlayButtonClick}
-            onShowMoreButtonClick={() => {}}
-            onSignInClick={() => {}}
-          />
-        </Provider>
+        <Router history={history}>
+          <Provider store={store}>
+            <Main
+              activeGenre={`All genres`}
+              authorizationStatus={`AUTH`}
+              avatar={`img/avatar.jpg`}
+              genres={genres}
+              hasUploadingError={false}
+              isUploading={false}
+              movies={showedMovies}
+              moviesCount={4}
+              onGenreClick={() => {}}
+              onMovieCardClick={() => {}}
+              onPlayButtonClick={onPlayButtonClick}
+              onShowMoreButtonClick={() => {}}
+              onMyListButtonClick={() => {}}
+              promoMovie={promoMovie}
+            />
+          </Provider>
+        </Router>
     );
     const playButton = mainElement.find(`.btn--play`);
     playButton.simulate(`click`, {preventDefault: () => {}});

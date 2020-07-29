@@ -1,250 +1,137 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`App Component Should render AddReview Component 1`] = `
-<section
-  className="movie-card movie-card--full"
+<div
+  className="user-page"
 >
-  <div
-    className="movie-card__header"
+  <header
+    className="page-header user-page__head"
   >
     <div
-      className="movie-card__bg"
+      className="logo"
     >
-      <img
-        alt="Jurassic Park"
-        src="bip-poster-0.jpg"
-      />
+      <a
+        className="logo__link"
+        href="main.html"
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
     </div>
     <h1
-      className="visually-hidden"
+      className="page-title user-page__title"
     >
-      WTW
+      Sign in
     </h1>
-    <header
-      className="page-header"
-    >
-      <div
-        className="logo"
-      >
-        <a
-          className="logo__link"
-          href="main.html"
-        >
-          <span
-            className="logo__letter logo__letter--1"
-          >
-            W
-          </span>
-          <span
-            className="logo__letter logo__letter--2"
-          >
-            T
-          </span>
-          <span
-            className="logo__letter logo__letter--3"
-          >
-            W
-          </span>
-        </a>
-      </div>
-      <nav
-        className="breadcrumbs"
-      >
-        <ul
-          className="breadcrumbs__list"
-        >
-          <li
-            className="breadcrumbs__item"
-          >
-            <a
-              className="breadcrumbs__link"
-              href="movie-page.html"
-            >
-              Jurassic Park
-            </a>
-          </li>
-          <li
-            className="breadcrumbs__item"
-          >
-            <a
-              className="breadcrumbs__link"
-            >
-              Add review
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <div
-        className="user-block"
-      >
-        <div
-          className="user-block__avatar"
-        >
-          <img
-            alt="User avatar"
-            height="63"
-            src="img/avatar.jpg"
-            width="63"
-          />
-        </div>
-      </div>
-    </header>
-    <div
-      className="movie-card__poster movie-card__poster--small"
-    >
-      <img
-        alt="Jurassic Park poster"
-        height="327"
-        src="poster-0.jpg"
-        width="218"
-      />
-    </div>
-  </div>
+  </header>
   <div
-    className="add-review"
+    className="sign-in user-page__content"
   >
     <form
       action="#"
-      className="add-review__form"
+      className="sign-in__form"
       onSubmit={[Function]}
     >
       <div
-        className="rating"
+        className="sign-in__fields"
       >
         <div
-          className="rating__stars"
+          className="sign-in__field"
         >
           <input
-            checked={true}
-            className="rating__input"
-            disabled={false}
-            id="star-0"
-            name="rating"
-            onChange={[Function]}
-            type="radio"
-            value={0}
-          />
-          <input
-            checked={false}
-            className="rating__input"
-            disabled={false}
-            id="star-1"
-            name="rating"
-            onChange={[Function]}
-            type="radio"
-            value={1}
+            className="sign-in__input"
+            id="user-email"
+            name="user-email"
+            placeholder="Email address"
+            type="email"
           />
           <label
-            className="rating__label"
-            htmlFor="star-1"
+            className="sign-in__label visually-hidden"
+            htmlFor="user-email"
           >
-            Rating 
-            1
+            Email address
           </label>
+        </div>
+        <div
+          className="sign-in__field"
+        >
           <input
-            checked={false}
-            className="rating__input"
-            disabled={false}
-            id="star-2"
-            name="rating"
-            onChange={[Function]}
-            type="radio"
-            value={2}
+            className="sign-in__input"
+            id="user-password"
+            name="user-password"
+            placeholder="Password"
+            required={true}
+            type="password"
           />
           <label
-            className="rating__label"
-            htmlFor="star-2"
+            className="sign-in__label visually-hidden"
+            htmlFor="user-password"
           >
-            Rating 
-            2
-          </label>
-          <input
-            checked={false}
-            className="rating__input"
-            disabled={false}
-            id="star-3"
-            name="rating"
-            onChange={[Function]}
-            type="radio"
-            value={3}
-          />
-          <label
-            className="rating__label"
-            htmlFor="star-3"
-          >
-            Rating 
-            3
-          </label>
-          <input
-            checked={false}
-            className="rating__input"
-            disabled={false}
-            id="star-4"
-            name="rating"
-            onChange={[Function]}
-            type="radio"
-            value={4}
-          />
-          <label
-            className="rating__label"
-            htmlFor="star-4"
-          >
-            Rating 
-            4
-          </label>
-          <input
-            checked={false}
-            className="rating__input"
-            disabled={false}
-            id="star-5"
-            name="rating"
-            onChange={[Function]}
-            type="radio"
-            value={5}
-          />
-          <label
-            className="rating__label"
-            htmlFor="star-5"
-          >
-            Rating 
-            5
+            Password
           </label>
         </div>
       </div>
       <div
-        className="add-review__text"
+        className="sign-in__submit"
       >
-        <textarea
-          className="add-review__textarea"
-          disabled={false}
-          id="review-text"
-          maxLength={400}
-          minLength={50}
-          name="review-text"
-          onChange={[Function]}
-          placeholder="Review text"
-          required={true}
-        />
-        <div
-          className="add-review__submit"
+        <button
+          className="sign-in__btn"
+          type="submit"
         >
-          <button
-            className="add-review__btn"
-            disabled={true}
-            style={
-              Object {
-                "opacity": 0.5,
-              }
-            }
-            type="submit"
-          >
-            Post
-          </button>
-        </div>
+          Sign in
+        </button>
       </div>
     </form>
   </div>
-</section>
+  <footer
+    className="page-footer"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link logo__link--light"
+        href="main.html"
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <div
+      className="copyright"
+    >
+      <p>
+        © 2019 What to watch Ltd.
+      </p>
+    </div>
+  </footer>
+</div>
 `;
 
 exports[`App Component Should render ErrorScreen Component 1`] = `
@@ -473,16 +360,22 @@ Array [
       <div
         className="user-block"
       >
-        <div
-          className="user-block__avatar"
+        <a
+          className="user-block__link"
+          href="/mylist"
+          onClick={[Function]}
         >
-          <img
-            alt="User avatar"
-            height="63"
-            src="img/avatar.jpg"
-            width="63"
-          />
-        </div>
+          <div
+            className="user-block__avatar"
+          >
+            <img
+              alt="User avatar"
+              height="63"
+              src="img/avatar.jpg"
+              width="63"
+            />
+          </div>
+        </a>
       </div>
     </header>
     <div
@@ -546,6 +439,9 @@ Array [
             </button>
             <button
               className="btn btn--list movie-card__button"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
               type="button"
             >
               <svg

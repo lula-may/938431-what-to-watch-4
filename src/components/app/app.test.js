@@ -19,7 +19,9 @@ describe(`App Component`, () => {
         authorizationStatus: `AUTH`,
         genre: `All movies`,
         hasFilmsLoadingError: false,
+        hasUploadingError: false,
         isLoading: false,
+        isUploading: false,
         movies: testMovies,
         promoMovie,
       },
@@ -31,6 +33,7 @@ describe(`App Component`, () => {
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
         avatarUrl: `img/avatar.jpg`,
+        hasLoginError: false,
       }
     });
 
@@ -55,6 +58,8 @@ describe(`App Component`, () => {
         activeMovie: promoMovie,
         genre: `All movies`,
         hasFilmsLoadingError: false,
+        hasUploadingError: false,
+        isUploading: false,
         isLoading: false,
         movies: testMovies,
         promoMovie,
@@ -67,6 +72,7 @@ describe(`App Component`, () => {
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
         avatarUrl: `img/avatar.jpg`,
+        hasLoginError: false,
       }
     });
 
@@ -91,7 +97,9 @@ describe(`App Component`, () => {
         activeMovie: promoMovie,
         genre: `All movies`,
         hasFilmsLoadingError: false,
+        hasUploadingError: false,
         isLoading: false,
+        isUploading: false,
         movies: testMovies,
         promoMovie,
       },
@@ -103,6 +111,7 @@ describe(`App Component`, () => {
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
         avatarUrl: `img/avatar.jpg`,
+        hasLoginError: false,
       },
     });
 
@@ -129,7 +138,9 @@ describe(`App Component`, () => {
         activeMovie: promoMovie,
         genre: `All movies`,
         hasFilmsLoadingError: true,
+        hasUploadingError: false,
         isLoading: false,
+        isUploading: false,
         movies: testMovies,
         promoMovie,
       },
@@ -141,6 +152,7 @@ describe(`App Component`, () => {
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
         avatarUrl: `img/avatar.jpg`,
+        hasLoginError: false,
       }
     });
 
@@ -167,7 +179,9 @@ describe(`App Component`, () => {
         activeMovie: promoMovie,
         genre: `All movies`,
         hasFilmsLoadingError: false,
+        hasUploadingError: false,
         isLoading: true,
+        isUploading: false,
         movies: testMovies,
         promoMovie,
       },
@@ -179,6 +193,7 @@ describe(`App Component`, () => {
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
         avatarUrl: `img/avatar.jpg`,
+        hasLoginError: false,
       }
     });
 
@@ -205,7 +220,9 @@ describe(`App Component`, () => {
         activeMovie: promoMovie,
         genre: `All movies`,
         hasFilmsLoadingError: false,
+        hasUploadingError: false,
         isLoading: false,
+        isUploading: false,
         movies: testMovies,
         promoMovie,
       },
@@ -244,8 +261,8 @@ describe(`App Component`, () => {
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
         genre: `All movies`,
-        hasCommentUploadingError: false,
         hasFilmsLoadingError: false,
+        hasUploadingError: false,
         isLoading: false,
         isUploading: false,
         movies: testMovies,
@@ -259,7 +276,7 @@ describe(`App Component`, () => {
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
         avatarUrl: `img/avatar.jpg`,
-        hasCommentUploadingError: false,
+        hasUploadingError: false,
         hasLoginError: false,
         isInvalidEmail: false,
       }

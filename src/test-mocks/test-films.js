@@ -62,7 +62,7 @@ const testMovies = movieTitles.map((title, i) => {
     director: directors[i],
     genre: genres[i],
     id: i,
-    isFavorite: true,
+    isFavorite: false,
     poster: `poster-${i}.jpg`,
     previewPoster: `poster-${i}.jpg`,
     rating: {

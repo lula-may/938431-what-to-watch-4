@@ -15,7 +15,7 @@ const avatar = `img/avatar.jpg`;
 const store = mockStore({
   [NameSpace.DATA]: {
     activeMovie: movie,
-    hasCommentUploadingError: false,
+    hasUploadingError: false,
     isUploading: false,
   },
   [NameSpace.USER]: {
