@@ -9,6 +9,12 @@ const SHOWED_MOVIES_ON_START_COUNT = 8;
 const DEFAULT_GENRE = `All genres`;
 const MAX_GENRES_COUNT = 9;
 
+const AppRoute = {
+  ROOT: `/`,
+  LOGIN: `/login`,
+  MY_LIST: `/mylist`,
+};
+
 const Page = {
   ADD_REVIEW: `add-review`,
   DETAILS: `details`,
@@ -24,6 +30,7 @@ const TabType = {
 };
 
 export {
+  AppRoute,
   DEFAULT_GENRE,
   MAX_GENRES_COUNT,
   Page,

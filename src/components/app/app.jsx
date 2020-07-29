@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -9,13 +9,15 @@ import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
+import PrivateRoute from "../private-root/private-root.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
+import {AppRoute, Page} from "../../const.js";
 import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
 import {getPage} from "../../reducer/app-state/selectors.js";
-import {Page} from "../../const.js";
+import history from "../../history.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 
@@ -23,30 +25,24 @@ const PlayerWrapped = withFullVideo(Player);
 
 class App extends PureComponent {
   render() {
-    const {onExitButtonClick} = this.props;
     return (
-      <BrowserRouter>
+      <Router
+        history={history}
+      >
         <Switch>
-          <Route exact path="/">
+          <Route exact path={AppRoute.ROOT}>
             {this._renderApp()}
           </Route>
-          <Route exact path="/dev-film">
-            <MovieDetails/>
-          </Route>
-          <Route exact path="/dev-player">
-            <PlayerWrapped
-              onExitButtonClick={onExitButtonClick}
-            />
-          </Route>
-          <Route exact path="/dev-sign-in">
+          <Route exact path={AppRoute.LOGIN}>
             <SignIn/>
           </Route>
-          <Route exact path="/dev-review">
-            <AddReview/>
-          </Route>
-
+          <PrivateRoute
+            exact
+            path={AppRoute.FAVORITES}
+            render={() => {}}
+          />
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 
@@ -74,7 +70,7 @@ class App extends PureComponent {
           onExitButtonClick={onExitButtonClick}
         />;
       case Page.SIGN_IN:
-        return (authorizationStatus === AuthorizationStatus.AUTH) ? <Main/> : <SignIn/>;
+        return (authorizationStatus === AuthorizationStatus.AUTH) ? history.push(AppRoute.ROOT) : history.push(AppRoute.LOGIN);
       case Page.ADD_REVIEW:
         return <AddReview/>;
       default: return null;
