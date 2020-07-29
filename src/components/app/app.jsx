@@ -38,7 +38,7 @@ class App extends PureComponent {
           </Route>
           <PrivateRoute
             exact
-            path={AppRoute.FAVORITES}
+            path={AppRoute.MY_LIST}
             render={() => {}}
           />
         </Switch>
