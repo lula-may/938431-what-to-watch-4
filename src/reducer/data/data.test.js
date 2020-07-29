@@ -11,8 +11,9 @@ describe(`Reducer`, () => {
     expect(reducer(undefined, {})).toEqual({
       activeMovie: {},
       comments: [],
+      favoriteMovies: [],
       genre: `All genres`,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
       hasFilmsLoadingError: false,
       isLoading: false,
       isUploading: false,
@@ -79,13 +80,13 @@ describe(`Reducer`, () => {
     expect(reducer({
       movies: [],
       isUploading: false,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     }, {
       type: ActionType.START_UPLOADING,
     })).toEqual({
       movies: [],
       isUploading: true,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     });
   });
 
@@ -93,13 +94,13 @@ describe(`Reducer`, () => {
     expect(reducer({
       movies: [],
       isUploading: true,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     }, {
       type: ActionType.END_UPLOADING,
     })).toEqual({
       movies: [],
       isUploading: false,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     });
   });
 
@@ -108,26 +109,26 @@ describe(`Reducer`, () => {
       movies: [],
       isLoading: false,
       hasFilmsLoadingError: false,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     }, {
-      type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+      type: ActionType.SET_UPLOADING_ERROR,
       payload: true,
     })).toEqual({
       movies: [],
       isLoading: false,
       hasFilmsLoadingError: false,
-      hasCommentUploadingError: true,
+      hasUploadingError: true,
     });
   });
 
-  it(`should set comments when set comments action supplied`, () => {
+  it(`should udate favorite movies when udate favorite movies action supplied`, () => {
     expect(reducer({
       activeMovie: movie,
       comments: [],
       movies: [],
       isLoading: false,
       hasFilmsLoadingError: false,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     }, {
       type: ActionType.SET_MOVIE_COMMENTS,
       payload: reviews,
@@ -137,10 +138,33 @@ describe(`Reducer`, () => {
       movies: [],
       isLoading: false,
       hasFilmsLoadingError: false,
-      hasCommentUploadingError: false,
+      hasUploadingError: false,
     });
   });
 
+  it(`should update favorite movies when udateFavoriteMovies action supplied`, () => {
+    const updatedMovies = [Object.assign({}, testMovies[0], {isFavorite: true})];
+    expect(reducer({
+      activeMovie: movie,
+      comments: [],
+      favoriteMovies: [],
+      movies: [],
+      isLoading: false,
+      hasFilmsLoadingError: false,
+      hasUploadingError: false,
+    }, {
+      type: ActionType.UPDATE_FAVORITE_MOVIES,
+      payload: updatedMovies,
+    })).toEqual({
+      activeMovie: movie,
+      comments: [],
+      favoriteMovies: updatedMovies,
+      movies: [],
+      isLoading: false,
+      hasFilmsLoadingError: false,
+      hasUploadingError: false,
+    });
+  });
 
   it(`should set genre when set genre action supplied`, () => {
     expect(reducer({
@@ -228,12 +252,82 @@ describe(`ActionCreator`, () => {
   });
 
   it(`should return correct action for comment uploading error setting`, () => {
-    expect(ActionCreator.setCommentUploadingError(true)).toEqual({
-      type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+    expect(ActionCreator.setUploadingError(true)).toEqual({
+      type: ActionType.SET_UPLOADING_ERROR,
       payload: true,
     });
   });
 
+  it(`should add or delete movie from favoriteFilms`, () => {
+    const favoriteMovies = [
+      {
+        id: 0,
+        isFavorite: true,
+        title: `Jurassic Park`
+      },
+      {
+        id: 1,
+        isFavorite: true,
+        title: `Gone With The Wind`
+      }
+    ];
+    const newFavoriteMovie = {
+      id: 3,
+      isFavorite: true,
+      title: `Casablanca`
+    };
+
+    expect(ActionCreator.updateFavoriteMovies([], newFavoriteMovie)).toEqual({
+      type: ActionType.UPDATE_FAVORITE_MOVIES,
+      payload: [
+        {
+          id: 3,
+          isFavorite: true,
+          title: `Casablanca`
+        }],
+    });
+
+    expect(ActionCreator.updateFavoriteMovies(favoriteMovies, newFavoriteMovie)).toEqual({
+      type: ActionType.UPDATE_FAVORITE_MOVIES,
+      payload: [
+        {
+          id: 0,
+          isFavorite: true,
+          title: `Jurassic Park`
+        },
+        {
+          id: 1,
+          isFavorite: true,
+          title: `Gone With The Wind`
+        },
+        {
+          id: 3,
+          isFavorite: true,
+          title: `Casablanca`
+        }],
+    });
+
+    const notFavoriteMovie = {
+      id: 1,
+      isFavorite: false,
+      title: `Gone With The Wind`
+    };
+    expect(ActionCreator.updateFavoriteMovies(favoriteMovies, notFavoriteMovie)).toEqual({
+      type: ActionType.UPDATE_FAVORITE_MOVIES,
+      payload: [
+        {
+          id: 0,
+          isFavorite: true,
+          title: `Jurassic Park`
+        },
+        {
+          id: 3,
+          isFavorite: true,
+          title: `Casablanca`
+        },
+      ],
+    });
+  });
 });
 
 describe(`Operation`, () => {
@@ -347,7 +441,7 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[1][0]).toEqual({
-        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        type: ActionType.SET_UPLOADING_ERROR,
         payload: false,
       });
 
@@ -394,7 +488,7 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[1][0]).toEqual({
-        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        type: ActionType.SET_UPLOADING_ERROR,
         payload: false,
       });
 
@@ -403,9 +497,85 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[3][0]).toEqual({
-        type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+        type: ActionType.SET_UPLOADING_ERROR,
         payload: true,
       });
     });
   });
+
+  it(`should make a correct API call on add to or delete from favorite films`, () => {
+    const dispatch = jest.fn();
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+
+    const getState = () => ({
+      DATA: {
+        favoriteMovies: [{id: 1}, {id: 3}, {id: 5}],
+        promoMovie: {id: 1},
+      },
+    });
+
+    const favoriteUpdater = Operation.updateFavoriteMovies({
+      id: 1,
+      isFavorite: true,
+    });
+
+    const movieAnswer = {
+      "id": 1,
+      "name": `The Grand Budapest Hotel`,
+      "poster_image": `img/the-grand-budapest-hotel-poster.jpg`,
+      "preview_image": `img/the-grand-budapest-hotel.jpg`,
+      "background_image": `img/the-grand-budapest-hotel-bg.jpg`,
+      "background_color": `#ffffff`,
+      "video_link": `https://some-link`,
+      "preview_video_link": `https://some-link`,
+      "description": `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+      "rating": 8.9,
+      "scores_count": 240,
+      "director": `Wes Andreson`,
+      "starring": [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+      "run_time": 99,
+      "genre": `Comedy`,
+      "released": 2014,
+      "is_favorite": false
+    };
+
+    MockApi.onPost(`/favorite/1/0`)
+    .reply(200, movieAnswer);
+
+    return favoriteUpdater(dispatch, getState, api)
+    .then(() => {
+      expect(dispatch).toHaveBeenCalledTimes(6);
+
+      expect(dispatch.mock.calls[0][0]).toEqual({
+        type: ActionType.START_UPLOADING,
+      });
+
+      expect(dispatch.mock.calls[1][0]).toEqual({
+        type: ActionType.SET_UPLOADING_ERROR,
+        payload: false,
+      });
+
+      expect(dispatch.mock.calls[2][0]).toEqual({
+        type: ActionType.END_UPLOADING,
+      });
+
+      expect(dispatch.mock.calls[3][0]).toEqual({
+        type: ActionType.LOAD_PROMO,
+        payload: adaptMovie(movieAnswer),
+      });
+
+      expect(dispatch.mock.calls[4][0]).toEqual({
+        type: ActionType.SET_ACTIVE_MOVIE,
+        payload: adaptMovie(movieAnswer),
+      });
+
+      expect(dispatch.mock.calls[5][0]).toEqual({
+        type: ActionType.UPDATE_FAVORITE_MOVIES,
+        payload: [{id: 3}, {id: 5}],
+      });
+
+    });
+  });
+
 });

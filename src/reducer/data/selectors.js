@@ -28,11 +28,11 @@ export const getErrorState = (state) => {
   return state[NAME_SPACE].hasFilmsLoadingError;
 };
 
-export const getCommentUploadingError = (state) => {
-  return state[NAME_SPACE].hasCommentUploadingError;
+export const getUploadingError = (state) => {
+  return state[NAME_SPACE].hasUploadingError;
 };
 
-export const getCommentUploadingState = (state) => {
+export const getUploadingState = (state) => {
   return state[NAME_SPACE].isUploading;
 };
 

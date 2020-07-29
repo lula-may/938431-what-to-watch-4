@@ -5,6 +5,7 @@ import {ActionCreator as StateActionCreator} from "../app-state/app-state.js";
 import {Page} from "../../const.js";
 
 const Url = {
+  FAVORITE: `/favorite`,
   FILMS: `/films`,
   PROMO: `/films/promo`,
   COMMENTS: `/comments`,
@@ -13,9 +14,10 @@ const Url = {
 const initialState = {
   activeMovie: {},
   comments: [],
+  favoriteMovies: [],
   genre: DEFAULT_GENRE,
   hasFilmsLoadingError: false,
-  hasCommentUploadingError: false,
+  hasUploadingError: false,
   isLoading: false,
   isUploading: false,
   movies: [],
@@ -29,12 +31,25 @@ const ActionType = {
   LOAD_PROMO: `LOAD_PROMO`,
   POST_COMMENT: `POST_COMMENT`,
   SET_ACTIVE_MOVIE: `SET_ACTIVE_MOVIE`,
-  SET_COMMENT_UPLOADING_ERROR: `SET_COMMENT_UPLOADING_ERROR`,
+  SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
   SET_FILMS_LOADING_ERROR: `SET_FILMS_LOADING_ERROR`,
   SET_GENRE: `SET_GENRE`,
   SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
   START_UPLOADING: `START_UPLOADING`,
+  UPDATE_ACTIVE_MOVIE: `UPDATE_ACTIVE_MOVIE`,
+  UPDATE_FAVORITE_MOVIES: `UPDATE_FAVORITE_MOVIES`,
+};
+
+const updateFavoriteMovies = (movies, movie) => {
+  const index = movies.findIndex((item) => item.id === movie.id);
+  if (index === -1 && movie.isFavorite) {
+    movies.push(movie);
+  }
+  if (!movie.isFavorite) {
+    movies = [...movies.slice(0, index), ...movies.slice(index + 1)];
+  }
+  return movies;
 };
 
 const ActionCreator = {
@@ -66,8 +81,8 @@ const ActionCreator = {
     payload: genre,
   }),
 
-  setCommentUploadingError: (hasError) => ({
-    type: ActionType.SET_COMMENT_UPLOADING_ERROR,
+  setUploadingError: (hasError) => ({
+    type: ActionType.SET_UPLOADING_ERROR,
     payload: hasError,
   }),
 
@@ -87,7 +102,12 @@ const ActionCreator = {
 
   startUploading: () => ({
     type: ActionType.START_UPLOADING,
-  })
+  }),
+
+  updateFavoriteMovies: (favoriteMovies, movie) => ({
+    type: ActionType.UPDATE_FAVORITE_MOVIES,
+    payload: updateFavoriteMovies(favoriteMovies, movie),
+  }),
 };
 
 const Operation = {
@@ -115,7 +135,7 @@ const Operation = {
   postComment: (comment) => (dispatch, getState, api) => {
     const {DATA: {activeMovie: {id}}} = getState();
     dispatch(ActionCreator.startUploading());
-    dispatch(ActionCreator.setCommentUploadingError(false));
+    dispatch(ActionCreator.setUploadingError(false));
     return api.post(`${Url.COMMENTS}/${id}`, comment)
     .then((response) => {
       dispatch(ActionCreator.setMovieComments(adaptComments(response.data)));
@@ -123,11 +143,36 @@ const Operation = {
       dispatch(StateActionCreator.setPage(Page.DETAILS));
     })
     .catch((err) => {
-      dispatch(ActionCreator.setCommentUploadingError(true));
+      dispatch(ActionCreator.setUploadingError(true));
       dispatch(ActionCreator.endUploading());
       return err;
     });
-  }
+  },
+
+  updateFavoriteMovies: (movie) => (dispatch, getState, api) => {
+    const {id, isFavorite} = movie;
+    const {DATA: {favoriteMovies, promoMovie}} = getState();
+    const status = isFavorite ? 0 : 1;
+    const isPromo = id === promoMovie.id;
+
+    dispatch(ActionCreator.startUploading());
+    dispatch(ActionCreator.setUploadingError(false));
+    return api.post(`${Url.FAVORITE}/${id}/${status}`)
+    .then((response) => {
+      const updatedMovie = adaptMovie(response.data);
+      dispatch(ActionCreator.endUploading());
+      if (isPromo) {
+        dispatch(ActionCreator.loadPromo(updatedMovie));
+      }
+      dispatch(ActionCreator.setActiveMovie(updatedMovie));
+      dispatch(ActionCreator.updateFavoriteMovies(favoriteMovies, updatedMovie));
+    })
+    .catch((err) => {
+      dispatch(ActionCreator.setUploadingError(true));
+      dispatch(ActionCreator.endUploading());
+      return err;
+    });
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -164,9 +209,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         isUploading: false,
       });
-    case ActionType.SET_COMMENT_UPLOADING_ERROR:
+    case ActionType.SET_UPLOADING_ERROR:
       return extend(state, {
-        hasCommentUploadingError: action.payload,
+        hasUploadingError: action.payload,
       });
     case ActionType.SET_GENRE:
       return extend(state, {
@@ -175,6 +220,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.SET_FILMS_LOADING_ERROR:
       return extend(state, {
         hasFilmsLoadingError: action.payload,
+      });
+    case ActionType.UPDATE_FAVORITE_MOVIES:
+      return extend(state, {
+        favoriteMovies: action.payload,
       });
   }
   return state;
