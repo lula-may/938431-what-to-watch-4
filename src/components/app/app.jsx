@@ -15,7 +15,7 @@ import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {AppRoute, Page} from "../../const.js";
-import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
+import {getLoadingState, getLoadingError} from "../../reducer/data/selectors.js";
 import {getPage} from "../../reducer/app-state/selectors.js";
 import history from "../../history.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
@@ -47,14 +47,14 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {authorizationStatus, hasFilmsLoadingError, isLoading, onExitButtonClick, page} = this.props;
+    const {authorizationStatus, hasLoadingError, isLoading, onExitButtonClick, page} = this.props;
 
     if (isLoading) {
       return (
         <LoadingScreen/>
       );
     }
-    if (hasFilmsLoadingError) {
+    if (hasLoadingError) {
       return (
         <ErrorScreen/>
       );
@@ -80,7 +80,7 @@ class App extends PureComponent {
 
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  hasFilmsLoadingError: PropTypes.bool.isRequired,
+  hasLoadingError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   onExitButtonClick: PropTypes.func.isRequired,
   page: PropTypes.string.isRequired,
@@ -88,7 +88,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  hasFilmsLoadingError: getErrorState(state),
+  hasLoadingError: getLoadingError(state),
   isLoading: getLoadingState(state),
   page: getPage(state),
 });
