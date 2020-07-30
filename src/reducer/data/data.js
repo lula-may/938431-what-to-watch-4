@@ -16,7 +16,7 @@ const initialState = {
   comments: [],
   favoriteMovies: [],
   genre: DEFAULT_GENRE,
-  hasFilmsLoadingError: false,
+  hasLoadingError: false,
   hasUploadingError: false,
   isLoading: false,
   isUploading: false,
@@ -27,12 +27,13 @@ const initialState = {
 const ActionType = {
   END_LOADING: `END_LOADING`,
   END_UPLOADING: `END_UPLOADING`,
+  LOAD_COMMENTS: `LOAD_COMMENTS`,
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
   POST_COMMENT: `POST_COMMENT`,
   SET_ACTIVE_MOVIE: `SET_ACTIVE_MOVIE`,
   SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
-  SET_FILMS_LOADING_ERROR: `SET_FILMS_LOADING_ERROR`,
+  SET_LOADING_ERROR: `SET_LOADING_ERROR`,
   SET_GENRE: `SET_GENRE`,
   SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
@@ -61,6 +62,11 @@ const ActionCreator = {
     type: ActionType.END_UPLOADING,
   }),
 
+  loadComments: (comments) => ({
+    type: ActionType.LOAD_COMMENTS,
+    payload: comments,
+  }),
+
   loadMovies: (movies) => ({
     type: ActionType.LOAD_MOVIES,
     payload: movies,
@@ -86,8 +92,8 @@ const ActionCreator = {
     payload: hasError,
   }),
 
-  setFilmsLoadingError: (hasError) => ({
-    type: ActionType.SET_FILMS_LOADING_ERROR,
+  setLoadingError: (hasError) => ({
+    type: ActionType.SET_LOADING_ERROR,
     payload: hasError,
   }),
 
@@ -113,7 +119,7 @@ const ActionCreator = {
 const Operation = {
   loadMovies: () => (dispatch, getState, api) => {
     dispatch(ActionCreator.startLoading());
-    dispatch(ActionCreator.setFilmsLoadingError(false));
+    dispatch(ActionCreator.setLoadingError(false));
     return api.get(Url.PROMO)
     .then((response) => {
       const promoMovie = adaptMovie(response.data);
@@ -127,7 +133,22 @@ const Operation = {
     })
     .catch((err) => {
       dispatch(ActionCreator.endLoading());
-      dispatch(ActionCreator.setFilmsLoadingError(true));
+      dispatch(ActionCreator.setLoadingError(true));
+      return err;
+    });
+  },
+
+  loadComments: (id) => (dispatch, getState, api) => {
+    dispatch(ActionCreator.startLoading());
+    dispatch(ActionCreator.setLoadingError(false));
+    return api.get(`${Url.COMMENTS}/${id}`)
+    .then((response) => {
+      dispatch(ActionCreator.loadComments(adaptComments(response.data)));
+      dispatch(ActionCreator.endLoading());
+    })
+    .catch((err) => {
+      dispatch(ActionCreator.endLoading());
+      dispatch(ActionCreator.setLoadingError(true));
       return err;
     });
   },
@@ -181,6 +202,10 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         movies: action.payload
       });
+    case ActionType.LOAD_COMMENTS:
+      return extend(state, {
+        comments: action.payload,
+      });
     case ActionType.LOAD_PROMO:
       return extend(state, {
         promoMovie: action.payload
@@ -217,9 +242,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         genre: action.payload,
       });
-    case ActionType.SET_FILMS_LOADING_ERROR:
+    case ActionType.SET_LOADING_ERROR:
       return extend(state, {
-        hasFilmsLoadingError: action.payload,
+        hasLoadingError: action.payload,
       });
     case ActionType.UPDATE_FAVORITE_MOVIES:
       return extend(state, {

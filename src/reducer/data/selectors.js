@@ -12,6 +12,10 @@ export const getActiveMovie = (state) => {
   return state[NAME_SPACE].activeMovie;
 };
 
+
+export const getMovieComments = (state) => {
+  return state[NAME_SPACE].comments;
+};
 export const getPromoMovie = (state) => {
   return state[NAME_SPACE].promoMovie;
 };
@@ -24,8 +28,8 @@ export const getLoadingState = (state) => {
   return state[NAME_SPACE].isLoading;
 };
 
-export const getErrorState = (state) => {
-  return state[NAME_SPACE].hasFilmsLoadingError;
+export const getLoadingError = (state) => {
+  return state[NAME_SPACE].hasLoadingError;
 };
 
 export const getUploadingError = (state) => {
