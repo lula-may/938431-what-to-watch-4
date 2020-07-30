@@ -18,6 +18,7 @@ describe(`MovieDetails Component`, () => {
         <MovieDetails
           authorizationStatus={`AUTH`}
           avatar={`avatar.jpg`}
+          hasLoadingError={false}
           movie={movie}
           onAddReviewButtonClick={onAddReviewButtonClick}
           onMovieCardClick={() => {}}
@@ -38,6 +39,7 @@ describe(`MovieDetails Component`, () => {
         <MovieDetails
           authorizationStatus={`AUTH`}
           avatar={`avatar.jpg`}
+          hasLoadingError={false}
           movie={movie}
           onAddReviewButtonClick={() => {}}
           onMovieCardClick={() => {}}
@@ -58,6 +60,7 @@ describe(`MovieDetails Component`, () => {
         <MovieDetails
           authorizationStatus={`AUTH`}
           avatar={`avatar.jpg`}
+          hasLoadingError={false}
           movie={movie}
           onAddReviewButtonClick={() => {}}
           onMovieCardClick={onMovieCardClick}

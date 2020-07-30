@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly Reviews Component 1`] = `
+exports[`Reviews Component should render correctly Reviews Component 1`] = `
 <div
   className="movie-card__reviews movie-card__row"
 >
@@ -112,4 +112,10 @@ exports[`should render correctly Reviews Component 1`] = `
     </div>
   </div>
 </div>
+`;
+
+exports[`Reviews Component should render error message on comments loading error 1`] = `
+<p>
+  Sorry, we can't load comments now. Please, try again later.
+</p>
 `;

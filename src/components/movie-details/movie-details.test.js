@@ -12,6 +12,7 @@ describe(`MovieDetails Component`, () => {
         <MovieDetails
           authorizationStatus={`AUTH`}
           avatar={avatar}
+          hasLoadingError={false}
           movie={movie}
           similarMovies={testMovies}
           onMovieCardClick={() => {}}
@@ -28,6 +29,7 @@ describe(`MovieDetails Component`, () => {
         <MovieDetails
           authorizationStatus={`NO_AUTH`}
           avatar={avatar}
+          hasLoadingError={false}
           movie={movie}
           similarMovies={testMovies}
           onMovieCardClick={() => {}}
