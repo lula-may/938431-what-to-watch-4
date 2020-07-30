@@ -214,6 +214,7 @@ const mapDispatchToProps = (dispatch) => ({
 
   onMovieCardClick(movie) {
     dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(DataOperation.loadComments(movie.id));
     dispatch(StateActionCreator.setPage(Page.DETAILS));
   },
 

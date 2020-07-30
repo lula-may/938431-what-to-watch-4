@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Details from "../details/details.jsx";
 import Overview from "../overview/overview.jsx";
 import Reviews from "../reviews/reviews.jsx";
-import {movieShape} from "../shapes";
+import {movieShape, reviewShape} from "../shapes";
 import {TabType} from "../../const";
 
 const tabsWithIds = [
@@ -51,7 +51,7 @@ class Tabs extends PureComponent {
   }
 
   _renderInfo() {
-    const {activeItem, movie} = this.props;
+    const {activeItem, hasLoadingError, movie, comments} = this.props;
     switch (activeItem) {
       case TabType.OVERVIEW:
         return (
@@ -63,7 +63,10 @@ class Tabs extends PureComponent {
         );
       case TabType.REVIEWS:
         return (
-          <Reviews movie={movie}/>
+          <Reviews
+            comments={comments}
+            hasLoadingError={hasLoadingError}
+          />
         );
       default: return null;
     }
@@ -72,6 +75,8 @@ class Tabs extends PureComponent {
 
 Tabs.propTypes = {
   activeItem: PropTypes.string.isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape(reviewShape)),
+  hasLoadingError: PropTypes.bool.isRequired,
   movie: PropTypes.shape(movieShape).isRequired,
   onClick: PropTypes.func.isRequired,
 };

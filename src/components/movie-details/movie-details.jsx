@@ -7,12 +7,12 @@ import Tabs from "../tabs/tabs.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 
-import {movieShape} from "../shapes";
+import {movieShape, reviewShape} from "../shapes";
 import {Page, SIMILAR_MOVIES_COUNT, TabType} from "../../const";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {ActionCreator as DataActionCreator} from "../../reducer/data/data.js";
+import {ActionCreator as DataActionCreator, Operation as DataOperation} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getActiveMovie, selectSimilarMovies} from "../../reducer/data/selectors.js";
+import {getActiveMovie, getMovieComments, selectSimilarMovies, getLoadingError} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 
 const MoviesListWrapped = withActiveMovie(MoviesList);
@@ -22,11 +22,13 @@ const MovieDetails = (props) => {
   const {
     authorizationStatus,
     avatar,
-    similarMovies,
+    comments,
+    hasLoadingError,
     movie,
     onAddReviewButtonClick,
     onMovieCardClick,
     onPlayButtonClick,
+    similarMovies,
   } = props;
   const {
     bgColor,
@@ -97,8 +99,10 @@ const MovieDetails = (props) => {
             <img src={poster} alt={`${title} poster`} width="218" height="327" />
           </div>
           <TabsWrapped
-            movie={movie}
             activeItem={TabType.OVERVIEW}
+            comments={comments}
+            hasLoadingError={hasLoadingError}
+            movie={movie}
             onActiveChange={() => {}}
           />
         </div>
@@ -135,6 +139,8 @@ const MovieDetails = (props) => {
 MovieDetails.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape(reviewShape)),
+  hasLoadingError: PropTypes.bool.isRequired,
   movie: PropTypes.shape(movieShape).isRequired,
   similarMovies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
@@ -147,6 +153,8 @@ MovieDetails.propTypes = {
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   avatar: getAvatarUrl(state),
+  comments: getMovieComments(state),
+  hasLoadingError: getLoadingError(state),
   movie: getActiveMovie(state),
   similarMovies: selectSimilarMovies(state),
 });
@@ -159,6 +167,7 @@ const mapDispatchToProps = (dispatch) => ({
 
   onMovieCardClick(movie) {
     dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(DataOperation.loadComments(movie.id));
     dispatch(StateActionCreator.setPage(Page.DETAILS));
   },
 
