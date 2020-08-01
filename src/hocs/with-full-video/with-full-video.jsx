@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {movieShape} from "../../components/shapes";
-import {getActiveMovie} from "../../reducer/data/selectors.js";
+import {getMovieById} from "../../reducer/data/selectors.js";
 
 const withFullVideo = (Component) => {
   class WithFullVideo extends PureComponent {
@@ -50,6 +50,7 @@ const withFullVideo = (Component) => {
       const {movie: {src}} = this.props;
       const video = this._videoRef.current;
       video.src = src;
+      video.controlls = true;
 
       video.onloadedmetadata = () => {
         this._duration = video.duration;
@@ -120,8 +121,8 @@ const withFullVideo = (Component) => {
 
 };
 
-const mapStateToProps = (state) => ({
-  movie: getActiveMovie(state),
+const mapStateToProps = (state, props) => ({
+  movie: getMovieById(state, props.match.params.id),
 });
 
 export {withFullVideo};

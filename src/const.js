@@ -12,15 +12,10 @@ const MAX_GENRES_COUNT = 9;
 const AppRoute = {
   ROOT: `/`,
   LOGIN: `/login`,
+  FILM: `/films/:id`,
   MY_LIST: `/mylist`,
-};
-
-const Page = {
-  ADD_REVIEW: `add-review`,
-  DETAILS: `details`,
-  MAIN: `main`,
-  PLAYER: `player`,
-  SIGN_IN: `signIn`,
+  PLAYER: `/films/:id/player`,
+  REVIEW: `/films/:id/review`,
 };
 
 const TabType = {
@@ -33,7 +28,6 @@ export {
   AppRoute,
   DEFAULT_GENRE,
   MAX_GENRES_COUNT,
-  Page,
   PLAYER_DELAY,
   PREVIEW,
   SIMILAR_MOVIES_COUNT,

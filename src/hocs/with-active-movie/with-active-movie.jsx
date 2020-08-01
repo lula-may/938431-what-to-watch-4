@@ -24,10 +24,9 @@ const withActiveMovie = (Component) => {
       );
     }
 
-    handleCardClick(evt) {
+    handleCardClick() {
       const {onMovieCardClick} = this.props;
       const {movie} = this.state;
-      evt.preventDefault();
       onMovieCardClick(movie);
     }
 
