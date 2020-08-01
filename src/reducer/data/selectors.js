@@ -16,6 +16,7 @@ export const getActiveMovie = (state) => {
 export const getMovieComments = (state) => {
   return state[NAME_SPACE].comments;
 };
+
 export const getPromoMovie = (state) => {
   return state[NAME_SPACE].promoMovie;
 };
@@ -40,6 +41,11 @@ export const getUploadingState = (state) => {
   return state[NAME_SPACE].isUploading;
 };
 
+export const getMovieById = (state, id) => {
+  const movies = state[NAME_SPACE].movies;
+  return movies.find((movie) => movie.id === parseInt(id, 10));
+};
+
 export const selectMoviesByGenre = createSelector(
     [getMovies, getGenre],
     (movies, genre) => {
@@ -53,7 +59,8 @@ export const selectMoviesByGenre = createSelector(
 export const selectSimilarMovies = createSelector(
     [getMovies, getActiveMovie],
     (movies, activeMovie) => {
-      return movies.filter((movie) => movie.genre === activeMovie.genre && movie.id !== activeMovie.id);
+      const {genre, id} = activeMovie;
+      return movies.filter((movie) => movie.genre === genre && movie.id !== id);
     }
 );
 

@@ -17,7 +17,7 @@ import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getGenre, getPromoMovie, getUploadingError, getUploadingState, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";
 import {getMoviesCount} from "../../reducer/app-state/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
-import {AppRoute, Page} from "../../const.js";
+import {AppRoute} from "../../const.js";
 
 const GenresListWrapped = withActiveItem(GenresList);
 const MoviesListWrapped = withActiveMovie(MoviesList);
@@ -25,7 +25,14 @@ const MoviesListWrapped = withActiveMovie(MoviesList);
 class Main extends PureComponent {
   constructor(props) {
     super(props);
-    this._handleMyListButtonClick = this._handleMyListButtonClick.bind(this);
+    this.handleAddToMyListButtonClick = this.handleAddToMyListButtonClick.bind(this);
+  }
+
+  handleAddToMyListButtonClick() {
+    const {authorizationStatus, promoMovie, onMyListButtonClick} = this.props;
+    return authorizationStatus === AuthorizationStatus.NO_AUTH
+      ? history.push(AppRoute.LOGIN)
+      : onMyListButtonClick(promoMovie);
   }
 
   render() {
@@ -40,7 +47,6 @@ class Main extends PureComponent {
       moviesCount,
       onGenreClick,
       onMovieCardClick,
-      onPlayButtonClick,
       onShowMoreButtonClick,
       promoMovie,
     } = this.props;
@@ -102,16 +108,16 @@ class Main extends PureComponent {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={onPlayButtonClick}>
+                <Link to={`/films/${promoMovie.id}/player`} className="btn btn--play movie-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
-                </button>
+                </Link>
                 <button
                   className="btn btn--list movie-card__button"
                   type="button"
-                  onClick={this._handleMyListButtonClick}
+                  onClick={this.handleAddToMyListButtonClick}
                   disabled={isUploading}
                   style={hasUploadingError ? {border: `1px solid red`} : {}}
                 >
@@ -167,12 +173,6 @@ class Main extends PureComponent {
     </React.Fragment>;
   }
 
-  _handleMyListButtonClick() {
-    const {authorizationStatus, promoMovie, onMyListButtonClick} = this.props;
-    return authorizationStatus === AuthorizationStatus.NO_AUTH
-      ? history.push(AppRoute.LOGIN)
-      : onMyListButtonClick(promoMovie);
-  }
 }
 
 Main.propTypes = {
@@ -189,7 +189,6 @@ Main.propTypes = {
   onGenreClick: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   onMyListButtonClick: PropTypes.func.isRequired,
-  onPlayButtonClick: PropTypes.func.isRequired,
   onShowMoreButtonClick: PropTypes.func.isRequired,
   promoMovie: PropTypes.shape(movieShape).isRequired,
 };
@@ -215,12 +214,6 @@ const mapDispatchToProps = (dispatch) => ({
   onMovieCardClick(movie) {
     dispatch(DataActionCreator.setActiveMovie(movie));
     dispatch(DataOperation.loadComments(movie.id));
-    dispatch(StateActionCreator.setPage(Page.DETAILS));
-  },
-
-  onPlayButtonClick() {
-    dispatch(StateActionCreator.saveCurrentPage());
-    dispatch(StateActionCreator.setPage(Page.PLAYER));
   },
 
   onShowMoreButtonClick() {
