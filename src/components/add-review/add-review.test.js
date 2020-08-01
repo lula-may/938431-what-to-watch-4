@@ -36,6 +36,7 @@ describe(`AddReview Component`, () => {
               avatar={avatar}
               movie={movie}
               onLogoLinkClick={() => {}}
+              setActiveMovie={() => {}}
             />
           </Provider>
         </Router>
