@@ -18,7 +18,6 @@ describe(`MoviesList Component`, () => {
           <MoviesList
             movies={testMovies}
             moviesCount={8}
-            onMovieCardEnter={() => {}}
             onMovieCardClick={onMovieCardClick}
           />
         </Router>
@@ -37,7 +36,6 @@ describe(`MoviesList Component`, () => {
           <MoviesList
             movies={testMovies}
             moviesCount={8}
-            onMovieCardEnter={() => {}}
             onMovieCardClick={onMovieCardClick}
           />
         </Router>
@@ -47,25 +45,6 @@ describe(`MoviesList Component`, () => {
     cardTitle.simulate(`click`, {});
 
     expect(onMovieCardClick).toHaveBeenCalledTimes(1);
-  });
-
-  it(`should run callback on mouseEntering the movieCard`, () => {
-    const onMovieCardEnter = jest.fn();
-    const moviesList = mount(
-        <Router history={history}>
-          <MoviesList
-            movies={testMovies}
-            moviesCount={8}
-            onMovieCardClick={() => {}}
-            onMovieCardEnter={onMovieCardEnter}
-          />
-        </Router>
-    );
-
-    const card = moviesList.find(`.small-movie-card`).at(2);
-    card.simulate(`mouseenter`, {});
-
-    expect(onMovieCardEnter).toHaveBeenCalledTimes(1);
   });
 });
 

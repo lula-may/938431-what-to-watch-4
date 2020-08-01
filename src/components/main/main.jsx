@@ -7,7 +7,6 @@ import GenresList from "../genres-list/genres-list.jsx";
 import MoviesList from "../movies-list/movies-list.jsx";
 import ShowMoreButton from "../show-more-button/show-more-button.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
-import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 
 import history from "../../history.js";
 import {movieShape} from "../shapes.js";
@@ -20,7 +19,6 @@ import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors
 import {AppRoute} from "../../const.js";
 
 const GenresListWrapped = withActiveItem(GenresList);
-const MoviesListWrapped = withActiveMovie(MoviesList);
 
 class Main extends PureComponent {
   constructor(props) {
@@ -147,7 +145,7 @@ class Main extends PureComponent {
             onActiveChange={onGenreClick}
           />
 
-          <MoviesListWrapped
+          <MoviesList
             movies={showedMovies}
             moviesCount={moviesCount}
             onMovieCardClick={onMovieCardClick}

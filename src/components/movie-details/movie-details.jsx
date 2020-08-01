@@ -6,17 +6,15 @@ import PropTypes from "prop-types";
 import MoviesList from "../movies-list/movies-list.jsx";
 import Tabs from "../tabs/tabs.jsx";
 import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
-import withActiveMovie from "../../hocs/with-active-movie/with-active-movie.jsx";
 
 import {movieShape, reviewShape} from "../shapes";
 import {SIMILAR_MOVIES_COUNT, TabType, AppRoute} from "../../const";
 import history from "../../history.js";
 import {ActionCreator as DataActionCreator, Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getMovieById, getMovieComments, selectSimilarMovies, getLoadingError, getMovies, getPromoMovie} from "../../reducer/data/selectors.js";
+import {getMovieById, getMovieComments, selectSimilarMovies, getLoadingError, getMovies} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 
-const MoviesListWrapped = withActiveMovie(MoviesList);
 const TabsWrapped = withActiveItem(Tabs);
 
 class MovieDetails extends Component {
@@ -33,12 +31,11 @@ class MovieDetails extends Component {
   }
 
   componentDidMount() {
-    const {loadComments, movie, promoMovie, setActiveMovie} = this.props;
-    if (movie.id === promoMovie.id) {
-      loadComments(promoMovie.id);
-    }
+    const {loadComments, movie, setActiveMovie} = this.props;
+    loadComments(movie.id);
     setActiveMovie(movie);
   }
+
   render() {
     const {
       authorizationStatus,
@@ -46,7 +43,6 @@ class MovieDetails extends Component {
       hasLoadingError,
       comments,
       movie,
-      onLogoLinkClick,
       onMovieCardClick,
       similarMovies,
     } = this.props;
@@ -74,7 +70,7 @@ class MovieDetails extends Component {
 
           <header className="page-header movie-card__head">
             <div className="logo">
-              <Link to={AppRoute.ROOT} className="logo__link" onClick={onLogoLinkClick}>
+              <Link to={AppRoute.ROOT} className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -140,7 +136,7 @@ class MovieDetails extends Component {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <MoviesListWrapped
+          <MoviesList
             movies={similarMovies}
             moviesCount={SIMILAR_MOVIES_COUNT}
             onMovieCardClick={onMovieCardClick}
@@ -148,7 +144,7 @@ class MovieDetails extends Component {
         </section>
         <footer className="page-footer">
           <div className="logo">
-            <Link to={AppRoute.ROOT} className="logo__link logo__link--light" onClick={onLogoLinkClick}>
+            <Link to={AppRoute.ROOT} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -174,10 +170,8 @@ MovieDetails.propTypes = {
   similarMovies: PropTypes.arrayOf(
       PropTypes.shape(movieShape)
   ).isRequired,
-  onLogoLinkClick: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
   onMyListButtonClick: PropTypes.func.isRequired,
-  promoMovie: PropTypes.shape(movieShape).isRequired,
   setActiveMovie: PropTypes.func.isRequired,
 };
 
@@ -188,17 +182,12 @@ const mapStateToProps = (state, props) => ({
   hasLoadingError: getLoadingError(state),
   movie: getMovieById(state, props.match.params.id),
   movies: getMovies(state),
-  promoMovie: getPromoMovie(state),
   similarMovies: selectSimilarMovies(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   loadComments(id) {
     dispatch(DataOperation.loadComments(id));
-  },
-
-  onLogoLinkClick() {
-    dispatch(DataActionCreator.resetActiveMovie());
   },
 
   onMovieCardClick(movie) {

@@ -15,30 +15,6 @@ const promoMovie = testMovies[0];
 const similarMovies = testMovies.slice(2);
 
 describe(`MovieDetails Component`, () => {
-  it(`should run callback on Logo link click`, () => {
-    const onLogoLinkClick = jest.fn();
-    const wrapper = mount(
-        <Router history={history}>
-          <MovieDetails
-            authorizationStatus={`AUTH`}
-            avatar={`avatar.jpg`}
-            hasLoadingError={false}
-            loadComments={() => {}}
-            movie={movie}
-            setActiveMovie={() => {}}
-            onLogoLinkClick={onLogoLinkClick}
-            onMovieCardClick={() => {}}
-            onMyListButtonClick={() => {}}
-            promoMovie={promoMovie}
-            similarMovies={similarMovies}
-          />
-        </Router>
-    );
-    const logoLinks = wrapper.find(`a.logo__link`);
-    logoLinks.forEach((link)=> link.simulate(`click`));
-    expect(onLogoLinkClick).toHaveBeenCalledTimes(2);
-  });
-
   it(`should run callback on every SimilarMovie card click`, () => {
     const onMovieCardClick = jest.fn();
     const wrapper = mount(

@@ -6,7 +6,6 @@ import history from "../../history.js";
 import {testMovies} from "../../test-mocks/test-films";
 
 const movie = testMovies[1];
-const promoMovie = testMovies[0];
 const avatar = `img/avatar.jpg`;
 
 describe(`MovieDetails Component`, () => {
@@ -24,7 +23,6 @@ describe(`MovieDetails Component`, () => {
             onLogoLinkClick={() => {}}
             onMovieCardClick={() => {}}
             onMyListButtonClick={() => {}}
-            promoMovie={promoMovie}
           />
         </Router>
     )
@@ -46,7 +44,6 @@ describe(`MovieDetails Component`, () => {
             onLogoLinkClick={() => {}}
             onMovieCardClick={() => {}}
             onMyListButtonClick={() => {}}
-            promoMovie={promoMovie}
           />
         </Router>
     )
