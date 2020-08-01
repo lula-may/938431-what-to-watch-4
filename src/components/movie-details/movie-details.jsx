@@ -93,7 +93,7 @@ class MovieDetails extends Component {
               </p>
 
               <div className="movie-card__buttons">
-                <Link to={`/films/${id}/player`} className="btn btn--play movie-card__button">
+                <Link to={`${AppRoute.FILMS}/${id}${AppRoute.PLAYER}`} className="btn btn--play movie-card__button">
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -110,7 +110,7 @@ class MovieDetails extends Component {
                   }
                   <span>My list</span>
                 </button>
-                {isUserAuthorized && <Link to={`/films/${id}/review`} className="btn movie-card__button">Add review</Link>}
+                {isUserAuthorized && <Link to={`${AppRoute.FILMS}/${id}${AppRoute.REVIEW}`} className="btn movie-card__button">Add review</Link>}
               </div>
             </div>
           </div>

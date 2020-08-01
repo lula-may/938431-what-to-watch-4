@@ -12,10 +12,10 @@ const MAX_GENRES_COUNT = 9;
 const AppRoute = {
   ROOT: `/`,
   LOGIN: `/login`,
-  FILM: `/films/:id`,
+  FILMS: `/films`,
   MY_LIST: `/mylist`,
-  PLAYER: `/films/:id/player`,
-  REVIEW: `/films/:id/review`,
+  PLAYER: `/player`,
+  REVIEW: `/review`,
 };
 
 const TabType = {

@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {formatElapsedTime} from "../../utils.js";
 import {movieShape} from "../shapes.js";
+import {AppRoute} from "../../const.js";
 
 const Player = (props) => {
   const {
@@ -18,7 +19,7 @@ const Player = (props) => {
   return (
     <div className="player">
       {children}
-      <Link to={`/films/${id}`} className="player__exit" style={{textDecoration: `none`}}>Exit</Link>
+      <Link to={`${AppRoute.FILMS}/${id}`} className="player__exit" style={{textDecoration: `none`}}>Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">

@@ -37,15 +37,15 @@ class App extends PureComponent {
               : <Redirect to={AppRoute.ROOT}/>}
           />
 
-          <Route exact path={AppRoute.FILM} component={MovieDetails}/>
+          <Route exact path={`${AppRoute.FILMS}/:id`} component={MovieDetails}/>
 
           <Route
             exact
-            path={AppRoute.PLAYER}
+            path={`${AppRoute.FILMS}/:id/${AppRoute.PLAYER}`}
             component={PlayerWrapped}
           />
 
-          <Route exact path={AppRoute.REVIEW} component={AddReview}/>
+          <Route exact path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`} component={AddReview}/>
 
           <PrivateRoute
             exact
