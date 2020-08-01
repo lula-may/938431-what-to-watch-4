@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDom from "react-dom";
-import {applyMiddleware, compose, createStore} from "redux";
+import {applyMiddleware, createStore} from "redux";
+import {composeWithDevTools} from "redux-devtools-extension";
 import {Provider} from "react-redux";
 import thunk from "redux-thunk";
 
@@ -15,10 +16,10 @@ const onUnauthorized = () => {
 };
 
 const api = createApi(onUnauthorized);
-const store = createStore(reducer,
-    compose(
-        applyMiddleware(thunk.withExtraArgument(api)),
-        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+const store = createStore(
+    reducer,
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api))
     )
 );
 
