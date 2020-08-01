@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {Route, Router, Switch} from "react-router-dom";
+import {Redirect, Route, Router, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -13,18 +13,15 @@ import PrivateRoute from "../private-root/private-root.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 
-import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {AppRoute, Page} from "../../const.js";
+import {AppRoute} from "../../const.js";
 import {getLoadingState, getLoadingError} from "../../reducer/data/selectors.js";
-import {getPage} from "../../reducer/app-state/selectors.js";
 import history from "../../history.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const PlayerWrapped = withFullVideo(Player);
-
 class App extends PureComponent {
   render() {
+    const {authorizationStatus} = this.props;
     return (
       <Router
         history={history}
@@ -33,9 +30,23 @@ class App extends PureComponent {
           <Route exact path={AppRoute.ROOT}>
             {this._renderApp()}
           </Route>
-          <Route exact path={AppRoute.LOGIN}>
-            <SignIn/>
-          </Route>
+
+          <Route exact path={AppRoute.LOGIN}
+            render={() => authorizationStatus === `NO_AUTH`
+              ? <SignIn/>
+              : <Redirect to={AppRoute.ROOT}/>}
+          />
+
+          <Route exact path={AppRoute.FILM} component={MovieDetails}/>
+
+          <Route
+            exact
+            path={AppRoute.PLAYER}
+            component={PlayerWrapped}
+          />
+
+          <Route exact path={AppRoute.REVIEW} component={AddReview}/>
+
           <PrivateRoute
             exact
             path={AppRoute.MY_LIST}
@@ -47,7 +58,7 @@ class App extends PureComponent {
   }
 
   _renderApp() {
-    const {authorizationStatus, hasLoadingError, isLoading, onExitButtonClick, page} = this.props;
+    const {hasLoadingError, isLoading} = this.props;
 
     if (isLoading) {
       return (
@@ -59,22 +70,9 @@ class App extends PureComponent {
         <ErrorScreen/>
       );
     }
-
-    switch (page) {
-      case Page.MAIN:
-        return <Main/>;
-      case Page.DETAILS:
-        return <MovieDetails/>;
-      case Page.PLAYER:
-        return <PlayerWrapped
-          onExitButtonClick={onExitButtonClick}
-        />;
-      case Page.SIGN_IN:
-        return (authorizationStatus === AuthorizationStatus.AUTH) ? history.push(AppRoute.ROOT) : history.push(AppRoute.LOGIN);
-      case Page.ADD_REVIEW:
-        return <AddReview/>;
-      default: return null;
-    }
+    return (
+      <Main/>
+    );
   }
 }
 
@@ -82,22 +80,13 @@ App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
   hasLoadingError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  onExitButtonClick: PropTypes.func.isRequired,
-  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
   hasLoadingError: getLoadingError(state),
   isLoading: getLoadingState(state),
-  page: getPage(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onExitButtonClick() {
-    dispatch(StateActionCreator.returnToPreviousPage());
-  },
 });
 
 export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);
