@@ -27,9 +27,9 @@ class App extends PureComponent {
         history={history}
       >
         <Switch>
-          <Route exact path={AppRoute.ROOT}>
-            {this._renderApp()}
-          </Route>
+          <Route exact path={AppRoute.ROOT}
+            render={(props) => this.renderComponent(<Main {...props}/>)}
+          />
 
           <Route exact path={AppRoute.LOGIN}
             render={() => authorizationStatus === `NO_AUTH`
@@ -37,27 +37,36 @@ class App extends PureComponent {
               : <Redirect to={AppRoute.ROOT}/>}
           />
 
-          <Route exact path={`${AppRoute.FILMS}/:id`} component={MovieDetails}/>
+          <Route exact path={`${AppRoute.FILMS}/:id`}
+            render={(props) => this.renderComponent(<MovieDetails {...props}/>)}
+          />
 
           <Route
             exact
-            path={`${AppRoute.FILMS}/:id/${AppRoute.PLAYER}`}
-            component={PlayerWrapped}
+            path={`${AppRoute.FILMS}/:id${AppRoute.PLAYER}`}
+            render={(props) => this.renderComponent(<PlayerWrapped {...props}/>)}
           />
 
-          <Route exact path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`} component={AddReview}/>
+          <PrivateRoute
+            exact
+            path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
+            render={(props) => (<AddReview {...props}/>)}
+          />
 
           <PrivateRoute
             exact
             path={AppRoute.MY_LIST}
             render={() => {}}
           />
+
+          <Route component={Main}/>
+
         </Switch>
       </Router>
     );
   }
 
-  _renderApp() {
+  renderComponent(Component) {
     const {hasLoadingError, isLoading} = this.props;
 
     if (isLoading) {
@@ -70,9 +79,7 @@ class App extends PureComponent {
         <ErrorScreen/>
       );
     }
-    return (
-      <Main/>
-    );
+    return Component;
   }
 }
 

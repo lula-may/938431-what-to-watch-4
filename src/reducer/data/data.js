@@ -142,15 +142,12 @@ const Operation = {
   },
 
   loadComments: (id) => (dispatch, getState, api) => {
-    dispatch(ActionCreator.startLoading());
     dispatch(ActionCreator.setLoadingError(false));
     return api.get(`${Url.COMMENTS}/${id}`)
     .then((response) => {
       dispatch(ActionCreator.loadComments(adaptComments(response.data)));
-      dispatch(ActionCreator.endLoading());
     })
     .catch((err) => {
-      dispatch(ActionCreator.endLoading());
       dispatch(ActionCreator.setLoadingError(true));
       return err;
     });

@@ -402,20 +402,14 @@ describe(`Operation`, () => {
 
     return commentsLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.START_LOADING,
-        });
-        expect(dispatch.mock.calls[1][0]).toEqual({
           type: ActionType.SET_LOADING_ERROR,
           payload: false,
         });
-        expect(dispatch.mock.calls[2][0]).toEqual({
+        expect(dispatch.mock.calls[1][0]).toEqual({
           type: ActionType.LOAD_COMMENTS,
           payload: adaptComments(commentsAnswer),
-        });
-        expect(dispatch.mock.calls[3][0]).toEqual({
-          type: ActionType.END_LOADING,
         });
       });
   });
@@ -424,25 +418,19 @@ describe(`Operation`, () => {
     const api = createApi(() => {});
     const MockApi = new MockAdapter(api);
     const dispatch = jest.fn();
-    const commentsLoader = Operation.loadMovies();
+    const commentsLoader = Operation.loadComments();
 
     MockApi.onGet(`/comments/1`)
     .reply(404);
 
     return commentsLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.START_LOADING,
-        });
-        expect(dispatch.mock.calls[1][0]).toEqual({
           type: ActionType.SET_LOADING_ERROR,
           payload: false,
         });
-        expect(dispatch.mock.calls[2][0]).toEqual({
-          type: ActionType.END_LOADING,
-        });
-        expect(dispatch.mock.calls[3][0]).toEqual({
+        expect(dispatch.mock.calls[1][0]).toEqual({
           type: ActionType.SET_LOADING_ERROR,
           payload: true,
         });
