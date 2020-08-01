@@ -1,9 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
 import {Provider} from "react-redux";
+import {Router} from "react-router-dom";
+import renderer from "react-test-renderer";
 import configureStore from "redux-mock-store";
 
 import {AddReview} from "./add-review.jsx";
+import history from "../../history.js";
 import {testMovies} from "../../test-mocks/test-films.js";
 import NameSpace from "../../reducer/name-space.js";
 
@@ -28,14 +30,16 @@ const store = mockStore({
 describe(`AddReview Component`, () => {
   it(`should render correctly AddReview Component`, () => {
     const tree = renderer.create(
-        <Provider store={store}>
-          <AddReview
-            avatar={avatar}
-            movie={movie}
-          />
-        </Provider>
+        <Router history={history}>
+          <Provider store={store}>
+            <AddReview
+              avatar={avatar}
+              movie={movie}
+              onLogoLinkClick={() => {}}
+            />
+          </Provider>
+        </Router>
     ).toJSON();
-
     expect(tree).toMatchSnapshot();
   });
 });

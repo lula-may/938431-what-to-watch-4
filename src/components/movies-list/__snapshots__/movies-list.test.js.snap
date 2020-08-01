@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render correctly MoviesListComponent 1`] = `
+exports[`MoviesList Component should render correctly MoviesListComponent 1`] = `
 <div
   className="catalog__movies-list"
 >
@@ -9,8 +9,9 @@ exports[`should render correctly MoviesListComponent 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
+    <a
       className="small-movie-card__image"
+      href="/films/0"
       onClick={[Function]}
     >
       <video
@@ -18,14 +19,14 @@ exports[`should render correctly MoviesListComponent 1`] = `
         poster="poster-0.jpg"
         width="280"
       />
-    </div>
+    </a>
     <h3
       className="small-movie-card__title"
-      onClick={[Function]}
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="/films/0"
+        onClick={[Function]}
       >
         Jurassic Park
       </a>
@@ -36,8 +37,9 @@ exports[`should render correctly MoviesListComponent 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
+    <a
       className="small-movie-card__image"
+      href="/films/1"
       onClick={[Function]}
     >
       <video
@@ -45,14 +47,14 @@ exports[`should render correctly MoviesListComponent 1`] = `
         poster="poster-1.jpg"
         width="280"
       />
-    </div>
+    </a>
     <h3
       className="small-movie-card__title"
-      onClick={[Function]}
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="/films/1"
+        onClick={[Function]}
       >
         Gone With The Wind
       </a>
@@ -63,8 +65,9 @@ exports[`should render correctly MoviesListComponent 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
+    <a
       className="small-movie-card__image"
+      href="/films/2"
       onClick={[Function]}
     >
       <video
@@ -72,14 +75,14 @@ exports[`should render correctly MoviesListComponent 1`] = `
         poster="poster-2.jpg"
         width="280"
       />
-    </div>
+    </a>
     <h3
       className="small-movie-card__title"
-      onClick={[Function]}
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="/films/2"
+        onClick={[Function]}
       >
         The Godfather
       </a>
@@ -90,8 +93,9 @@ exports[`should render correctly MoviesListComponent 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
+    <a
       className="small-movie-card__image"
+      href="/films/3"
       onClick={[Function]}
     >
       <video
@@ -99,14 +103,14 @@ exports[`should render correctly MoviesListComponent 1`] = `
         poster="poster-3.jpg"
         width="280"
       />
-    </div>
+    </a>
     <h3
       className="small-movie-card__title"
-      onClick={[Function]}
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="/films/3"
+        onClick={[Function]}
       >
         Casablanca
       </a>
@@ -117,8 +121,9 @@ exports[`should render correctly MoviesListComponent 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
+    <a
       className="small-movie-card__image"
+      href="/films/4"
       onClick={[Function]}
     >
       <video
@@ -126,14 +131,14 @@ exports[`should render correctly MoviesListComponent 1`] = `
         poster="poster-4.jpg"
         width="280"
       />
-    </div>
+    </a>
     <h3
       className="small-movie-card__title"
-      onClick={[Function]}
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="/films/4"
+        onClick={[Function]}
       >
         A Streetcar Named Desire
       </a>
@@ -144,8 +149,9 @@ exports[`should render correctly MoviesListComponent 1`] = `
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
   >
-    <div
+    <a
       className="small-movie-card__image"
+      href="/films/5"
       onClick={[Function]}
     >
       <video
@@ -153,14 +159,14 @@ exports[`should render correctly MoviesListComponent 1`] = `
         poster="poster-5.jpg"
         width="280"
       />
-    </div>
+    </a>
     <h3
       className="small-movie-card__title"
-      onClick={[Function]}
     >
       <a
         className="small-movie-card__link"
-        href="movie-page.html"
+        href="/films/5"
+        onClick={[Function]}
       >
         Some Likes It Hot
       </a>
