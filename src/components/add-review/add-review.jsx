@@ -9,7 +9,7 @@ import {movieShape} from "../../components/shapes.js";
 import {getAvatarUrl} from "../../reducer/user/selectors.js";
 import {getMovieById} from "../../reducer/data/selectors.js";
 import {AppRoute} from "../../const.js";
-import {ActionCreator} from "../../reducer/data/data.js";
+import {ActionCreator} from "../../reducer/app-state/app-state.js";
 
 const AddReviewFormWrapped = withFormValidity(AddReviewForm);
 

@@ -1,5 +1,6 @@
 import {createSelector} from "reselect";
 import NameSpace from "../name-space.js";
+import {getGenre, getActiveMovie} from "../app-state/selectors.js";
 import {DEFAULT_GENRE, MAX_GENRES_COUNT} from "../../const.js";
 
 const NAME_SPACE = NameSpace.DATA;
@@ -8,21 +9,12 @@ export const getMovies = (state) => {
   return state[NAME_SPACE].movies;
 };
 
-export const getActiveMovie = (state) => {
-  return state[NAME_SPACE].activeMovie;
-};
-
-
 export const getMovieComments = (state) => {
   return state[NAME_SPACE].comments;
 };
 
 export const getPromoMovie = (state) => {
   return state[NAME_SPACE].promoMovie;
-};
-
-export const getGenre = (state) => {
-  return state[NAME_SPACE].genre;
 };
 
 export const getLoadingState = (state) => {
@@ -49,10 +41,9 @@ export const getMovieById = (state, id) => {
 export const selectMoviesByGenre = createSelector(
     [getMovies, getGenre],
     (movies, genre) => {
-      if (genre === DEFAULT_GENRE) {
-        return movies;
-      }
-      return movies.filter((movie) => movie.genre === genre);
+      return genre === DEFAULT_GENRE
+        ? movies
+        : movies.filter((movie) => movie.genre === genre);
     }
 );
 

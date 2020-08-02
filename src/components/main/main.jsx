@@ -13,7 +13,8 @@ import {movieShape} from "../shapes.js";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {ActionCreator as DataActionCreator, Operation as DataOperation} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getGenre, getPromoMovie, getUploadingError, getUploadingState, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";
+import {getGenre} from "../../reducer/app-state/selectors.js";
+import {getPromoMovie, getUploadingError, getUploadingState, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";
 import {getMoviesCount} from "../../reducer/app-state/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 import {AppRoute} from "../../const.js";
@@ -205,12 +206,12 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick(genre) {
-    dispatch(DataActionCreator.setGenre(genre));
+    dispatch(StateActionCreator.setGenre(genre));
     dispatch(StateActionCreator.resetCount());
   },
 
   onMovieCardClick(movie) {
-    dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setActiveMovie(movie));
     dispatch(DataOperation.loadComments(movie.id));
   },
 

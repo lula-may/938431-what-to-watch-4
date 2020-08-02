@@ -1,7 +1,8 @@
-import {extend} from "../../utils.js";
 import {adaptComments, adaptMovie, adaptMovies} from "../../adapter.js";
-import {DEFAULT_GENRE} from "../../const.js";
+import {AppRoute} from "../../const.js";
+import {extend} from "../../utils.js";
 import history from "../../history.js";
+
 const Url = {
   FAVORITE: `/favorite`,
   FILMS: `/films`,
@@ -10,10 +11,8 @@ const Url = {
 };
 
 const initialState = {
-  activeMovie: {},
   comments: [],
   favoriteMovies: [],
-  genre: DEFAULT_GENRE,
   hasLoadingError: false,
   hasUploadingError: false,
   isLoading: false,
@@ -26,19 +25,15 @@ const ActionType = {
   END_LOADING: `END_LOADING`,
   END_UPLOADING: `END_UPLOADING`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
+  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
   POST_COMMENT: `POST_COMMENT`,
-  RESET_ACTIVE_MOVIE: `RESET_ACTIVE_MOVIE`,
-  SET_ACTIVE_MOVIE: `SET_ACTIVE_MOVIE`,
   SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
   SET_LOADING_ERROR: `SET_LOADING_ERROR`,
-  SET_GENRE: `SET_GENRE`,
   SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
   START_UPLOADING: `START_UPLOADING`,
-  UPDATE_ACTIVE_MOVIE: `UPDATE_ACTIVE_MOVIE`,
-  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
 };
 
 const getFavoriteMovies = (movies) => movies.filter(({isFavorite}) => isFavorite);
@@ -80,20 +75,6 @@ const ActionCreator = {
     payload: movie,
   }),
 
-  resetActiveMovie: () => ({
-    type: ActionType.RESET_ACTIVE_MOVIE,
-  }),
-
-  setActiveMovie: (movie) => ({
-    type: ActionType.SET_ACTIVE_MOVIE,
-    payload: movie,
-  }),
-
-  setGenre: (genre) => ({
-    type: ActionType.SET_GENRE,
-    payload: genre,
-  }),
-
   setUploadingError: (hasError) => ({
     type: ActionType.SET_UPLOADING_ERROR,
     payload: hasError,
@@ -116,7 +97,6 @@ const ActionCreator = {
   startUploading: () => ({
     type: ActionType.START_UPLOADING,
   }),
-
 };
 
 const Operation = {
@@ -127,7 +107,6 @@ const Operation = {
     .then((response) => {
       const promoMovie = adaptMovie(response.data);
       dispatch(ActionCreator.loadPromo(promoMovie));
-      dispatch(ActionCreator.setActiveMovie(promoMovie));
     })
     .then(() => api.get(Url.FILMS))
     .then((response) => {
@@ -154,14 +133,14 @@ const Operation = {
   },
 
   postComment: (comment) => (dispatch, getState, api) => {
-    const {DATA: {activeMovie}} = getState();
+    const {APP_STATE: {activeMovie}} = getState();
     dispatch(ActionCreator.startUploading());
     dispatch(ActionCreator.setUploadingError(false));
     return api.post(`${Url.COMMENTS}/${activeMovie.id}`, comment)
     .then((response) => {
       dispatch(ActionCreator.setMovieComments(adaptComments(response.data)));
       dispatch(ActionCreator.endUploading());
-      history.push(`/films/${activeMovie.id}`);
+      history.push(`${AppRoute.FILMS}/${activeMovie.id}`);
     })
     .catch((err) => {
       dispatch(ActionCreator.setUploadingError(true));
@@ -187,7 +166,6 @@ const Operation = {
       if (isPromo) {
         dispatch(ActionCreator.loadPromo(updatedMovie));
       }
-      dispatch(ActionCreator.setActiveMovie(updatedMovie));
       dispatch(ActionCreator.loadMovies(updatedMovies));
       dispatch(ActionCreator.loadFavoriteMovies(favoriteMovies));
     })
@@ -225,14 +203,6 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         isLoading: false,
       });
-    case ActionType.RESET_ACTIVE_MOVIE:
-      return extend(state, {
-        activeMovie: state.promoMovie.id,
-      });
-    case ActionType.SET_ACTIVE_MOVIE:
-      return extend(state, {
-        activeMovie: action.payload,
-      });
     case ActionType.SET_MOVIE_COMMENTS:
       return extend(state, {
         comments: action.payload,
@@ -249,9 +219,9 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         hasUploadingError: action.payload,
       });
-    case ActionType.SET_GENRE:
+    case ActionType.SET_FAVORITE_LOADING_ERROR:
       return extend(state, {
-        genre: action.payload,
+        hasFavoriteLoadingError: action.payload,
       });
     case ActionType.SET_LOADING_ERROR:
       return extend(state, {

@@ -15,9 +15,7 @@ describe(`App Component`, () => {
   it(`Should render MainComponent`, () => {
     const store = mockStore({
       [NameSpace.DATA]: {
-        activeMovie: promoMovie,
         authorizationStatus: `AUTH`,
-        genre: `All movies`,
         hasLoadingError: false,
         hasUploadingError: false,
         isLoading: false,
@@ -26,9 +24,9 @@ describe(`App Component`, () => {
         promoMovie,
       },
       [NameSpace.APP_STATE]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
         moviesCount: 4,
-        page: `main`,
-        previousPage: undefined,
       },
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
@@ -65,9 +63,9 @@ describe(`App Component`, () => {
         promoMovie,
       },
       [NameSpace.APP_STATE]: {
+        activeMovie: promoMovie,
+        genre: `All movies`,
         moviesCount: 4,
-        page: `main`,
-        previousPage: undefined,
       },
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,
@@ -97,7 +95,6 @@ describe(`App Component`, () => {
     const store = mockStore({
       [NameSpace.DATA]: {
         activeMovie: promoMovie,
-        genre: `All movies`,
         hasLoadingError: false,
         hasUploadingError: false,
         isLoading: true,
@@ -107,8 +104,8 @@ describe(`App Component`, () => {
       },
       [NameSpace.APP_STATE]: {
         moviesCount: 4,
-        page: `main`,
-        previousPage: undefined,
+        activeMovie: promoMovie,
+        genre: `All movies`,
       },
       [NameSpace.USER]: {
         authorizationStatus: `AUTH`,

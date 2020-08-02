@@ -10,7 +10,8 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import {movieShape, reviewShape} from "../shapes";
 import {SIMILAR_MOVIES_COUNT, TabType, AppRoute} from "../../const";
 import history from "../../history.js";
-import {ActionCreator as DataActionCreator, Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getMovieById, getMovieComments, selectSimilarMovies, getLoadingError, getMovies} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
@@ -191,7 +192,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   onMovieCardClick(movie) {
-    dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setActiveMovie(movie));
     dispatch(DataOperation.loadComments(movie.id));
   },
 
@@ -199,7 +200,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.updateFavoriteMovies(movie));
   },
   setActiveMovie(movie) {
-    dispatch(ActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setActiveMovie(movie));
   }
 });
 
