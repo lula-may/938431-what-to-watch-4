@@ -70,7 +70,6 @@ const testMovies = movieTitles.map((title, i) => {
       score: rating,
     },
     releaseYear: MAX_RELEASE_YEAR - i,
-    reviews,
     runTime: 60 + i,
     title,
   };
