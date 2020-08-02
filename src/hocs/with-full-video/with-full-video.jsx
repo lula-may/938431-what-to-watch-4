@@ -3,13 +3,12 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
 import {movieShape} from "../../components/shapes";
-import {getActiveMovie} from "../../reducer/data/selectors.js";
+import {getMovieById} from "../../reducer/data/selectors.js";
 
 const withFullVideo = (Component) => {
   class WithFullVideo extends PureComponent {
     constructor(props) {
       super(props);
-
       this.state = {
         elapsedTime: 0,
         isLoading: true,
@@ -48,9 +47,9 @@ const withFullVideo = (Component) => {
 
     componentDidMount() {
       const {movie: {src}} = this.props;
+
       const video = this._videoRef.current;
       video.src = src;
-
       video.onloadedmetadata = () => {
         this._duration = video.duration;
         this.setState({
@@ -72,6 +71,10 @@ const withFullVideo = (Component) => {
       video.onended = () => this.setState({
         isPlaying: false,
       });
+
+      video.onfullscreenchange = () => {
+        video.controls = (document.fullscreenElement && document.fullscreenElement.nodeName === `VIDEO`);
+      };
     }
 
     componentDidUpdate() {
@@ -102,7 +105,6 @@ const withFullVideo = (Component) => {
 
     handleFullscreenButtonClick() {
       const video = this._videoRef.current;
-
       if (!document.fullscreenElement) {
         video.requestFullscreen()
           .catch((err) => err);
@@ -120,8 +122,8 @@ const withFullVideo = (Component) => {
 
 };
 
-const mapStateToProps = (state) => ({
-  movie: getActiveMovie(state),
+const mapStateToProps = (state, props) => ({
+  movie: getMovieById(state, props.match.params.id),
 });
 
 export {withFullVideo};

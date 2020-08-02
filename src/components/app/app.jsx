@@ -1,5 +1,5 @@
 import React, {PureComponent} from "react";
-import {BrowserRouter, Route, Switch} from "react-router-dom";
+import {Redirect, Route, Router, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -9,99 +9,91 @@ import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
 import Player from "../player/player.jsx";
+import PrivateRoute from "../private-root/private-root.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
 import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
 
-import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {getLoadingState, getErrorState} from "../../reducer/data/selectors.js";
-import {getPage} from "../../reducer/app-state/selectors.js";
-import {Page} from "../../const.js";
+import {AppRoute} from "../../const.js";
+import {getLoadingState, getLoadingError} from "../../reducer/data/selectors.js";
+import history from "../../history.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
 
 const PlayerWrapped = withFullVideo(Player);
-
 class App extends PureComponent {
   render() {
-    const {onExitButtonClick} = this.props;
+    const {authorizationStatus} = this.props;
     return (
-      <BrowserRouter>
+      <Router
+        history={history}
+      >
         <Switch>
-          <Route exact path="/">
-            {this._renderApp()}
-          </Route>
-          <Route exact path="/dev-film">
-            <MovieDetails/>
-          </Route>
-          <Route exact path="/dev-player">
-            <PlayerWrapped
-              onExitButtonClick={onExitButtonClick}
-            />
-          </Route>
-          <Route exact path="/dev-sign-in">
-            <SignIn/>
-          </Route>
-          <Route exact path="/dev-review">
-            <AddReview/>
-          </Route>
+          <Route exact path={AppRoute.ROOT}
+            render={(props) => this.renderComponent(<Main {...props}/>)}
+          />
+
+          <Route exact path={AppRoute.LOGIN}
+            render={() => authorizationStatus === `NO_AUTH`
+              ? <SignIn/>
+              : <Redirect to={AppRoute.ROOT}/>}
+          />
+
+          <Route exact path={`${AppRoute.FILMS}/:id`}
+            render={(props) => this.renderComponent(<MovieDetails {...props}/>)}
+          />
+
+          <Route
+            exact
+            path={`${AppRoute.FILMS}/:id${AppRoute.PLAYER}`}
+            render={(props) => this.renderComponent(<PlayerWrapped {...props}/>)}
+          />
+
+          <PrivateRoute
+            exact
+            path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
+            render={(props) => (<AddReview {...props}/>)}
+          />
+
+          <PrivateRoute
+            exact
+            path={AppRoute.MY_LIST}
+            render={() => {}}
+          />
+
+          <Route component={Main}/>
 
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 
-  _renderApp() {
-    const {authorizationStatus, hasFilmsLoadingError, isLoading, onExitButtonClick, page} = this.props;
+  renderComponent(Component) {
+    const {hasLoadingError, isLoading} = this.props;
 
     if (isLoading) {
       return (
         <LoadingScreen/>
       );
     }
-    if (hasFilmsLoadingError) {
+    if (hasLoadingError) {
       return (
         <ErrorScreen/>
       );
     }
-
-    switch (page) {
-      case Page.MAIN:
-        return <Main/>;
-      case Page.DETAILS:
-        return <MovieDetails/>;
-      case Page.PLAYER:
-        return <PlayerWrapped
-          onExitButtonClick={onExitButtonClick}
-        />;
-      case Page.SIGN_IN:
-        return (authorizationStatus === AuthorizationStatus.AUTH) ? <Main/> : <SignIn/>;
-      case Page.ADD_REVIEW:
-        return <AddReview/>;
-      default: return null;
-    }
+    return Component;
   }
 }
 
 App.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
-  hasFilmsLoadingError: PropTypes.bool.isRequired,
+  hasLoadingError: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  onExitButtonClick: PropTypes.func.isRequired,
-  page: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatus(state),
-  hasFilmsLoadingError: getErrorState(state),
+  hasLoadingError: getLoadingError(state),
   isLoading: getLoadingState(state),
-  page: getPage(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onExitButtonClick() {
-    dispatch(StateActionCreator.returnToPreviousPage());
-  },
 });
 
 export {App};
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

@@ -5,13 +5,18 @@ exports[`Player Component should render correctly full screen player 1`] = `
   className="player"
 >
   <video />
-  <button
+  <a
     className="player__exit"
+    href="/films/0"
     onClick={[Function]}
-    type="button"
+    style={
+      Object {
+        "textDecoration": "none",
+      }
+    }
   >
     Exit
-  </button>
+  </a>
   <div
     className="player__controls"
   >

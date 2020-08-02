@@ -12,6 +12,11 @@ export const getActiveMovie = (state) => {
   return state[NAME_SPACE].activeMovie;
 };
 
+
+export const getMovieComments = (state) => {
+  return state[NAME_SPACE].comments;
+};
+
 export const getPromoMovie = (state) => {
   return state[NAME_SPACE].promoMovie;
 };
@@ -24,16 +29,21 @@ export const getLoadingState = (state) => {
   return state[NAME_SPACE].isLoading;
 };
 
-export const getErrorState = (state) => {
-  return state[NAME_SPACE].hasFilmsLoadingError;
+export const getLoadingError = (state) => {
+  return state[NAME_SPACE].hasLoadingError;
 };
 
-export const getCommentUploadingError = (state) => {
-  return state[NAME_SPACE].hasCommentUploadingError;
+export const getUploadingError = (state) => {
+  return state[NAME_SPACE].hasUploadingError;
 };
 
-export const getCommentUploadingState = (state) => {
+export const getUploadingState = (state) => {
   return state[NAME_SPACE].isUploading;
+};
+
+export const getMovieById = (state, id) => {
+  const movies = state[NAME_SPACE].movies;
+  return movies.find((movie) => movie.id === parseInt(id, 10));
 };
 
 export const selectMoviesByGenre = createSelector(
@@ -49,7 +59,8 @@ export const selectMoviesByGenre = createSelector(
 export const selectSimilarMovies = createSelector(
     [getMovies, getActiveMovie],
     (movies, activeMovie) => {
-      return movies.filter((movie) => movie.genre === activeMovie.genre && movie.id !== activeMovie.id);
+      const {genre, id} = activeMovie;
+      return movies.filter((movie) => movie.genre === genre && movie.id !== id);
     }
 );
 

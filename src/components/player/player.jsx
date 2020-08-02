@@ -1,12 +1,15 @@
 import React from "react";
+import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {formatElapsedTime} from "../../utils.js";
+import {movieShape} from "../shapes.js";
+import {AppRoute} from "../../const.js";
 
 const Player = (props) => {
   const {
     children,
     isPlaying,
-    onExitButtonClick,
+    movie: {id},
     onFullScreenButtonClick,
     onPlayButtonClick,
     progressValue,
@@ -16,7 +19,7 @@ const Player = (props) => {
   return (
     <div className="player">
       {children}
-      <button type="button" className="player__exit" onClick={onExitButtonClick}>Exit</button>
+      <Link to={`${AppRoute.FILMS}/${id}`} className="player__exit" style={{textDecoration: `none`}}>Exit</Link>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -61,7 +64,7 @@ Player.propTypes = {
   ]).isRequired,
   elapsedTime: PropTypes.number.isRequired,
   isPlaying: PropTypes.bool.isRequired,
-  onExitButtonClick: PropTypes.func.isRequired,
+  movie: PropTypes.shape(movieShape).isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired,
   onPlayButtonClick: PropTypes.func.isRequired,
   progressValue: PropTypes.number.isRequired,

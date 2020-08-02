@@ -12,7 +12,8 @@ exports[`SingIn Component should render Upload Error Message in SignIn Component
     >
       <a
         className="logo__link"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -113,7 +114,8 @@ exports[`SingIn Component should render Upload Error Message in SignIn Component
     >
       <a
         className="logo__link logo__link--light"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -155,7 +157,8 @@ exports[`SingIn Component should render Wrong Email Message in SignIn Component 
     >
       <a
         className="logo__link"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -254,7 +257,8 @@ exports[`SingIn Component should render Wrong Email Message in SignIn Component 
     >
       <a
         className="logo__link logo__link--light"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -296,7 +300,8 @@ exports[`SingIn Component should render correctly SignIn Component 1`] = `
     >
       <a
         className="logo__link"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"
@@ -388,7 +393,8 @@ exports[`SingIn Component should render correctly SignIn Component 1`] = `
     >
       <a
         className="logo__link logo__link--light"
-        href="main.html"
+        href="/"
+        onClick={[Function]}
       >
         <span
           className="logo__letter logo__letter--1"

@@ -17,6 +17,7 @@ describe(`Tabs component`, () => {
     const tabsComponent = shallow(
         <Tabs
           activeItem={activeTab}
+          hasLoadingError={false}
           movie={movie}
           onClick={onClick}
         >

@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getCommentUploadingError, getCommentUploadingState} from "../../reducer/data/selectors.js";
+import {getUploadingError, getUploadingState} from "../../reducer/data/selectors.js";
 import {Operation} from "../../reducer/data/data.js";
 
 const DEFAULT_RATING = 0;
@@ -103,8 +103,8 @@ const withFormValidity = (Component) => {
 };
 
 const mapStateToProps = (state) => ({
-  hasError: getCommentUploadingError(state),
-  isCommentLoading: getCommentUploadingState(state),
+  hasError: getUploadingError(state),
+  isCommentLoading: getUploadingState(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -2,7 +2,7 @@ import React from "react";
 import renderer from "react-test-renderer";
 import Tabs from "./tabs.jsx";
 import {TabType} from "../../const";
-import {testMovies} from "../../test-mocks/test-films.js";
+import {reviews, testMovies} from "../../test-mocks/test-films.js";
 
 const movie = testMovies[0];
 
@@ -11,6 +11,8 @@ describe(`Tabs Component`, () => {
     const tree = renderer.create(
         <Tabs
           activeItem={TabType.OVERVIEW}
+          comments={reviews}
+          hasLoadingError={false}
           movie={movie}
           onClick={() => {}}
         />
@@ -23,6 +25,8 @@ describe(`Tabs Component`, () => {
     const tree = renderer.create(
         <Tabs
           activeItem={TabType.DETAILS}
+          comments={reviews}
+          hasLoadingError={false}
           movie={movie}
           onClick={() => {}}
         />
@@ -35,6 +39,8 @@ describe(`Tabs Component`, () => {
     const tree = renderer.create(
         <Tabs
           activeItem={TabType.REVIEWS}
+          comments={reviews}
+          hasLoadingError={false}
           movie={movie}
           onClick={() => {}}
         />

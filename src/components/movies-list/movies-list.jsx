@@ -11,7 +11,6 @@ const MoviesList = (props) => {
     movies,
     moviesCount: count,
     onMovieCardClick,
-    onMovieCardEnter,
   } = props;
   const showedMovies = movies.slice(0, count);
   return (
@@ -21,7 +20,6 @@ const MoviesList = (props) => {
           <MovieCardWrapped key={movie.id}
             movie={movie}
             onCardClick={onMovieCardClick}
-            onCardEnter={onMovieCardEnter}
           />
         );
       })}
@@ -32,7 +30,6 @@ const MoviesList = (props) => {
 MoviesList.propTypes = {
   movies: PropTypes.arrayOf(PropTypes.shape(movieShape)).isRequired,
   moviesCount: PropTypes.number.isRequired,
-  onMovieCardEnter: PropTypes.func.isRequired,
   onMovieCardClick: PropTypes.func.isRequired,
 };
 

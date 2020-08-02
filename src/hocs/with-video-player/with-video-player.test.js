@@ -27,6 +27,7 @@ describe(`WithVideoPlayer HOC`, () => {
         <MockComponentWrapped
           movie={movie}
           onCardEnter={() => {}}
+          onCardClick={() => {}}
         />
     ).toJSON();
 

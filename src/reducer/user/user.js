@@ -1,4 +1,6 @@
+import {AppRoute} from "../../const.js";
 import {extend} from "../../utils.js";
+import history from "../../history.js";
 const BASE_URL = `https://4.react.pages.academy`;
 const AuthorizationStatus = {
   AUTH: `AUTH`,
@@ -66,6 +68,7 @@ const Operation = {
       dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
       const avatarUrl = `${BASE_URL}${response.data[`avatar_url`]}`;
       dispatch(ActionCreator.setAvatarUrl(avatarUrl));
+      history.push(AppRoute.ROOT);
     })
     .catch((err) => {
       dispatch(ActionCreator.setLoginError(err));

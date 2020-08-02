@@ -16,24 +16,23 @@ const withVideoPlayer = (Component) => {
 
       this.handleMouseEnter = this.handleMouseEnter.bind(this);
       this.handleMouseLeave = this.handleMouseLeave.bind(this);
+      this.handleCardClick = this.handleCardClick.bind(this);
     }
 
-    render() {
-      const {movie: {previewPoster}} = this.props;
-      return (
-        <Component
-          {...this.props}
-          onCardEnter={this.handleMouseEnter}
-          onCardLeave={this.handleMouseLeave}
-        >
-          <video
-            width={PREVIEW.width}
-            height={PREVIEW.height}
-            poster={previewPoster}
-            ref={this._videoRef}
-          />
-        </Component>
-      );
+    handleMouseEnter() {
+      this.timeOut = setTimeout(() => {
+        this.setState({isPlaying: true});
+      }, PLAYER_DELAY);
+    }
+
+    handleCardClick() {
+      const {movie, onCardClick} = this.props;
+      onCardClick(movie);
+    }
+
+    handleMouseLeave() {
+      clearTimeout(this.timeOut);
+      this.setState({isPlaying: false});
     }
 
     componentDidUpdate() {
@@ -61,28 +60,32 @@ const withVideoPlayer = (Component) => {
       }
     }
 
-    handleMouseEnter() {
-      const {movie, onCardEnter} = this.props;
-      this.timeOut = setTimeout(() => {
-        this.setState({isPlaying: true});
-      }, PLAYER_DELAY);
-      onCardEnter(movie);
-    }
-
-
-    handleMouseLeave() {
-      clearTimeout(this.timeOut);
-      this.setState({isPlaying: false});
+    render() {
+      const {movie: {previewPoster}} = this.props;
+      return (
+        <Component
+          {...this.props}
+          onCardEnter={this.handleMouseEnter}
+          onCardLeave={this.handleMouseLeave}
+          onCardClick={this.handleCardClick}
+        >
+          <video
+            width={PREVIEW.width}
+            height={PREVIEW.height}
+            poster={previewPoster}
+            ref={this._videoRef}
+          />
+        </Component>
+      );
     }
   }
 
   WithVideoPlayer.propTypes = {
     movie: PropTypes.shape(movieShape).isRequired,
-    onCardEnter: PropTypes.func.isRequired,
+    onCardClick: PropTypes.func.isRequired,
   };
 
   return WithVideoPlayer;
-
 };
 
 export default withVideoPlayer;
