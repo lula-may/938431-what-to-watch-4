@@ -9,6 +9,9 @@ export const getMovies = (state) => {
   return state[NAME_SPACE].movies;
 };
 
+export const getFavoriteMovies = (state) => {
+  return state[NAME_SPACE].favoriteMovies;
+};
 export const getMovieComments = (state) => {
   return state[NAME_SPACE].comments;
 };
@@ -19,6 +22,14 @@ export const getPromoMovie = (state) => {
 
 export const getLoadingState = (state) => {
   return state[NAME_SPACE].isLoading;
+};
+
+export const getFavoriteLoadingState = (state) => {
+  return state[NAME_SPACE].isFavoriteLoading;
+};
+
+export const getFavoriteLoadingError = (state) => {
+  return state[NAME_SPACE].hasFavoriteLoadingError;
 };
 
 export const getLoadingError = (state) => {
