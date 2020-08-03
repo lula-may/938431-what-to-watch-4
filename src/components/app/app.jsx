@@ -8,6 +8,7 @@ import ErrorScreen from "../error-screen/error-screen.jsx";
 import LoadingScreen from "../loading-screen/loading-screen.jsx";
 import Main from "../main/main.jsx";
 import MovieDetails from "../movie-details/movie-details.jsx";
+import MyList from "../my-list/my-list.jsx";
 import Player from "../player/player.jsx";
 import PrivateRoute from "../private-root/private-root.jsx";
 import SignIn from "../sign-in/sign-in.jsx";
@@ -56,7 +57,7 @@ class App extends PureComponent {
           <PrivateRoute
             exact
             path={AppRoute.MY_LIST}
-            render={() => {}}
+            render={() => (<MyList/>)}
           />
 
           <Route component={Main}/>

@@ -11,7 +11,7 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import history from "../../history.js";
 import {movieShape} from "../shapes.js";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {ActionCreator as DataActionCreator, Operation as DataOperation} from "../../reducer/data/data.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
 import {getGenre} from "../../reducer/app-state/selectors.js";
 import {getPromoMovie, getUploadingError, getUploadingState, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";

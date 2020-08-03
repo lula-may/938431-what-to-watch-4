@@ -79,9 +79,11 @@ class MovieDetails extends Component {
             </div>
 
             {isUserAuthorized && <div className="user-block">
-              <div className="user-block__avatar">
-                <img src={avatar} alt="User avatar" width="63" height="63" />
-              </div>
+              <Link to={AppRoute.MY_LIST}>
+                <div className="user-block__avatar">
+                  <img src={avatar} alt="User avatar" width="63" height="63" />
+                </div>
+              </Link>
             </div>}
           </header>
 
