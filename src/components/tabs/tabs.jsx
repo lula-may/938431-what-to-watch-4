@@ -22,8 +22,30 @@ const tabsWithIds = [
   }
 ];
 
-
 class Tabs extends PureComponent {
+
+  renderInfo() {
+    const {activeItem, hasLoadingError, movie, comments} = this.props;
+    switch (activeItem) {
+      case TabType.OVERVIEW:
+        return (
+          <Overview movie={movie}/>
+        );
+      case TabType.DETAILS:
+        return (
+          <Details movie={movie}/>
+        );
+      case TabType.REVIEWS:
+        return (
+          <Reviews
+            comments={comments}
+            hasLoadingError={hasLoadingError}
+          />
+        );
+      default: return null;
+    }
+  }
+
   render() {
     const {activeItem, onClick} = this.props;
     return (
@@ -45,31 +67,9 @@ class Tabs extends PureComponent {
             })}
           </ul>
         </nav>
-        {this._renderInfo()}
+        {this.renderInfo()}
       </div>
     );
-  }
-
-  _renderInfo() {
-    const {activeItem, hasLoadingError, movie, comments} = this.props;
-    switch (activeItem) {
-      case TabType.OVERVIEW:
-        return (
-          <Overview movie={movie}/>
-        );
-      case TabType.DETAILS:
-        return (
-          <Details movie={movie}/>
-        );
-      case TabType.REVIEWS:
-        return (
-          <Reviews
-            comments={comments}
-            hasLoadingError={hasLoadingError}
-          />
-        );
-      default: return null;
-    }
   }
 }
 

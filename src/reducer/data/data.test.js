@@ -8,12 +8,13 @@ const movie = testMovies[0];
 describe(`Reducer`, () => {
   it(`should return initialState when empty parameters supplied`, () => {
     expect(reducer(undefined, {})).toEqual({
-      activeMovie: {},
       comments: [],
       favoriteMovies: [],
-      genre: `All genres`,
-      hasUploadingError: false,
+      hasCommentsLoadingError: false,
+      hasFavoriteLoadingError: false,
       hasLoadingError: false,
+      hasUploadingError: false,
+      isFavoriteLoading: false,
       isLoading: false,
       isUploading: false,
       movies: [],
@@ -33,6 +34,17 @@ describe(`Reducer`, () => {
   });
 
   it(`should update comments when load comments action supplied`, () => {
+    expect(reducer({
+      promoMovie: {},
+    }, {
+      type: ActionType.LOAD_PROMO,
+      payload: testMovies[0],
+    })).toEqual({
+      promoMovie: testMovies[0],
+    });
+  });
+
+  it(`should update promo movie when load promo action supplied`, () => {
     expect(reducer({
       comments: [],
     }, {
@@ -67,6 +79,51 @@ describe(`Reducer`, () => {
     })).toEqual({
       movies: [],
       isLoading: false,
+      hasLoadingError: false,
+    });
+  });
+
+  it(`should set isFavoriteLoading: true when start favorite loading action supplied`, () => {
+    expect(reducer({
+      favoriteMovies: [],
+      isFavoriteLoading: false,
+      hasFavoriteLoadingError: false,
+    }, {
+      type: ActionType.START_FAVORITE_LOADING,
+    })).toEqual({
+      favoriteMovies: [],
+      isFavoriteLoading: true,
+      hasFavoriteLoadingError: false,
+    });
+  });
+
+  it(`should set isLoading: false when end loading action supplied`, () => {
+    expect(reducer({
+      favoriteMovies: [],
+      isFavoriteLoading: false,
+      hasFavoriteLoadingError: false,
+    }, {
+      type: ActionType.END_FAVORITE_LOADING,
+    })).toEqual({
+      favoriteMovies: [],
+      isFavoriteLoading: false,
+      hasFavoriteLoadingError: false,
+    });
+  });
+
+  it(`should set favorite movies loading error when set favorite error supplied`, () => {
+    expect(reducer({
+      movies: [],
+      isLoading: false,
+      hasFavoriteLoadingError: false,
+      hasLoadingError: false,
+    }, {
+      type: ActionType.SET_FAVORITE_LOADING_ERROR,
+      payload: true,
+    })).toEqual({
+      movies: [],
+      isLoading: false,
+      hasFavoriteLoadingError: true,
       hasLoadingError: false,
     });
   });
@@ -114,7 +171,7 @@ describe(`Reducer`, () => {
     });
   });
 
-  it(`should set comment uploading error when set comment uploading error action supplied`, () => {
+  it(`should set uploading error when set uploading error action supplied`, () => {
     expect(reducer({
       movies: [],
       isLoading: false,
@@ -152,6 +209,19 @@ describe(`Reducer`, () => {
     });
   });
 
+  it(`should set comments loading error when set comments loading error action supplied`, () => {
+    expect(reducer({
+      comments: [],
+      hasCommentsLoadingError: false,
+    }, {
+      type: ActionType.SET_COMMENTS_LOADING_ERROR,
+      payload: true,
+    })).toEqual({
+      comments: [],
+      hasCommentsLoadingError: true,
+    });
+  });
+
   it(`should set favorite movies when loadFavoriteMovies action supplied`, () => {
     expect(reducer({
       activeMovie: testMovies[1],
@@ -174,43 +244,6 @@ describe(`Reducer`, () => {
       hasUploadingError: false,
     });
   });
-
-  it(`should set genre when set genre action supplied`, () => {
-    expect(reducer({
-      genre: `All movies`,
-      movies: [],
-      isLoading: false,
-      hasLoadingError: false,
-    }, {
-      type: ActionType.SET_GENRE,
-      payload: `Crime`,
-    })).toEqual({
-      genre: `Crime`,
-      movies: [],
-      isLoading: false,
-      hasLoadingError: false,
-    });
-  });
-
-  it(`should set active movie when set active movie action supplied`, () => {
-    expect(reducer({
-      genre: `All movies`,
-      activeMovie: {},
-      movies: [],
-      isLoading: false,
-      hasLoadingError: false,
-    }, {
-      type: ActionType.SET_ACTIVE_MOVIE,
-      payload: testMovies[2],
-    })).toEqual({
-      genre: `All movies`,
-      activeMovie: testMovies[2],
-      movies: [],
-      isLoading: false,
-      hasLoadingError: false,
-    });
-  });
-
 });
 
 describe(`ActionCreator`, () => {
@@ -242,13 +275,6 @@ describe(`ActionCreator`, () => {
     });
   });
 
-  it(`should return correct action for activeMovie setting`, () => {
-    expect(ActionCreator.setActiveMovie(2)).toEqual({
-      type: ActionType.SET_ACTIVE_MOVIE,
-      payload: 2,
-    });
-  });
-
   it(`should return correct action for start loading`, () => {
     expect(ActionCreator.startLoading()).toEqual({
       type: ActionType.START_LOADING,
@@ -268,19 +294,51 @@ describe(`ActionCreator`, () => {
     });
   });
 
-  it(`should return correct action for start comment uploading`, () => {
+  it(`should return correct action for comments loading error setting`, () => {
+    expect(ActionCreator.setCommentsLoadingError(true)).toEqual({
+      type: ActionType.SET_COMMENTS_LOADING_ERROR,
+      payload: true,
+    });
+  });
+
+  it(`should return correct action for start favorite movies loading`, () => {
+    expect(ActionCreator.startFavoriteLoading()).toEqual({
+      type: ActionType.START_FAVORITE_LOADING,
+    });
+  });
+
+  it(`should return correct action for end favorite movies loading`, () => {
+    expect(ActionCreator.endFavoriteLoading()).toEqual({
+      type: ActionType.END_FAVORITE_LOADING,
+    });
+  });
+
+  it(`should return correct action for end favorite movies loading`, () => {
+    expect(ActionCreator.endFavoriteLoading()).toEqual({
+      type: ActionType.END_FAVORITE_LOADING,
+    });
+  });
+
+  it(`should return correct action for favorite movies loading error setting`, () => {
+    expect(ActionCreator.setFavoriteLoadingError(true)).toEqual({
+      type: ActionType.SET_FAVORITE_LOADING_ERROR,
+      payload: true,
+    });
+  });
+
+  it(`should return correct action for start uploading`, () => {
     expect(ActionCreator.startUploading()).toEqual({
       type: ActionType.START_UPLOADING,
     });
   });
 
-  it(`should return correct action for end loading`, () => {
+  it(`should return correct action for end uploading`, () => {
     expect(ActionCreator.endUploading()).toEqual({
       type: ActionType.END_UPLOADING,
     });
   });
 
-  it(`should return correct action for comment uploading error setting`, () => {
+  it(`should return correct action for uploading error setting`, () => {
     expect(ActionCreator.setUploadingError(true)).toEqual({
       type: ActionType.SET_UPLOADING_ERROR,
       payload: true,
@@ -325,7 +383,7 @@ describe(`Operation`, () => {
 
     return moviesLoader(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(6);
+        expect(dispatch).toHaveBeenCalledTimes(5);
         expect(dispatch.mock.calls[0][0]).toEqual({
           type: ActionType.START_LOADING,
         });
@@ -338,14 +396,10 @@ describe(`Operation`, () => {
           payload: adaptedMovieAnswer,
         });
         expect(dispatch.mock.calls[3][0]).toEqual({
-          type: ActionType.SET_ACTIVE_MOVIE,
-          payload: adaptedMovieAnswer,
-        });
-        expect(dispatch.mock.calls[4][0]).toEqual({
           type: ActionType.LOAD_MOVIES,
           payload: adaptMovies([{fake: true}]),
         });
-        expect(dispatch.mock.calls[5][0]).toEqual({
+        expect(dispatch.mock.calls[4][0]).toEqual({
           type: ActionType.END_LOADING,
         });
       });
@@ -380,6 +434,64 @@ describe(`Operation`, () => {
       });
   });
 
+  it(`should make a correct API call to "/favorite"`, () => {
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const favoriteLoader = Operation.loadFavoriteMovies();
+
+    MockApi.onGet(`/favorite`)
+    .reply(200, [{fake: true}]);
+
+    return favoriteLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: ActionType.START_FAVORITE_LOADING,
+        });
+        expect(dispatch.mock.calls[1][0]).toEqual({
+          type: ActionType.SET_FAVORITE_LOADING_ERROR,
+          payload: false,
+        });
+        expect(dispatch.mock.calls[2][0]).toEqual({
+          type: ActionType.LOAD_FAVORITE_MOVIES,
+          payload: adaptMovies([{fake: true}]),
+        });
+        expect(dispatch.mock.calls[3][0]).toEqual({
+          type: ActionType.END_FAVORITE_LOADING,
+        });
+      });
+  });
+
+  it(`should catch error on API call to "/favorite" fail`, () => {
+    const api = createApi(() => {});
+    const MockApi = new MockAdapter(api);
+    const dispatch = jest.fn();
+    const favoriteLoader = Operation.loadFavoriteMovies();
+
+    MockApi.onGet(`/favorite`)
+    .reply(404);
+
+    return favoriteLoader(dispatch, () => {}, api)
+      .then(() => {
+        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch.mock.calls[0][0]).toEqual({
+          type: ActionType.START_FAVORITE_LOADING,
+        });
+        expect(dispatch.mock.calls[1][0]).toEqual({
+          type: ActionType.SET_FAVORITE_LOADING_ERROR,
+          payload: false,
+        });
+        expect(dispatch.mock.calls[2][0]).toEqual({
+          type: ActionType.SET_FAVORITE_LOADING_ERROR,
+          payload: true,
+        });
+        expect(dispatch.mock.calls[3][0]).toEqual({
+          type: ActionType.END_FAVORITE_LOADING,
+        });
+      });
+  });
+
   it(`should make a correct API call to "/comments/:id"`, () => {
     const api = createApi(() => {});
     const MockApi = new MockAdapter(api);
@@ -404,7 +516,7 @@ describe(`Operation`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.SET_LOADING_ERROR,
+          type: ActionType.SET_COMMENTS_LOADING_ERROR,
           payload: false,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
@@ -427,11 +539,11 @@ describe(`Operation`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.SET_LOADING_ERROR,
+          type: ActionType.SET_COMMENTS_LOADING_ERROR,
           payload: false,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
-          type: ActionType.SET_LOADING_ERROR,
+          type: ActionType.SET_COMMENTS_LOADING_ERROR,
           payload: true,
         });
       });
@@ -443,7 +555,7 @@ describe(`Operation`, () => {
     const MockApi = new MockAdapter(api);
 
     const getState = () => ({
-      DATA: {activeMovie: testMovies[1]},
+      APP_STATE: {activeMovie: testMovies[1]},
     });
 
     const commentUploader = Operation.postComment({
@@ -479,7 +591,7 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[2][0]).toEqual({
-        type: ActionType.SET_MOVIE_COMMENTS,
+        type: ActionType.LOAD_COMMENTS,
         payload: adaptComments(commentAnswer),
       });
       expect(dispatch.mock.calls[3][0]).toEqual({
@@ -494,7 +606,7 @@ describe(`Operation`, () => {
     const MockApi = new MockAdapter(api);
 
     const getState = () => ({
-      DATA: {
+      APP_STATE: {
         activeMovie: {id: 1},
       },
     });
@@ -583,7 +695,7 @@ describe(`Operation`, () => {
 
     return favoriteUpdater(dispatch, getState, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(7);
+      expect(dispatch).toHaveBeenCalledTimes(6);
 
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: ActionType.START_UPLOADING,
@@ -604,11 +716,6 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[4][0]).toEqual({
-        type: ActionType.SET_ACTIVE_MOVIE,
-        payload: adaptedMovieAnswer,
-      });
-
-      expect(dispatch.mock.calls[5][0]).toEqual({
         type: ActionType.LOAD_MOVIES,
         payload: [
           adaptedMovieAnswer,
@@ -619,7 +726,7 @@ describe(`Operation`, () => {
         ],
       });
 
-      expect(dispatch.mock.calls[6][0]).toEqual({
+      expect(dispatch.mock.calls[5][0]).toEqual({
         type: ActionType.LOAD_FAVORITE_MOVIES,
         payload: [
           {id: 3, isFavorite: true},

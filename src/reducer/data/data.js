@@ -1,7 +1,8 @@
-import {extend} from "../../utils.js";
 import {adaptComments, adaptMovie, adaptMovies} from "../../adapter.js";
-import {DEFAULT_GENRE} from "../../const.js";
+import {AppRoute} from "../../const.js";
+import {extend} from "../../utils.js";
 import history from "../../history.js";
+
 const Url = {
   FAVORITE: `/favorite`,
   FILMS: `/films`,
@@ -10,12 +11,13 @@ const Url = {
 };
 
 const initialState = {
-  activeMovie: {},
   comments: [],
   favoriteMovies: [],
-  genre: DEFAULT_GENRE,
+  hasCommentsLoadingError: false,
+  hasFavoriteLoadingError: false,
   hasLoadingError: false,
   hasUploadingError: false,
+  isFavoriteLoading: false,
   isLoading: false,
   isUploading: false,
   movies: [],
@@ -23,22 +25,21 @@ const initialState = {
 };
 
 const ActionType = {
+  END_FAVORITE_LOADING: `END_FAVORITE_LOADING`,
   END_LOADING: `END_LOADING`,
   END_UPLOADING: `END_UPLOADING`,
   LOAD_COMMENTS: `LOAD_COMMENTS`,
+  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
-  POST_COMMENT: `POST_COMMENT`,
-  RESET_ACTIVE_MOVIE: `RESET_ACTIVE_MOVIE`,
-  SET_ACTIVE_MOVIE: `SET_ACTIVE_MOVIE`,
-  SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
+  SET_COMMENTS_LOADING_ERROR: `SET_COMMENTS_LOADING_ERROR`,
+  SET_FAVORITE_LOADING_ERROR: `SET_FAVORITE_LOADING_ERROR`,
   SET_LOADING_ERROR: `SET_LOADING_ERROR`,
-  SET_GENRE: `SET_GENRE`,
+  SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
   SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
+  START_FAVORITE_LOADING: `START_FAVORITE_LOADING`,
   START_UPLOADING: `START_UPLOADING`,
-  UPDATE_ACTIVE_MOVIE: `UPDATE_ACTIVE_MOVIE`,
-  LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
 };
 
 const getFavoriteMovies = (movies) => movies.filter(({isFavorite}) => isFavorite);
@@ -52,6 +53,10 @@ const updateMovies = (movies, movie) => {
 };
 
 const ActionCreator = {
+  endFavoriteLoading: () => ({
+    type: ActionType.END_FAVORITE_LOADING,
+  }),
+
   endLoading: () => ({
     type: ActionType.END_LOADING,
   }),
@@ -80,22 +85,18 @@ const ActionCreator = {
     payload: movie,
   }),
 
-  resetActiveMovie: () => ({
-    type: ActionType.RESET_ACTIVE_MOVIE,
-  }),
-
-  setActiveMovie: (movie) => ({
-    type: ActionType.SET_ACTIVE_MOVIE,
-    payload: movie,
-  }),
-
-  setGenre: (genre) => ({
-    type: ActionType.SET_GENRE,
-    payload: genre,
-  }),
-
   setUploadingError: (hasError) => ({
     type: ActionType.SET_UPLOADING_ERROR,
+    payload: hasError,
+  }),
+
+  setCommentsLoadingError: (hasError) => ({
+    type: ActionType.SET_COMMENTS_LOADING_ERROR,
+    payload: hasError,
+  }),
+
+  setFavoriteLoadingError: (hasError) => ({
+    type: ActionType.SET_FAVORITE_LOADING_ERROR,
     payload: hasError,
   }),
 
@@ -104,9 +105,8 @@ const ActionCreator = {
     payload: hasError,
   }),
 
-  setMovieComments: (comments) => ({
-    type: ActionType.SET_MOVIE_COMMENTS,
-    payload: comments,
+  startFavoriteLoading: () => ({
+    type: ActionType.START_FAVORITE_LOADING,
   }),
 
   startLoading: () => ({
@@ -116,7 +116,6 @@ const ActionCreator = {
   startUploading: () => ({
     type: ActionType.START_UPLOADING,
   }),
-
 };
 
 const Operation = {
@@ -127,7 +126,6 @@ const Operation = {
     .then((response) => {
       const promoMovie = adaptMovie(response.data);
       dispatch(ActionCreator.loadPromo(promoMovie));
-      dispatch(ActionCreator.setActiveMovie(promoMovie));
     })
     .then(() => api.get(Url.FILMS))
     .then((response) => {
@@ -141,27 +139,42 @@ const Operation = {
     });
   },
 
+  loadFavoriteMovies: () => (dispatch, getState, api) => {
+    dispatch(ActionCreator.startFavoriteLoading());
+    dispatch(ActionCreator.setFavoriteLoadingError(false));
+    return api.get(Url.FAVORITE)
+    .then((response) => {
+      dispatch(ActionCreator.loadFavoriteMovies(adaptMovies(response.data)));
+      dispatch(ActionCreator.endFavoriteLoading());
+    })
+    .catch((err) => {
+      dispatch(ActionCreator.setFavoriteLoadingError(true));
+      dispatch(ActionCreator.endFavoriteLoading());
+      return err;
+    });
+  },
+
   loadComments: (id) => (dispatch, getState, api) => {
-    dispatch(ActionCreator.setLoadingError(false));
+    dispatch(ActionCreator.setCommentsLoadingError(false));
     return api.get(`${Url.COMMENTS}/${id}`)
     .then((response) => {
       dispatch(ActionCreator.loadComments(adaptComments(response.data)));
     })
     .catch((err) => {
-      dispatch(ActionCreator.setLoadingError(true));
+      dispatch(ActionCreator.setCommentsLoadingError(true));
       return err;
     });
   },
 
   postComment: (comment) => (dispatch, getState, api) => {
-    const {DATA: {activeMovie}} = getState();
+    const {APP_STATE: {activeMovie}} = getState();
     dispatch(ActionCreator.startUploading());
     dispatch(ActionCreator.setUploadingError(false));
     return api.post(`${Url.COMMENTS}/${activeMovie.id}`, comment)
     .then((response) => {
-      dispatch(ActionCreator.setMovieComments(adaptComments(response.data)));
+      dispatch(ActionCreator.loadComments(adaptComments(response.data)));
       dispatch(ActionCreator.endUploading());
-      history.push(`/films/${activeMovie.id}`);
+      history.push(`${AppRoute.FILMS}/${activeMovie.id}`);
     })
     .catch((err) => {
       dispatch(ActionCreator.setUploadingError(true));
@@ -187,7 +200,6 @@ const Operation = {
       if (isPromo) {
         dispatch(ActionCreator.loadPromo(updatedMovie));
       }
-      dispatch(ActionCreator.setActiveMovie(updatedMovie));
       dispatch(ActionCreator.loadMovies(updatedMovies));
       dispatch(ActionCreator.loadFavoriteMovies(favoriteMovies));
     })
@@ -201,61 +213,65 @@ const Operation = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.LOAD_MOVIES:
+    case ActionType.END_FAVORITE_LOADING:
       return extend(state, {
-        movies: action.payload
-      });
-    case ActionType.LOAD_COMMENTS:
-      return extend(state, {
-        comments: action.payload,
-      });
-    case ActionType.LOAD_PROMO:
-      return extend(state, {
-        promoMovie: action.payload
-      });
-    case ActionType.START_LOADING:
-      return extend(state, {
-        isLoading: true,
-      });
-    case ActionType.LOAD_FAVORITE_MOVIES:
-      return extend(state, {
-        favoriteMovies: action.payload,
+        isFavoriteLoading: false,
       });
     case ActionType.END_LOADING:
       return extend(state, {
         isLoading: false,
       });
-    case ActionType.RESET_ACTIVE_MOVIE:
+    case ActionType.END_UPLOADING:
       return extend(state, {
-        activeMovie: state.promoMovie.id,
+        isUploading: false,
       });
-    case ActionType.SET_ACTIVE_MOVIE:
+    case ActionType.LOAD_FAVORITE_MOVIES:
       return extend(state, {
-        activeMovie: action.payload,
+        favoriteMovies: action.payload,
+      });
+    case ActionType.LOAD_COMMENTS:
+      return extend(state, {
+        comments: action.payload,
+      });
+    case ActionType.LOAD_MOVIES:
+      return extend(state, {
+        movies: action.payload
+      });
+    case ActionType.LOAD_PROMO:
+      return extend(state, {
+        promoMovie: action.payload
+      });
+    case ActionType.SET_COMMENTS_LOADING_ERROR:
+      return extend(state, {
+        hasCommentsLoadingError: action.payload,
+      });
+    case ActionType.SET_FAVORITE_LOADING_ERROR:
+      return extend(state, {
+        hasFavoriteLoadingError: action.payload,
+      });
+    case ActionType.SET_LOADING_ERROR:
+      return extend(state, {
+        hasLoadingError: action.payload,
       });
     case ActionType.SET_MOVIE_COMMENTS:
       return extend(state, {
         comments: action.payload,
       });
-    case ActionType.START_UPLOADING:
-      return extend(state, {
-        isUploading: true,
-      });
-    case ActionType.END_UPLOADING:
-      return extend(state, {
-        isUploading: false,
-      });
     case ActionType.SET_UPLOADING_ERROR:
       return extend(state, {
         hasUploadingError: action.payload,
       });
-    case ActionType.SET_GENRE:
+    case ActionType.START_FAVORITE_LOADING:
       return extend(state, {
-        genre: action.payload,
+        isFavoriteLoading: true,
       });
-    case ActionType.SET_LOADING_ERROR:
+    case ActionType.START_LOADING:
       return extend(state, {
-        hasLoadingError: action.payload,
+        isLoading: true,
+      });
+    case ActionType.START_UPLOADING:
+      return extend(state, {
+        isUploading: true,
       });
   }
   return state;

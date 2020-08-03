@@ -27,27 +27,9 @@ const withFormValidity = (Component) => {
         isFormValid: false,
       };
 
-      this._handleRatingChange = this._handleRatingChange.bind(this);
-      this._handleTextChange = this._handleTextChange.bind(this);
-      this._handleSubmit = this._handleSubmit.bind(this);
-    }
-    render() {
-      const {isCommentLoading} = this.props;
-      const {isFormValid, rating} = this.state;
-
-      return (
-        <Component
-          {...this.props}
-          isFormBlocked={isCommentLoading}
-          isFormValid={isFormValid}
-          onRatingChange={this._handleRatingChange}
-          onTextChange={this._handleTextChange}
-          onSubmit={this._handleSubmit}
-          rating={rating}
-        >
-          {this.renderMessage()}
-        </Component>
-      );
+      this.handleRatingChange = this.handleRatingChange.bind(this);
+      this.handleTextChange = this.handleTextChange.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     renderMessage() {
@@ -68,7 +50,7 @@ const withFormValidity = (Component) => {
       return null;
     }
 
-    _handleRatingChange(evt) {
+    handleRatingChange(evt) {
       const rating = parseInt(evt.target.value, 10);
       this.setState((oldState) => ({
         rating,
@@ -76,7 +58,7 @@ const withFormValidity = (Component) => {
       }));
     }
 
-    _handleTextChange(evt) {
+    handleTextChange(evt) {
       const text = evt.target.value;
       this.setState((oldState) => ({
         comment: text,
@@ -84,12 +66,32 @@ const withFormValidity = (Component) => {
       }));
     }
 
-    _handleSubmit(evt) {
+    handleSubmit(evt) {
       const {onSubmit} = this.props;
       const {comment, rating} = this.state;
       evt.preventDefault();
       onSubmit({comment, rating});
     }
+
+    render() {
+      const {isCommentLoading} = this.props;
+      const {isFormValid, rating} = this.state;
+
+      return (
+        <Component
+          {...this.props}
+          isFormBlocked={isCommentLoading}
+          isFormValid={isFormValid}
+          onRatingChange={this.handleRatingChange}
+          onTextChange={this.handleTextChange}
+          onSubmit={this.handleSubmit}
+          rating={rating}
+        >
+          {this.renderMessage()}
+        </Component>
+      );
+    }
+
   }
 
   WithFormValidity.propTypes = {
@@ -99,7 +101,6 @@ const withFormValidity = (Component) => {
   };
 
   return WithFormValidity;
-
 };
 
 const mapStateToProps = (state) => ({

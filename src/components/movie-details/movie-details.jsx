@@ -10,9 +10,10 @@ import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
 import {movieShape, reviewShape} from "../shapes";
 import {SIMILAR_MOVIES_COUNT, TabType, AppRoute} from "../../const";
 import history from "../../history.js";
-import {ActionCreator as DataActionCreator, Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getMovieById, getMovieComments, selectSimilarMovies, getLoadingError, getMovies} from "../../reducer/data/selectors.js";
+import {getMovieById, getMovieComments, selectSimilarMovies, getCommentsLoadingError, getMovies} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 
 const TabsWrapped = withActiveItem(Tabs);
@@ -78,9 +79,11 @@ class MovieDetails extends Component {
             </div>
 
             {isUserAuthorized && <div className="user-block">
-              <div className="user-block__avatar">
-                <img src={avatar} alt="User avatar" width="63" height="63" />
-              </div>
+              <Link to={AppRoute.MY_LIST}>
+                <div className="user-block__avatar">
+                  <img src={avatar} alt="User avatar" width="63" height="63" />
+                </div>
+              </Link>
             </div>}
           </header>
 
@@ -179,7 +182,7 @@ const mapStateToProps = (state, props) => ({
   authorizationStatus: getAuthorizationStatus(state),
   avatar: getAvatarUrl(state),
   comments: getMovieComments(state),
-  hasLoadingError: getLoadingError(state),
+  hasLoadingError: getCommentsLoadingError(state),
   movie: getMovieById(state, props.match.params.id),
   movies: getMovies(state),
   similarMovies: selectSimilarMovies(state),
@@ -191,7 +194,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
 
   onMovieCardClick(movie) {
-    dispatch(DataActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setActiveMovie(movie));
     dispatch(DataOperation.loadComments(movie.id));
   },
 
@@ -199,7 +202,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(DataOperation.updateFavoriteMovies(movie));
   },
   setActiveMovie(movie) {
-    dispatch(ActionCreator.setActiveMovie(movie));
+    dispatch(StateActionCreator.setActiveMovie(movie));
   }
 });
 

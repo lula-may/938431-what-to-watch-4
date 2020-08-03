@@ -30,4 +30,18 @@ const formatDate = (date) => date.toLocaleString(`en-US`, {day: `numeric`, month
 
 const formatDateTimeAttribute = (date) => date.toISOString().slice(0, DATE_STRING_LENGTH);
 
-export {extend, formatDate, formatTime, formatDateTimeAttribute, formatElapsedTime};
+const getRatingLevel = (rating) => {
+  if (rating < 3) {
+    return `Bad`;
+  } else if (rating < 5) {
+    return `Normal`;
+  } else if (rating < 8) {
+    return `Good`;
+  } else if (rating < 10) {
+    return `Very Good`;
+  }
+  return `Awesome`;
+};
+
+
+export {extend, formatDate, formatTime, formatDateTimeAttribute, formatElapsedTime, getRatingLevel};

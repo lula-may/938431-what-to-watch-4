@@ -1,0 +1,413 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyList Component should render Error message 1`] = `
+<div
+  className="user-page"
+>
+  <header
+    className="page-header user-page__head"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link"
+        href="/"
+        onClick={[Function]}
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <h1
+      className="page-title user-page__title"
+    >
+      My list
+    </h1>
+    <div
+      className="user-block"
+    >
+      <div
+        className="user-block__avatar"
+      >
+        <img
+          alt="User avatar"
+          height="63"
+          src="avatar.jpg"
+          width="63"
+        />
+      </div>
+    </div>
+  </header>
+  <section
+    className="catalog"
+  >
+    <h2
+      className="catalog__title visually-hidden"
+    >
+      Catalog
+    </h2>
+    <p
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      Sorry, we failed to load your favortite movies. Please, try again later.
+    </p>
+    <div
+      className="catalog__movies-list"
+    />
+  </section>
+  <footer
+    className="page-footer"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link logo__link--light"
+        href="/"
+        onClick={[Function]}
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <div
+      className="copyright"
+    >
+      <p>
+        © 2019 What to watch Ltd.
+      </p>
+    </div>
+  </footer>
+</div>
+`;
+
+exports[`MyList Component should render Loading message 1`] = `
+<div
+  className="user-page"
+>
+  <header
+    className="page-header user-page__head"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link"
+        href="/"
+        onClick={[Function]}
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <h1
+      className="page-title user-page__title"
+    >
+      My list
+    </h1>
+    <div
+      className="user-block"
+    >
+      <div
+        className="user-block__avatar"
+      >
+        <img
+          alt="User avatar"
+          height="63"
+          src="avatar.jpg"
+          width="63"
+        />
+      </div>
+    </div>
+  </header>
+  <section
+    className="catalog"
+  >
+    <h2
+      className="catalog__title visually-hidden"
+    >
+      Catalog
+    </h2>
+    <p
+      style={
+        Object {
+          "textAlign": "center",
+        }
+      }
+    >
+      Loading...
+    </p>
+    <div
+      className="catalog__movies-list"
+    />
+  </section>
+  <footer
+    className="page-footer"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link logo__link--light"
+        href="/"
+        onClick={[Function]}
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <div
+      className="copyright"
+    >
+      <p>
+        © 2019 What to watch Ltd.
+      </p>
+    </div>
+  </footer>
+</div>
+`;
+
+exports[`MyList Component should render correctly MyList component 1`] = `
+<div
+  className="user-page"
+>
+  <header
+    className="page-header user-page__head"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link"
+        href="/"
+        onClick={[Function]}
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <h1
+      className="page-title user-page__title"
+    >
+      My list
+    </h1>
+    <div
+      className="user-block"
+    >
+      <div
+        className="user-block__avatar"
+      >
+        <img
+          alt="User avatar"
+          height="63"
+          src="avatar.jpg"
+          width="63"
+        />
+      </div>
+    </div>
+  </header>
+  <section
+    className="catalog"
+  >
+    <h2
+      className="catalog__title visually-hidden"
+    >
+      Catalog
+    </h2>
+    <div
+      className="catalog__movies-list"
+    >
+      <article
+        className="small-movie-card catalog__movies-card"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <a
+          className="small-movie-card__image"
+          href="/films/0"
+          onClick={[Function]}
+        >
+          <video
+            height="175"
+            poster="poster-0.jpg"
+            width="280"
+          />
+        </a>
+        <h3
+          className="small-movie-card__title"
+        >
+          <a
+            className="small-movie-card__link"
+            href="/films/0"
+            onClick={[Function]}
+          >
+            Jurassic Park
+          </a>
+        </h3>
+      </article>
+      <article
+        className="small-movie-card catalog__movies-card"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <a
+          className="small-movie-card__image"
+          href="/films/1"
+          onClick={[Function]}
+        >
+          <video
+            height="175"
+            poster="poster-1.jpg"
+            width="280"
+          />
+        </a>
+        <h3
+          className="small-movie-card__title"
+        >
+          <a
+            className="small-movie-card__link"
+            href="/films/1"
+            onClick={[Function]}
+          >
+            Gone With The Wind
+          </a>
+        </h3>
+      </article>
+      <article
+        className="small-movie-card catalog__movies-card"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+      >
+        <a
+          className="small-movie-card__image"
+          href="/films/2"
+          onClick={[Function]}
+        >
+          <video
+            height="175"
+            poster="poster-2.jpg"
+            width="280"
+          />
+        </a>
+        <h3
+          className="small-movie-card__title"
+        >
+          <a
+            className="small-movie-card__link"
+            href="/films/2"
+            onClick={[Function]}
+          >
+            The Godfather
+          </a>
+        </h3>
+      </article>
+    </div>
+  </section>
+  <footer
+    className="page-footer"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        className="logo__link logo__link--light"
+        href="/"
+        onClick={[Function]}
+      >
+        <span
+          className="logo__letter logo__letter--1"
+        >
+          W
+        </span>
+        <span
+          className="logo__letter logo__letter--2"
+        >
+          T
+        </span>
+        <span
+          className="logo__letter logo__letter--3"
+        >
+          W
+        </span>
+      </a>
+    </div>
+    <div
+      className="copyright"
+    >
+      <p>
+        © 2019 What to watch Ltd.
+      </p>
+    </div>
+  </footer>
+</div>
+`;

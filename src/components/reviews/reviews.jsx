@@ -21,7 +21,7 @@ const Reviews = (props) => {
   const splitReviews = splitReviewsIntoColumns(sortedReviews);
   return (
     hasLoadingError
-      ? <p>Sorry, we can&apos;t load comments now. Please, try again later.</p>
+      ? <p style={{color: `black`}}>Sorry, we can&apos;t load comments now. Please, try again later.</p>
       : <div className="movie-card__reviews movie-card__row">
         <ReviewsColumn reviews={splitReviews[0]}/>
         <ReviewsColumn reviews={splitReviews[1]}/>

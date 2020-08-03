@@ -8,22 +8,10 @@ const withActiveItem = (Component) => {
       this.state = {
         activeItem: props.activeItem,
       };
-      this._handleItemClick = this._handleItemClick.bind(this);
+      this.handleItemClick = this.handleItemClick.bind(this);
     }
 
-    render() {
-      const {activeItem} = this.state;
-
-      return (
-        <Component
-          {...this.props}
-          activeItem={activeItem}
-          onClick={this._handleItemClick}
-        />
-      );
-    }
-
-    _handleItemClick(evt) {
+    handleItemClick(evt) {
       const {onActiveChange} = this.props;
       const {activeItem} = this.state;
       evt.preventDefault();
@@ -34,6 +22,19 @@ const withActiveItem = (Component) => {
       this.setState({activeItem: newActiveItem});
       onActiveChange(newActiveItem);
     }
+
+    render() {
+      const {activeItem} = this.state;
+
+      return (
+        <Component
+          {...this.props}
+          activeItem={activeItem}
+          onClick={this.handleItemClick}
+        />
+      );
+    }
+
   }
 
   WithActiveItem.propTypes = {

@@ -115,7 +115,13 @@ exports[`Reviews Component should render correctly Reviews Component 1`] = `
 `;
 
 exports[`Reviews Component should render error message on comments loading error 1`] = `
-<p>
+<p
+  style={
+    Object {
+      "color": "black",
+    }
+  }
+>
   Sorry, we can't load comments now. Please, try again later.
 </p>
 `;

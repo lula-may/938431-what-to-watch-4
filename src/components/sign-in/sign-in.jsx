@@ -16,6 +16,35 @@ class SignIn extends PureComponent {
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
+  renderMessage() {
+    const {hasLoginError, isInvalidEmail} = this.props;
+    if (isInvalidEmail) {
+      return (
+        <div className="sign-in__message">
+          <p>Please enter a valid email address</p>
+        </div>
+      );
+    }
+    if (hasLoginError) {
+      return (
+        <div className="sign-in__message">
+          <p>We can&apos;t recognize this email <br/> and password combination. Please try again.</p>
+        </div>
+      );
+    }
+    return null;
+  }
+
+  handleFormSubmit(evt) {
+    const {onSubmit} = this.props;
+
+    evt.preventDefault();
+    onSubmit({
+      email: this._emailRef.current.value,
+      password: this._passwordRef.current.value,
+    });
+  }
+
   render() {
     const {hasLoginError, isInvalidEmail} = this.props;
     return (
@@ -34,7 +63,7 @@ class SignIn extends PureComponent {
 
         <div className="sign-in user-page__content">
           <form action="#" className="sign-in__form" onSubmit={this.handleFormSubmit}>
-            {hasLoginError && this._renderMessage()}
+            {hasLoginError && this.renderMessage()}
             <div className="sign-in__fields">
               <div className={`sign-in__field${isInvalidEmail ? ` sign-in__field--error` : ``}`}>
                 <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"
@@ -70,35 +99,6 @@ class SignIn extends PureComponent {
         </footer>
       </div>
     );
-  }
-
-  _renderMessage() {
-    const {hasLoginError, isInvalidEmail} = this.props;
-    if (isInvalidEmail) {
-      return (
-        <div className="sign-in__message">
-          <p>Please enter a valid email address</p>
-        </div>
-      );
-    }
-    if (hasLoginError) {
-      return (
-        <div className="sign-in__message">
-          <p>We can&apos;t recognize this email <br/> and password combination. Please try again.</p>
-        </div>
-      );
-    }
-    return null;
-  }
-
-  handleFormSubmit(evt) {
-    const {onSubmit} = this.props;
-
-    evt.preventDefault();
-    onSubmit({
-      email: this._emailRef.current.value,
-      password: this._passwordRef.current.value,
-    });
   }
 }
 

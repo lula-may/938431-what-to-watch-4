@@ -462,16 +462,21 @@ Array [
         <div
           className="user-block"
         >
-          <div
-            className="user-block__avatar"
+          <a
+            href="/mylist"
+            onClick={[Function]}
           >
-            <img
-              alt="User avatar"
-              height="63"
-              src="img/avatar.jpg"
-              width="63"
-            />
-          </div>
+            <div
+              className="user-block__avatar"
+            >
+              <img
+                alt="User avatar"
+                height="63"
+                src="img/avatar.jpg"
+                width="63"
+              />
+            </div>
+          </a>
         </div>
       </header>
       <div
