@@ -13,7 +13,7 @@ import history from "../../history.js";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getMovieById, getMovieComments, selectSimilarMovies, getLoadingError, getMovies} from "../../reducer/data/selectors.js";
+import {getMovieById, getMovieComments, selectSimilarMovies, getCommentsLoadingError, getMovies} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
 
 const TabsWrapped = withActiveItem(Tabs);
@@ -182,7 +182,7 @@ const mapStateToProps = (state, props) => ({
   authorizationStatus: getAuthorizationStatus(state),
   avatar: getAvatarUrl(state),
   comments: getMovieComments(state),
-  hasLoadingError: getLoadingError(state),
+  hasLoadingError: getCommentsLoadingError(state),
   movie: getMovieById(state, props.match.params.id),
   movies: getMovies(state),
   similarMovies: selectSimilarMovies(state),
