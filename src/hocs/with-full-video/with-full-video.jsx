@@ -23,26 +23,21 @@ const withFullVideo = (Component) => {
       this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(this);
     }
 
-    render() {
-      const {elapsedTime, isPlaying, progress} = this.state;
-      const {movie: {bgPoster}} = this.props;
-      const progressValue = Math.round(progress * 100 / this._duration);
-      return (
-        <Component
-          {...this.props}
-          elapsedTime={elapsedTime}
-          isPlaying={isPlaying}
-          onFullScreenButtonClick={this.handleFullscreenButtonClick}
-          onPlayButtonClick={this.handlePlayButtonClick}
-          progressValue={progressValue}
-        >
-          <video
-            className="player__video"
-            ref={this._videoRef}
-            poster={bgPoster}
-          />
-        </Component>
-      );
+    handlePlayButtonClick() {
+      const {isPlaying} = this.state;
+      this.setState({
+        isPlaying: !isPlaying
+      });
+    }
+
+    handleFullscreenButtonClick() {
+      const video = this._videoRef.current;
+      if (!document.fullscreenElement) {
+        video.requestFullscreen()
+          .catch((err) => err);
+      } else {
+        document.exitFullscreen();
+      }
     }
 
     componentDidMount() {
@@ -96,21 +91,26 @@ const withFullVideo = (Component) => {
       video.src = ``;
     }
 
-    handlePlayButtonClick() {
-      const {isPlaying} = this.state;
-      this.setState({
-        isPlaying: !isPlaying
-      });
-    }
-
-    handleFullscreenButtonClick() {
-      const video = this._videoRef.current;
-      if (!document.fullscreenElement) {
-        video.requestFullscreen()
-          .catch((err) => err);
-      } else {
-        document.exitFullscreen();
-      }
+    render() {
+      const {elapsedTime, isPlaying, progress} = this.state;
+      const {movie: {bgPoster}} = this.props;
+      const progressValue = Math.round(progress * 100 / this._duration);
+      return (
+        <Component
+          {...this.props}
+          elapsedTime={elapsedTime}
+          isPlaying={isPlaying}
+          onFullScreenButtonClick={this.handleFullscreenButtonClick}
+          onPlayButtonClick={this.handlePlayButtonClick}
+          progressValue={progressValue}
+        >
+          <video
+            className="player__video"
+            ref={this._videoRef}
+            poster={bgPoster}
+          />
+        </Component>
+      );
     }
   }
 

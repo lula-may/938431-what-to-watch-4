@@ -20,7 +20,25 @@ import history from "../../history.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
 const PlayerWrapped = withFullVideo(Player);
+
 class App extends PureComponent {
+
+  renderComponent(Component) {
+    const {hasLoadingError, isLoading} = this.props;
+
+    if (isLoading) {
+      return (
+        <LoadingScreen/>
+      );
+    }
+    if (hasLoadingError) {
+      return (
+        <ErrorScreen/>
+      );
+    }
+    return Component;
+  }
+
   render() {
     const {authorizationStatus} = this.props;
     return (
@@ -65,22 +83,6 @@ class App extends PureComponent {
         </Switch>
       </Router>
     );
-  }
-
-  renderComponent(Component) {
-    const {hasLoadingError, isLoading} = this.props;
-
-    if (isLoading) {
-      return (
-        <LoadingScreen/>
-      );
-    }
-    if (hasLoadingError) {
-      return (
-        <ErrorScreen/>
-      );
-    }
-    return Component;
   }
 }
 

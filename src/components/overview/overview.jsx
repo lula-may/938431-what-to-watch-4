@@ -1,19 +1,8 @@
 import React, {Fragment} from "react";
 import PropTypes from "prop-types";
-import {movieShape} from "../shapes";
 
-const getRatingLevel = (rating) => {
-  if (rating < 3) {
-    return `Bad`;
-  } else if (rating < 5) {
-    return `Normal`;
-  } else if (rating < 8) {
-    return `Good`;
-  } else if (rating < 10) {
-    return `Very Good`;
-  }
-  return `Awesome`;
-};
+import {getRatingLevel} from "../../utils.js";
+import {movieShape} from "../shapes";
 
 const Overview = (props) => {
   const {movie} = props;

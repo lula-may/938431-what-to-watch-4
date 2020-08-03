@@ -171,7 +171,6 @@ class Main extends PureComponent {
       </div>
     </React.Fragment>;
   }
-
 }
 
 Main.propTypes = {
