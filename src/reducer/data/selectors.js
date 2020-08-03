@@ -28,6 +28,10 @@ export const getFavoriteLoadingState = (state) => {
   return state[NAME_SPACE].isFavoriteLoading;
 };
 
+export const getCommentsLoadingError = (state) => {
+  return state[NAME_SPACE].hasCommentsLoadingError;
+};
+
 export const getFavoriteLoadingError = (state) => {
   return state[NAME_SPACE].hasFavoriteLoadingError;
 };

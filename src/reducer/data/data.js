@@ -13,6 +13,7 @@ const Url = {
 const initialState = {
   comments: [],
   favoriteMovies: [],
+  hasCommentsLoadingError: false,
   hasFavoriteLoadingError: false,
   hasLoadingError: false,
   hasUploadingError: false,
@@ -31,10 +32,10 @@ const ActionType = {
   LOAD_FAVORITE_MOVIES: `LOAD_FAVORITE_MOVIES`,
   LOAD_MOVIES: `LOAD_MOVIES`,
   LOAD_PROMO: `LOAD_PROMO`,
-  POST_COMMENT: `POST_COMMENT`,
-  SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
+  SET_COMMENTS_LOADING_ERROR: `SET_COMMENTS_LOADING_ERROR`,
   SET_FAVORITE_LOADING_ERROR: `SET_FAVORITE_LOADING_ERROR`,
   SET_LOADING_ERROR: `SET_LOADING_ERROR`,
+  SET_UPLOADING_ERROR: `SET_UPLOADING_ERROR`,
   SET_MOVIE_COMMENTS: `SET_MOVIE_COMMENTS`,
   START_LOADING: `START_LOADING`,
   START_FAVORITE_LOADING: `START_FAVORITE_LOADING`,
@@ -89,6 +90,11 @@ const ActionCreator = {
     payload: hasError,
   }),
 
+  setCommentsLoadingError: (hasError) => ({
+    type: ActionType.SET_COMMENTS_LOADING_ERROR,
+    payload: hasError,
+  }),
+
   setFavoriteLoadingError: (hasError) => ({
     type: ActionType.SET_FAVORITE_LOADING_ERROR,
     payload: hasError,
@@ -97,11 +103,6 @@ const ActionCreator = {
   setLoadingError: (hasError) => ({
     type: ActionType.SET_LOADING_ERROR,
     payload: hasError,
-  }),
-
-  setMovieComments: (comments) => ({
-    type: ActionType.SET_MOVIE_COMMENTS,
-    payload: comments,
   }),
 
   startFavoriteLoading: () => ({
@@ -154,13 +155,13 @@ const Operation = {
   },
 
   loadComments: (id) => (dispatch, getState, api) => {
-    dispatch(ActionCreator.setLoadingError(false));
+    dispatch(ActionCreator.setCommentsLoadingError(false));
     return api.get(`${Url.COMMENTS}/${id}`)
     .then((response) => {
       dispatch(ActionCreator.loadComments(adaptComments(response.data)));
     })
     .catch((err) => {
-      dispatch(ActionCreator.setLoadingError(true));
+      dispatch(ActionCreator.setCommentsLoadingError(true));
       return err;
     });
   },
@@ -171,7 +172,7 @@ const Operation = {
     dispatch(ActionCreator.setUploadingError(false));
     return api.post(`${Url.COMMENTS}/${activeMovie.id}`, comment)
     .then((response) => {
-      dispatch(ActionCreator.setMovieComments(adaptComments(response.data)));
+      dispatch(ActionCreator.loadComments(adaptComments(response.data)));
       dispatch(ActionCreator.endUploading());
       history.push(`${AppRoute.FILMS}/${activeMovie.id}`);
     })
@@ -239,6 +240,10 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_PROMO:
       return extend(state, {
         promoMovie: action.payload
+      });
+    case ActionType.SET_COMMENTS_LOADING_ERROR:
+      return extend(state, {
+        hasCommentsLoadingError: action.payload,
       });
     case ActionType.SET_FAVORITE_LOADING_ERROR:
       return extend(state, {

@@ -10,6 +10,7 @@ describe(`Reducer`, () => {
     expect(reducer(undefined, {})).toEqual({
       comments: [],
       favoriteMovies: [],
+      hasCommentsLoadingError: false,
       hasFavoriteLoadingError: false,
       hasLoadingError: false,
       hasUploadingError: false,
@@ -33,6 +34,17 @@ describe(`Reducer`, () => {
   });
 
   it(`should update comments when load comments action supplied`, () => {
+    expect(reducer({
+      promoMovie: {},
+    }, {
+      type: ActionType.LOAD_PROMO,
+      payload: testMovies[0],
+    })).toEqual({
+      promoMovie: testMovies[0],
+    });
+  });
+
+  it(`should update promo movie when load promo action supplied`, () => {
     expect(reducer({
       comments: [],
     }, {
@@ -159,7 +171,7 @@ describe(`Reducer`, () => {
     });
   });
 
-  it(`should set comment uploading error when set comment uploading error action supplied`, () => {
+  it(`should set uploading error when set uploading error action supplied`, () => {
     expect(reducer({
       movies: [],
       isLoading: false,
@@ -194,6 +206,19 @@ describe(`Reducer`, () => {
       isLoading: false,
       hasLoadingError: false,
       hasUploadingError: false,
+    });
+  });
+
+  it(`should set comments loading error when set comments loading error action supplied`, () => {
+    expect(reducer({
+      comments: [],
+      hasCommentsLoadingError: false,
+    }, {
+      type: ActionType.SET_COMMENTS_LOADING_ERROR,
+      payload: true,
+    })).toEqual({
+      comments: [],
+      hasCommentsLoadingError: true,
     });
   });
 
@@ -269,9 +294,22 @@ describe(`ActionCreator`, () => {
     });
   });
 
+  it(`should return correct action for comments loading error setting`, () => {
+    expect(ActionCreator.setCommentsLoadingError(true)).toEqual({
+      type: ActionType.SET_COMMENTS_LOADING_ERROR,
+      payload: true,
+    });
+  });
+
   it(`should return correct action for start favorite movies loading`, () => {
     expect(ActionCreator.startFavoriteLoading()).toEqual({
       type: ActionType.START_FAVORITE_LOADING,
+    });
+  });
+
+  it(`should return correct action for end favorite movies loading`, () => {
+    expect(ActionCreator.endFavoriteLoading()).toEqual({
+      type: ActionType.END_FAVORITE_LOADING,
     });
   });
 
@@ -288,19 +326,19 @@ describe(`ActionCreator`, () => {
     });
   });
 
-  it(`should return correct action for start comment uploading`, () => {
+  it(`should return correct action for start uploading`, () => {
     expect(ActionCreator.startUploading()).toEqual({
       type: ActionType.START_UPLOADING,
     });
   });
 
-  it(`should return correct action for end loading`, () => {
+  it(`should return correct action for end uploading`, () => {
     expect(ActionCreator.endUploading()).toEqual({
       type: ActionType.END_UPLOADING,
     });
   });
 
-  it(`should return correct action for comment uploading error setting`, () => {
+  it(`should return correct action for uploading error setting`, () => {
     expect(ActionCreator.setUploadingError(true)).toEqual({
       type: ActionType.SET_UPLOADING_ERROR,
       payload: true,
@@ -478,7 +516,7 @@ describe(`Operation`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.SET_LOADING_ERROR,
+          type: ActionType.SET_COMMENTS_LOADING_ERROR,
           payload: false,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
@@ -501,11 +539,11 @@ describe(`Operation`, () => {
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch.mock.calls[0][0]).toEqual({
-          type: ActionType.SET_LOADING_ERROR,
+          type: ActionType.SET_COMMENTS_LOADING_ERROR,
           payload: false,
         });
         expect(dispatch.mock.calls[1][0]).toEqual({
-          type: ActionType.SET_LOADING_ERROR,
+          type: ActionType.SET_COMMENTS_LOADING_ERROR,
           payload: true,
         });
       });
@@ -553,7 +591,7 @@ describe(`Operation`, () => {
       });
 
       expect(dispatch.mock.calls[2][0]).toEqual({
-        type: ActionType.SET_MOVIE_COMMENTS,
+        type: ActionType.LOAD_COMMENTS,
         payload: adaptComments(commentAnswer),
       });
       expect(dispatch.mock.calls[3][0]).toEqual({
