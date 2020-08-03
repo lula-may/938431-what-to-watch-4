@@ -21,6 +21,9 @@ describe(`MyList Component`, () => {
           <MyList
             avatarUrl={avatar}
             favoriteMovies={favoriteMovies}
+            hasFavoriteLoadingError={false}
+            isLoading={false}
+            loadFavoriteMovies={() => {}}
             onMovieCardClick={onMovieCardClick}
           />
         </Router>

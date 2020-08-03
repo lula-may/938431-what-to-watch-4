@@ -15,6 +15,9 @@ describe(`MyList Component`, () => {
           <MyList
             avatarUrl={`avatar.jpg`}
             favoriteMovies={movies}
+            hasFavoriteLoadingError={false}
+            isLoading={false}
+            loadFavoriteMovies={() => {}}
             onMovieCardClick={() => {}}
           />
         </Router>
@@ -22,4 +25,39 @@ describe(`MyList Component`, () => {
 
     expect(tree).toMatchSnapshot();
   });
+
+  it(`should render Loading message`, () => {
+    const tree = renderer.create(
+        <Router history={history}>
+          <MyList
+            avatarUrl={`avatar.jpg`}
+            favoriteMovies={[]}
+            hasFavoriteLoadingError={false}
+            isLoading={true}
+            loadFavoriteMovies={() => {}}
+            onMovieCardClick={() => {}}
+          />
+        </Router>
+    ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
+  it(`should render Error message`, () => {
+    const tree = renderer.create(
+        <Router history={history}>
+          <MyList
+            avatarUrl={`avatar.jpg`}
+            favoriteMovies={[]}
+            hasFavoriteLoadingError={true}
+            isLoading={false}
+            loadFavoriteMovies={() => {}}
+            onMovieCardClick={() => {}}
+          />
+        </Router>
+    ).toJSON();
+
+    expect(tree).toMatchSnapshot();
+  });
+
 });
