@@ -1,19 +1,19 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
-import AddReviewForm from "../add-review-form/add-review-form.jsx";
-import withFormValidity from "../../hocs/with-form-validity/with-form-validity.jsx";
-import {movieShape} from "../../components/shapes.js";
-import {getAvatarUrl} from "../../reducer/user/selectors.js";
-import {getMovieById} from "../../reducer/data/selectors.js";
-import {AppRoute} from "../../const.js";
-import {ActionCreator} from "../../reducer/app-state/app-state.js";
+import AddReviewForm from "../add-review-form/add-review-form";
+import withFormValidity from "../../hocs/with-form-validity/with-form-validity";
+import {movieShape} from "../../components/shapes";
+import {getAvatarUrl} from "../../reducer/user/selectors";
+import {getMovieById} from "../../reducer/data/selectors";
+import {AppRoute} from "../../const";
+import {ActionCreator} from "../../reducer/app-state/app-state";
 
 const AddReviewFormWrapped = withFormValidity(AddReviewForm);
 
-class AddReview extends PureComponent {
+class AddReview extends React.PureComponent {
   componentDidMount() {
     const {movie, setActiveMovie} = this.props;
     setActiveMovie(movie);

@@ -1,7 +1,7 @@
-import React, {Fragment} from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import {movieShape} from "../shapes";
-import {formatTime} from "../../utils.js";
+import {formatTime} from "../../utils";
 
 const Details = (props) => {
   const {movie} = props;
@@ -17,7 +17,7 @@ const Details = (props) => {
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Starring</strong>
           <span className="movie-card__details-value">
-            {actors.map((actor, i, items) => (<Fragment key={actor}>{i < items.length - 1 ? `${actor},` : actor}<br/></Fragment>))}
+            {actors.map((actor, i, items) => (<React.Fragment key={actor}>{i < items.length - 1 ? `${actor},` : actor}<br/></React.Fragment>))}
           </span>
         </p>
       </div>

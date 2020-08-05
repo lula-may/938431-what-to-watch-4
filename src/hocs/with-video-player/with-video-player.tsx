@@ -1,17 +1,17 @@
-import React, {PureComponent, createRef} from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import {PREVIEW, PLAYER_DELAY} from "../../const";
 import {movieShape} from "../../components/shapes";
 
 const withVideoPlayer = (Component) => {
-  class WithVideoPlayer extends PureComponent {
+  class WithVideoPlayer extends React.PureComponent {
     constructor(props) {
       super(props);
 
       this.state = {
         isPlaying: false
       };
-      this._videoRef = createRef();
+      this._videoRef = React.createRef();
       this.timeOut = null;
 
       this.handleMouseEnter = this.handleMouseEnter.bind(this);

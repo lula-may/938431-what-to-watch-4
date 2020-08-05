@@ -1,15 +1,15 @@
-import React from "react";
+import * as React from "react";
 import {Route, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-import ErrorScreen from "../error-screen/error-screen.jsx";
-import LoadingScreen from "../loading-screen/loading-screen.jsx";
+import ErrorScreen from "../error-screen/error-screen";
+import LoadingScreen from "../loading-screen/loading-screen";
 
-import {AppRoute} from "../../const.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
-import {getLoadingState, getLoadingError} from "../../reducer/data/selectors.js";
+import {AppRoute} from "../../const";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {getAuthorizationStatus} from "../../reducer/user/selectors";
+import {getLoadingState, getLoadingError} from "../../reducer/data/selectors";
 
 const PrivateRoute = (props) => {
   const {authorizationStatus, hasLoadingError, isLoading, path, render} = props;

@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 
 const NO_RATING = 0;
@@ -28,10 +28,10 @@ const AddReviewForm = (props) => {
             <input className="rating__input" id="star-0" type="radio" name="rating" value={0} disabled={isFormBlocked} onChange={onRatingChange} checked={rating === NO_RATING}/>
             {starsIds.map((id) => {
               const isChecked = (rating === id);
-              return (<Fragment key={id}>
+              return (<React.Fragment key={id}>
                 <input className="rating__input" id={`star-${id}`} type="radio" name="rating" value={id} disabled={isFormBlocked} checked={isChecked} onChange={onRatingChange}/>
                 <label className="rating__label" htmlFor={`star-${id}`}>Rating {id}</label>
-              </Fragment>
+              </React.Fragment>
               );
             })}
           </div>

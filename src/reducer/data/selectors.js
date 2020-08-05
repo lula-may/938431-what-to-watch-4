@@ -1,7 +1,7 @@
 import {createSelector} from "reselect";
-import NameSpace from "../name-space.js";
-import {getGenre, getActiveMovie} from "../app-state/selectors.js";
-import {DEFAULT_GENRE, MAX_GENRES_COUNT} from "../../const.js";
+import NameSpace from "../name-space";
+import {getGenre, getActiveMovie} from "../app-state/selectors";
+import {DEFAULT_GENRE, MAX_GENRES_COUNT} from "../../const";
 
 const NAME_SPACE = NameSpace.DATA;
 

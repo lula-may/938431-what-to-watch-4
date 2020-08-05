@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 import {reviewShape} from "../shapes";
-import {formatDate, formatDateTimeAttribute} from "../../utils.js";
+import {formatDate, formatDateTimeAttribute} from "../../utils";
 
 const ReviewsColumn = (props) => {
   const {reviews} = props;

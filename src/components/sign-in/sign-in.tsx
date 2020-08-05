@@ -1,18 +1,18 @@
-import React, {PureComponent, createRef} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
-import {AppRoute} from "../../const.js";
-import {Operation as UserOperation} from "../../reducer/user/user.js";
-import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors.js";
+import {AppRoute} from "../../const";
+import {Operation as UserOperation} from "../../reducer/user/user";
+import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors";
 
-class SignIn extends PureComponent {
+class SignIn extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this._emailRef = createRef();
-    this._passwordRef = createRef();
+    this._emailRef = React.createRef();
+    this._passwordRef = React.createRef();
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 

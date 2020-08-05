@@ -1,27 +1,27 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import {Link, Route, Router, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
-import AddReview from "../add-review/add-review.jsx";
-import ErrorScreen from "../error-screen/error-screen.jsx";
-import LoadingScreen from "../loading-screen/loading-screen.jsx";
-import Main from "../main/main.jsx";
-import MovieDetails from "../movie-details/movie-details.jsx";
-import MyList from "../my-list/my-list.jsx";
-import NoAuthRoute from "../no-auth-route/no-auth-route.jsx";
-import Player from "../player/player.jsx";
-import PrivateRoute from "../private-root/private-root.jsx";
-import SignIn from "../sign-in/sign-in.jsx";
-import withFullVideo from "../../hocs/with-full-video/with-full-video.jsx";
+import AddReview from "../add-review/add-review";
+import ErrorScreen from "../error-screen/error-screen";
+import LoadingScreen from "../loading-screen/loading-screen";
+import Main from "../main/main";
+import MovieDetails from "../movie-details/movie-details";
+import MyList from "../my-list/my-list";
+import NoAuthRoute from "../no-auth-route/no-auth-route";
+import Player from "../player/player";
+import PrivateRoute from "../private-root/private-root";
+import SignIn from "../sign-in/sign-in";
+import withFullVideo from "../../hocs/with-full-video/with-full-video";
 
-import {AppRoute} from "../../const.js";
-import {getLoadingState, getLoadingError} from "../../reducer/data/selectors.js";
-import history from "../../history.js";
+import {AppRoute} from "../../const";
+import {getLoadingState, getLoadingError} from "../../reducer/data/selectors";
+import history from "../../history";
 
 const PlayerWrapped = withFullVideo(Player);
 
-class App extends PureComponent {
+class App extends React.PureComponent {
 
   renderComponent(Component) {
     const {hasLoadingError, isLoading} = this.props;

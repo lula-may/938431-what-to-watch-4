@@ -1,4 +1,5 @@
-import {extend} from "../../utils.js";
+import {extend} from "../../utils";
+
 const BASE_URL = `https://4.react.pages.academy`;
 const AuthorizationStatus = {
   AUTH: `AUTH`,

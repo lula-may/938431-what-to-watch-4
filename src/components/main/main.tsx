@@ -1,27 +1,27 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
-import GenresList from "../genres-list/genres-list.jsx";
-import MoviesList from "../movies-list/movies-list.jsx";
-import ShowMoreButton from "../show-more-button/show-more-button.jsx";
-import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
+import GenresList from "../genres-list/genres-list";
+import MoviesList from "../movies-list/movies-list";
+import ShowMoreButton from "../show-more-button/show-more-button";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
-import history from "../../history.js";
-import {movieShape} from "../shapes.js";
-import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getGenre} from "../../reducer/app-state/selectors.js";
-import {getPromoMovie, getUploadingError, getUploadingState, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors.js";
-import {getMoviesCount} from "../../reducer/app-state/selectors.js";
-import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
-import {AppRoute} from "../../const.js";
+import history from "../../history";
+import {movieShape} from "../shapes";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state";
+import {Operation as DataOperation} from "../../reducer/data/data";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {getGenre} from "../../reducer/app-state/selectors";
+import {getPromoMovie, getUploadingError, getUploadingState, selectMoviesGenres, selectMoviesByGenre} from "../../reducer/data/selectors";
+import {getMoviesCount} from "../../reducer/app-state/selectors";
+import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors";
+import {AppRoute} from "../../const";
 
 const GenresListWrapped = withActiveItem(GenresList);
 
-class Main extends PureComponent {
+class Main extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleAddToMyListButtonClick = this.handleAddToMyListButtonClick.bind(this);

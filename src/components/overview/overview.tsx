@@ -1,7 +1,7 @@
-import React, {Fragment} from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 
-import {getRatingLevel} from "../../utils.js";
+import {getRatingLevel} from "../../utils";
 import {movieShape} from "../shapes";
 
 const Overview = (props) => {
@@ -13,7 +13,7 @@ const Overview = (props) => {
   const ratingLevel = getRatingLevel(ratingScore);
 
   return (
-    <Fragment>
+    <React.Fragment>
       <div className="movie-rating">
         <div className="movie-rating__score">{ratingScore}</div>
         <p className="movie-rating__meta">
@@ -29,7 +29,7 @@ const Overview = (props) => {
 
         <p className="movie-card__starring"><strong>Starring: {actorsText}</strong></p>
       </div>
-    </Fragment>
+    </React.Fragment>
   );
 };
 

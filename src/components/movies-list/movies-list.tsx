@@ -1,7 +1,7 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import MovieCard from "../movie-card/movie-card.jsx";
-import withVideoPlayer from "../../hocs/with-video-player/with-video-player.jsx";
+import MovieCard from "../movie-card/movie-card";
+import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
 import {movieShape} from "../shapes";
 
 const MovieCardWrapped = withVideoPlayer(MovieCard);

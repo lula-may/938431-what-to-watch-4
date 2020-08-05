@@ -1,6 +1,6 @@
-import React from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
-import ReviewsColumn from "../reviews-column/reviews-column.jsx";
+import ReviewsColumn from "../reviews-column/reviews-column";
 import {reviewShape} from "../shapes";
 
 const splitReviewsIntoColumns = (reviews) => {

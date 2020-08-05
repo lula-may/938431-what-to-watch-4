@@ -1,4 +1,4 @@
-import React, {PureComponent, createRef} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 
@@ -6,7 +6,7 @@ import {movieShape} from "../../components/shapes";
 import {getMovieById} from "../../reducer/data/selectors.js";
 
 const withFullVideo = (Component) => {
-  class WithFullVideo extends PureComponent {
+  class WithFullVideo extends React.PureComponent {
     constructor(props) {
       super(props);
       this.state = {
@@ -17,7 +17,7 @@ const withFullVideo = (Component) => {
       };
 
       this._duration = 1;
-      this._videoRef = createRef();
+      this._videoRef = React.createRef();
 
       this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
       this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(this);

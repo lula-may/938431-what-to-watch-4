@@ -1,5 +1,5 @@
-import {extend} from "../../utils.js";
-import {DEFAULT_GENRE, SHOWED_MOVIES_ON_START_COUNT} from "../../const.js";
+import {extend} from "../../utils";
+import {DEFAULT_GENRE, SHOWED_MOVIES_ON_START_COUNT} from "../../const";
 
 const initialState = {
   activeMovie: {},

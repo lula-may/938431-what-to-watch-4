@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import PropTypes from "prop-types";
 
 import Details from "../details/details.jsx";
@@ -22,7 +22,7 @@ const tabsWithIds = [
   }
 ];
 
-class Tabs extends PureComponent {
+class Tabs extends React.PureComponent {
 
   renderInfo() {
     const {activeItem, hasLoadingError, movie, comments} = this.props;

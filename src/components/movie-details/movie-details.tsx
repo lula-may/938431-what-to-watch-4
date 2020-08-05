@@ -1,24 +1,24 @@
-import React, {Component} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
-import MoviesList from "../movies-list/movies-list.jsx";
-import Tabs from "../tabs/tabs.jsx";
-import withActiveItem from "../../hocs/with-active-item/with-active-item.jsx";
+import MoviesList from "../movies-list/movies-list";
+import Tabs from "../tabs/tabs";
+import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
 import {movieShape, reviewShape} from "../shapes";
 import {SIMILAR_MOVIES_COUNT, TabType, AppRoute} from "../../const";
-import history from "../../history.js";
-import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
-import {AuthorizationStatus} from "../../reducer/user/user.js";
-import {getMovieById, getMovieComments, selectSimilarMovies, getCommentsLoadingError, getMovies} from "../../reducer/data/selectors.js";
-import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors.js";
+import history from "../../history";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state";
+import {Operation as DataOperation} from "../../reducer/data/data";
+import {AuthorizationStatus} from "../../reducer/user/user";
+import {getMovieById, getMovieComments, selectSimilarMovies, getCommentsLoadingError, getMovies} from "../../reducer/data/selectors";
+import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors";
 
 const TabsWrapped = withActiveItem(Tabs);
 
-class MovieDetails extends Component {
+class MovieDetails extends React.PureComponent {
   constructor(props) {
     super(props);
     this.handleAddToMyListButtonClick = this.handleAddToMyListButtonClick.bind(this);

@@ -1,22 +1,22 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 
-import MoviesList from "../movies-list/movies-list.jsx";
+import MoviesList from "../movies-list/movies-list";
 
-import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state.js";
-import {AppRoute} from "../../const.js";
-import {getAvatarUrl} from "../../reducer/user/selectors.js";
-import {getFavoriteMovies, getFavoriteLoadingError, getFavoriteLoadingState} from "../../reducer/data/selectors.js";
-import {movieShape} from "../shapes.js";
-import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state";
+import {AppRoute} from "../../const";
+import {getAvatarUrl} from "../../reducer/user/selectors";
+import {getFavoriteMovies, getFavoriteLoadingError, getFavoriteLoadingState} from "../../reducer/data/selectors";
+import {movieShape} from "../shapes";
+import {Operation as DataOperation} from "../../reducer/data/data";
 
 const messageStyle = {
   textAlign: `center`
 };
 
-class MyList extends PureComponent {
+class MyList extends React.PureComponent {
 
   componentDidMount() {
     const {loadFavoriteMovies} = this.props;

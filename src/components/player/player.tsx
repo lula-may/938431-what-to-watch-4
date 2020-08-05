@@ -1,9 +1,9 @@
-import React from "react";
+import * as React from "react";
 import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
-import {formatElapsedTime} from "../../utils.js";
-import {movieShape} from "../shapes.js";
-import {AppRoute} from "../../const.js";
+import {formatElapsedTime} from "../../utils";
+import {movieShape} from "../shapes";
+import {AppRoute} from "../../const";
 
 const Player = (props) => {
   const {

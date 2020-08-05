@@ -1,29 +1,31 @@
-import React, {Fragment} from "react";
+import * as React from "react";
 
-const LoadingScreen = () => {
+const ErrorScreen = () => {
   return (
-    <Fragment>
-      <section className="movie-card">
-
-        <h1 className="visually-hidden">WTW</h1>
-
-        <header className="page-header movie-card__head">
+    <React.Fragment>
+      <div className="user-page">
+        <header className="page-header user-page__head">
           <div className="logo">
-            <a className="logo__link">
+            <a href="main.html" className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
             </a>
           </div>
+
+          <h1 className="page-title user-page__title">Loading Error</h1>
         </header>
 
-        <h3 style={{textAlign: `center`, marginTop: `180px`, marginBottom: `160px`}}>Loading...</h3>
-      </section>
+        <div className="sign-in user-page__content">
+          <div className="sign-in__message">
+            <p>Sorry, something went wrong.</p>
+            <p> Please try again later.</p>
+          </div>
+        </div>
 
-      <div className="page-content">
         <footer className="page-footer">
           <div className="logo">
-            <a className="logo__link logo__link--light">
+            <a href="main.html" className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -35,8 +37,9 @@ const LoadingScreen = () => {
           </div>
         </footer>
       </div>
-    </Fragment>
+
+    </React.Fragment>
   );
 };
 
-export default LoadingScreen;
+export default ErrorScreen;

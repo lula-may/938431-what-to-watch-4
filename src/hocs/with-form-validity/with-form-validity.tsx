@@ -1,8 +1,8 @@
-import React, {PureComponent} from "react";
+import * as React from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {getUploadingError, getUploadingState} from "../../reducer/data/selectors.js";
-import {Operation} from "../../reducer/data/data.js";
+import {getUploadingError, getUploadingState} from "../../reducer/data/selectors";
+import {Operation} from "../../reducer/data/data";
 
 const DEFAULT_RATING = 0;
 const MESSAGE_STYLE = {
@@ -17,7 +17,7 @@ const isValidComment = (comment) => {
 const isValidFormData = (comment, rating) => isValidComment(comment) && (rating !== DEFAULT_RATING);
 
 const withFormValidity = (Component) => {
-  class WithFormValidity extends PureComponent {
+  class WithFormValidity extends React.PureComponent {
     constructor(props) {
       super(props);
 
