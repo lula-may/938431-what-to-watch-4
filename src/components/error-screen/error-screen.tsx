@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const ErrorScreen = () => {
+const ErrorScreen: React.FC = () => {
   return (
     <React.Fragment>
       <div className="user-page">

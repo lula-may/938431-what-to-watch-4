@@ -1,17 +1,39 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+import {Subtract} from "utility-types";
+
 import {PREVIEW, PLAYER_DELAY} from "../../const";
-import {movieShape} from "../../components/shapes";
+import {Movie} from "../../types";
+
+interface Props {
+  movie: Movie;
+  onCardClick: (movie: Movie) => void;
+}
+
+interface State {
+  isPlaying: boolean;
+}
+
+interface InjectedProps {
+  onCardEnter: () => void;
+  onCardLeave: () => void;
+  onCardClick: () => void;
+}
 
 const withVideoPlayer = (Component) => {
-  class WithVideoPlayer extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Props & Subtract<P, InjectedProps>;
+
+  class WithVideoPlayer extends React.PureComponent<T, State> {
+    private videoRef: React.RefObject<HTMLVideoElement>;
+    private timeOut: number;
+
     constructor(props) {
       super(props);
 
       this.state = {
         isPlaying: false
       };
-      this._videoRef = React.createRef();
+      this.videoRef = React.createRef();
       this.timeOut = null;
 
       this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -20,7 +42,7 @@ const withVideoPlayer = (Component) => {
     }
 
     handleMouseEnter() {
-      this.timeOut = setTimeout(() => {
+      this.timeOut = window.setTimeout(() => {
         this.setState({isPlaying: true});
       }, PLAYER_DELAY);
     }
@@ -31,14 +53,14 @@ const withVideoPlayer = (Component) => {
     }
 
     handleMouseLeave() {
-      clearTimeout(this.timeOut);
+      window.clearTimeout(this.timeOut);
       this.setState({isPlaying: false});
     }
 
     componentDidUpdate() {
       const {movie: {src}} = this.props;
       const {isPlaying} = this.state;
-      const video = this._videoRef.current;
+      const video = this.videoRef.current;
 
       if (isPlaying) {
         video.src = src;
@@ -51,7 +73,7 @@ const withVideoPlayer = (Component) => {
     }
 
     componentWillUnmount() {
-      const video = this._videoRef.current;
+      const video = this.videoRef.current;
       video.src = ``;
       video.poster = ``;
 
@@ -73,17 +95,12 @@ const withVideoPlayer = (Component) => {
             width={PREVIEW.width}
             height={PREVIEW.height}
             poster={previewPoster}
-            ref={this._videoRef}
+            ref={this.videoRef}
           />
         </Component>
       );
     }
   }
-
-  WithVideoPlayer.propTypes = {
-    movie: PropTypes.shape(movieShape).isRequired,
-    onCardClick: PropTypes.func.isRequired,
-  };
 
   return WithVideoPlayer;
 };

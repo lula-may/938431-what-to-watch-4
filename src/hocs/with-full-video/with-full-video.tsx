@@ -1,12 +1,39 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
+import {Subtract} from "utility-types";
 
-import {movieShape} from "../../components/shapes";
-import {getMovieById} from "../../reducer/data/selectors.js";
+import {Movie} from "../../types";
+import {getMovieById} from "../../reducer/data/selectors";
+
+const INITIAL_DURATION = 1;
+
+interface Props {
+  movie: Movie;
+}
+
+interface State {
+  elapsedTime: number;
+  isLoading: boolean;
+  isPlaying: boolean;
+  progress: number;
+}
+
+interface InjectedProps {
+  elapsedTime: number;
+  isPlaying: boolean;
+  onFullScreenButtonClick: () => void;
+  onPlayButtonClick: () => void;
+  progressValue: number;
+}
 
 const withFullVideo = (Component) => {
-  class WithFullVideo extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Props & Subtract<P, InjectedProps>;
+
+  class WithFullVideo extends React.PureComponent<T, State> {
+    private duration: number;
+    private videoRef: React.RefObject<HTMLVideoElement>;
+
     constructor(props) {
       super(props);
       this.state = {
@@ -15,9 +42,8 @@ const withFullVideo = (Component) => {
         isPlaying: false,
         progress: 0,
       };
-
-      this._duration = 1;
-      this._videoRef = React.createRef();
+      this.duration = INITIAL_DURATION;
+      this.videoRef = React.createRef();
 
       this.handlePlayButtonClick = this.handlePlayButtonClick.bind(this);
       this.handleFullscreenButtonClick = this.handleFullscreenButtonClick.bind(this);
@@ -31,7 +57,7 @@ const withFullVideo = (Component) => {
     }
 
     handleFullscreenButtonClick() {
-      const video = this._videoRef.current;
+      const video = this.videoRef.current;
       if (!document.fullscreenElement) {
         video.requestFullscreen()
           .catch((err) => err);
@@ -43,12 +69,12 @@ const withFullVideo = (Component) => {
     componentDidMount() {
       const {movie: {src}} = this.props;
 
-      const video = this._videoRef.current;
+      const video = this.videoRef.current;
       video.src = src;
       video.onloadedmetadata = () => {
-        this._duration = video.duration;
+        this.duration = video.duration;
         this.setState({
-          elapsedTime: this._duration,
+          elapsedTime: this.duration,
           isLoading: false,
           isPlaying: true,
         });
@@ -56,7 +82,7 @@ const withFullVideo = (Component) => {
 
       video.ontimeupdate = () => {
         const progress = Math.floor(video.currentTime);
-        const elapsedTime = (this._duration - progress);
+        const elapsedTime = (this.duration - progress);
         this.setState({
           progress,
           elapsedTime,
@@ -74,7 +100,7 @@ const withFullVideo = (Component) => {
 
     componentDidUpdate() {
       const {isPlaying} = this.state;
-      const video = this._videoRef.current;
+      const video = this.videoRef.current;
       if (isPlaying) {
         video.play();
       } else {
@@ -83,7 +109,7 @@ const withFullVideo = (Component) => {
     }
 
     componentWillUnmount() {
-      const video = this._videoRef.current;
+      const video = this.videoRef.current;
       video.onended = null;
       video.onloadedmetadata = null;
       video.ontimeupdate = null;
@@ -94,7 +120,7 @@ const withFullVideo = (Component) => {
     render() {
       const {elapsedTime, isPlaying, progress} = this.state;
       const {movie: {bgPoster}} = this.props;
-      const progressValue = Math.round(progress * 100 / this._duration);
+      const progressValue = Math.round(progress * 100 / this.duration);
       return (
         <Component
           {...this.props}
@@ -106,7 +132,7 @@ const withFullVideo = (Component) => {
         >
           <video
             className="player__video"
-            ref={this._videoRef}
+            ref={this.videoRef}
             poster={bgPoster}
           />
         </Component>
@@ -114,12 +140,7 @@ const withFullVideo = (Component) => {
     }
   }
 
-  WithFullVideo.propTypes = {
-    movie: PropTypes.shape(movieShape).isRequired,
-  };
-
   return WithFullVideo;
-
 };
 
 const mapStateToProps = (state, props) => ({

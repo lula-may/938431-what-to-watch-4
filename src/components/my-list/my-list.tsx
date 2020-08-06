@@ -1,7 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 
 import MoviesList from "../movies-list/movies-list";
 
@@ -9,14 +8,20 @@ import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-s
 import {AppRoute} from "../../const";
 import {getAvatarUrl} from "../../reducer/user/selectors";
 import {getFavoriteMovies, getFavoriteLoadingError, getFavoriteLoadingState} from "../../reducer/data/selectors";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
 import {Operation as DataOperation} from "../../reducer/data/data";
 
-const messageStyle = {
-  textAlign: `center`
-};
+interface Props {
+  avatarUrl: string;
+  favoriteMovies: Array<Movie>;
+  hasFavoriteLoadingError: boolean;
+  isLoading: boolean;
+  loadFavoriteMovies: () => void;
+  onMovieCardClick: (movie: Movie) => void;
+}
 
-class MyList extends React.PureComponent {
+class MyList extends React.PureComponent<Props> {
+  props: Props;
 
   componentDidMount() {
     const {loadFavoriteMovies} = this.props;
@@ -48,9 +53,9 @@ class MyList extends React.PureComponent {
 
         <section className="catalog">
           <h2 className="catalog__title visually-hidden">Catalog</h2>
-          {isLoading && <p style={messageStyle}>Loading...</p>}
+          {isLoading && <p style={{textAlign: `center`}}>Loading...</p>}
           {hasFavoriteLoadingError &&
-            <p style={messageStyle}>Sorry, we failed to load your favortite movies. Please, try again later.</p>
+            <p style={{textAlign: `center`}}>Sorry, we failed to load your favortite movies. Please, try again later.</p>
           }
           <MoviesList
             movies={favoriteMovies}
@@ -76,15 +81,6 @@ class MyList extends React.PureComponent {
     );
   }
 }
-
-MyList.propTypes = {
-  avatarUrl: PropTypes.string.isRequired,
-  favoriteMovies: PropTypes.arrayOf(PropTypes.shape(movieShape)).isRequired,
-  hasFavoriteLoadingError: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  loadFavoriteMovies: PropTypes.func.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   avatarUrl: getAvatarUrl(state),

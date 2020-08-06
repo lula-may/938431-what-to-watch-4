@@ -1,9 +1,14 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import {reviewShape} from "../shapes";
+
+import {Review} from "../../types";
 import {formatDate, formatDateTimeAttribute} from "../../utils";
 
-const ReviewsColumn = (props) => {
+
+interface Props {
+  reviews: Array<Review>;
+}
+
+const ReviewsColumn: React.FC<Props> = (props: Props) => {
   const {reviews} = props;
   return (
     <div className="movie-card__reviews-col">
@@ -29,10 +34,6 @@ const ReviewsColumn = (props) => {
       })}
     </div>
   );
-};
-
-ReviewsColumn.propTypes = {
-  reviews: PropTypes.arrayOf(PropTypes.shape(reviewShape)).isRequired,
 };
 
 export default ReviewsColumn;

@@ -1,7 +1,6 @@
 import * as React from "react";
 import {Link, Route, Router, Switch} from "react-router-dom";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 
 import AddReview from "../add-review/add-review";
 import ErrorScreen from "../error-screen/error-screen";
@@ -19,9 +18,15 @@ import {AppRoute} from "../../const";
 import {getLoadingState, getLoadingError} from "../../reducer/data/selectors";
 import history from "../../history";
 
+interface Props {
+  hasLoadingError: boolean;
+  isLoading: boolean;
+}
+
 const PlayerWrapped = withFullVideo(Player);
 
-class App extends React.PureComponent {
+class App extends React.PureComponent<Props> {
+  props: Props;
 
   renderComponent(Component) {
     const {hasLoadingError, isLoading} = this.props;
@@ -90,11 +95,6 @@ class App extends React.PureComponent {
     );
   }
 }
-
-App.propTypes = {
-  hasLoadingError: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   hasLoadingError: getLoadingError(state),

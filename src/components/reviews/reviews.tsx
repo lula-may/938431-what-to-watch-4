@@ -1,7 +1,7 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+
 import ReviewsColumn from "../reviews-column/reviews-column";
-import {reviewShape} from "../shapes";
+import {Review} from "../../types";
 
 const splitReviewsIntoColumns = (reviews) => {
   const firstColumnLength = Math.ceil(reviews.length / 2);
@@ -11,7 +11,12 @@ const splitReviewsIntoColumns = (reviews) => {
   return [firstColumnReviews, secondColumnReviews];
 };
 
-const Reviews = (props) => {
+interface Props {
+  comments: Array<Review>;
+  hasLoadingError: boolean;
+}
+
+const Reviews: React.FC<Props> = (props: Props) => {
   const {comments, hasLoadingError} = props;
 
   const sortedReviews = comments.slice().sort((left, right) => {
@@ -27,11 +32,6 @@ const Reviews = (props) => {
         <ReviewsColumn reviews={splitReviews[1]}/>
       </div>
   );
-};
-
-Reviews.propTypes = {
-  comments: PropTypes.arrayOf(PropTypes.shape(reviewShape)).isRequired,
-  hasLoadingError: PropTypes.bool.isRequired,
 };
 
 export default Reviews;

@@ -1,11 +1,18 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 import {AppRoute} from "../../const";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
 
 
-const MovieCard = (props) => {
+interface Props {
+  children: React.ReactNode;
+  movie: Movie;
+  onCardEnter: () => void;
+  onCardLeave: () => void;
+  onCardClick: () => void;
+}
+
+const MovieCard: React.FC<Props> = (props: Props) => {
   const {children, movie: {id, title}, onCardClick, onCardEnter, onCardLeave} = props;
 
   return (
@@ -21,17 +28,6 @@ const MovieCard = (props) => {
       </h3>
     </article>
   );
-};
-
-MovieCard.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  movie: PropTypes.shape(movieShape).isRequired,
-  onCardEnter: PropTypes.func.isRequired,
-  onCardLeave: PropTypes.func.isRequired,
-  onCardClick: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

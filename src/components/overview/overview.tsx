@@ -1,10 +1,13 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 
 import {getRatingLevel} from "../../utils";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
 
-const Overview = (props) => {
+interface Props {
+  movie: Movie;
+}
+
+const Overview: React.FC<Props> = (props: Props) => {
   const {movie} = props;
   const {actors, description, director, rating} = movie;
   const {count: ratingCount, score: ratingScore} = rating;
@@ -31,10 +34,6 @@ const Overview = (props) => {
       </div>
     </React.Fragment>
   );
-};
-
-Overview.propTypes = {
-  movie: PropTypes.shape(movieShape).isRequired,
 };
 
 export default Overview;

@@ -1,13 +1,18 @@
 import * as React from "react";
-import {Route, Redirect} from "react-router-dom";
+import {Route, Redirect, RouteProps} from "react-router-dom";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
 
 import {AppRoute} from "../../const";
 import {AuthorizationStatus} from "../../reducer/user/user";
 import {getAuthorizationStatus} from "../../reducer/user/selectors";
 
-const NoAuthRoute = (props) => {
+type Props = RouteProps & {
+  authorizationStatus: string;
+  render: () => React.ReactNode;
+};
+
+
+const NoAuthRoute: React.FC<Props> = (props: Props) => {
   const {authorizationStatus, path, render} = props;
   return (
     <Route
@@ -22,13 +27,6 @@ const NoAuthRoute = (props) => {
       }}
     />
   );
-};
-
-NoAuthRoute.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  exact: PropTypes.bool.isRequired,
-  path: PropTypes.string.isRequired,
-  render: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,6 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 
 import GenresList from "../genres-list/genres-list";
 import MoviesList from "../movies-list/movies-list";
@@ -9,7 +8,7 @@ import ShowMoreButton from "../show-more-button/show-more-button";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
 import history from "../../history";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state";
 import {Operation as DataOperation} from "../../reducer/data/data";
 import {AuthorizationStatus} from "../../reducer/user/user";
@@ -19,11 +18,30 @@ import {getMoviesCount} from "../../reducer/app-state/selectors";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors";
 import {AppRoute} from "../../const";
 
+interface Props {
+  activeGenre: string;
+  authorizationStatus: string;
+  avatar: string;
+  genres: string[];
+  hasUploadingError: boolean;
+  isUploading: boolean;
+  movies: Array<Movie>;
+  moviesCount: number;
+  onGenreClick: (genre: string) => void;
+  onMovieCardClick: (movie: Movie) => void;
+  onMyListButtonClick: (movie: Movie) => void;
+  onShowMoreButtonClick: () => void;
+  promoMovie: Movie;
+}
+
 const GenresListWrapped = withActiveItem(GenresList);
 
-class Main extends React.PureComponent {
+class Main extends React.PureComponent<Props> {
+  props: Props;
+
   constructor(props) {
     super(props);
+
     this.handleAddToMyListButtonClick = this.handleAddToMyListButtonClick.bind(this);
   }
 
@@ -172,24 +190,6 @@ class Main extends React.PureComponent {
     </React.Fragment>;
   }
 }
-
-Main.propTypes = {
-  activeGenre: PropTypes.string.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  genres: PropTypes.arrayOf(PropTypes.string).isRequired,
-  hasUploadingError: PropTypes.bool.isRequired,
-  isUploading: PropTypes.bool.isRequired,
-  movies: PropTypes.arrayOf(
-      PropTypes.shape(movieShape)
-  ).isRequired,
-  moviesCount: PropTypes.number.isRequired,
-  onGenreClick: PropTypes.func.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
-  onMyListButtonClick: PropTypes.func.isRequired,
-  onShowMoreButtonClick: PropTypes.func.isRequired,
-  promoMovie: PropTypes.shape(movieShape).isRequired,
-};
 
 const mapStateToProps = (state) => ({
   activeGenre: getGenre(state),

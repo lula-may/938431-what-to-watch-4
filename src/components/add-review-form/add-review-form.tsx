@@ -1,12 +1,21 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 
 const NO_RATING = 0;
 const REVIEW_LENGTH_MIN = 50;
 const REVIEW_LENGTH_MAX = 400;
 const starsIds = [1, 2, 3, 4, 5];
 
-const AddReviewForm = (props) => {
+interface Props {
+  children: React.ReactNode;
+  isFormBlocked: boolean;
+  isFormValid: boolean;
+  onRatingChange: () => void;
+  onSubmit: () => void;
+  onTextChange: () => void;
+  rating: number;
+}
+
+const AddReviewForm: React.FC<Props> = (props: Props) => {
   const {
     children,
     isFormBlocked,
@@ -58,19 +67,6 @@ const AddReviewForm = (props) => {
       {children}
     </div>
   );
-};
-
-AddReviewForm.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
-  isFormBlocked: PropTypes.bool.isRequired,
-  isFormValid: PropTypes.bool.isRequired,
-  onRatingChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  onTextChange: PropTypes.func.isRequired,
-  rating: PropTypes.number.isRequired,
 };
 
 export default AddReviewForm;

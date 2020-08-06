@@ -1,14 +1,11 @@
 import * as React from "react";
 import {connect} from "react-redux";
-import PropTypes from "prop-types";
+import {Subtract} from "utility-types";
 import {getUploadingError, getUploadingState} from "../../reducer/data/selectors";
 import {Operation} from "../../reducer/data/data";
 
 const DEFAULT_RATING = 0;
-const MESSAGE_STYLE = {
-  color: `black`,
-  textAlign: `center`,
-};
+
 
 const isValidComment = (comment) => {
   return comment.length >= 50 && comment.length <= 400;
@@ -16,8 +13,32 @@ const isValidComment = (comment) => {
 
 const isValidFormData = (comment, rating) => isValidComment(comment) && (rating !== DEFAULT_RATING);
 
+interface Props {
+  hasError: boolean;
+  isCommentLoading: boolean;
+  onSubmit: ({comment, rating}: {comment: string; rating: number}) => void;
+}
+
+interface State {
+  comment: string;
+  isFormValid: boolean;
+  rating: number;
+}
+
+interface InjectedProps {
+  isFormBlocked: boolean;
+  isFormValid: boolean;
+  onRatingChange: (evt: React.SyntheticEvent) => void;
+  onTextChange: (evt: React.SyntheticEvent) => void;
+  onSubmit: (evt: React.SyntheticEvent) => void;
+  rating: number;
+}
+
 const withFormValidity = (Component) => {
-  class WithFormValidity extends React.PureComponent {
+  type P = React.ComponentProps<typeof Component>;
+  type T = Props & Subtract<P, InjectedProps>;
+
+  class WithFormValidity extends React.PureComponent<T, State> {
     constructor(props) {
       super(props);
 
@@ -36,12 +57,12 @@ const withFormValidity = (Component) => {
       const {hasError, isCommentLoading} = this.props;
       if (isCommentLoading) {
         return (
-          <p style={MESSAGE_STYLE}>Sending your review...</p>
+          <p style={{color: `black`, textAlign: `center`}}>Sending your review...</p>
         );
       }
       if (hasError) {
         return (
-          <div style={MESSAGE_STYLE}>
+          <div style={{color: `black`, textAlign: `center`}}>
             <p>Sorry, we can&apos;t post your review.</p>
             <p>Please, check the Internet connection and try again later.</p>
           </div>
@@ -93,12 +114,6 @@ const withFormValidity = (Component) => {
     }
 
   }
-
-  WithFormValidity.propTypes = {
-    hasError: PropTypes.bool.isRequired,
-    isCommentLoading: PropTypes.bool.isRequired,
-    onSubmit: PropTypes.func.isRequired,
-  };
 
   return WithFormValidity;
 };

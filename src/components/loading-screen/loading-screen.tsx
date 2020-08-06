@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const LoadingScreen = () => {
+const LoadingScreen: React.FC = () => {
   return (
     <React.Fragment>
       <section className="movie-card">

@@ -1,18 +1,27 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 
 import {AppRoute} from "../../const";
 import {Operation as UserOperation} from "../../reducer/user/user";
 import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors";
 
-class SignIn extends React.PureComponent {
+interface Props {
+  hasLoginError: boolean;
+  isInvalidEmail: boolean;
+  onSubmit: ({email, password}: {email: string; password: string}) => void;
+}
+
+class SignIn extends React.PureComponent<Props> {
+  props: Props;
+  private emailRef: React.RefObject<HTMLInputElement>;
+  private passwordRef: React.RefObject<HTMLInputElement>;
+
   constructor(props) {
     super(props);
 
-    this._emailRef = React.createRef();
-    this._passwordRef = React.createRef();
+    this.emailRef = React.createRef();
+    this.passwordRef = React.createRef();
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
@@ -40,8 +49,8 @@ class SignIn extends React.PureComponent {
 
     evt.preventDefault();
     onSubmit({
-      email: this._emailRef.current.value,
-      password: this._passwordRef.current.value,
+      email: this.emailRef.current.value,
+      password: this.passwordRef.current.value,
     });
   }
 
@@ -67,13 +76,13 @@ class SignIn extends React.PureComponent {
             <div className="sign-in__fields">
               <div className={`sign-in__field${isInvalidEmail ? ` sign-in__field--error` : ``}`}>
                 <input className="sign-in__input" type="email" placeholder="Email address" name="user-email" id="user-email"
-                  ref={this._emailRef}
+                  ref={this.emailRef}
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
               </div>
               <div className="sign-in__field">
                 <input className="sign-in__input" type="password" placeholder="Password" name="user-password" id="user-password"
-                  ref={this._passwordRef} required
+                  ref={this.passwordRef} required
                 />
                 <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
               </div>
@@ -101,13 +110,6 @@ class SignIn extends React.PureComponent {
     );
   }
 }
-
-SignIn.propTypes = {
-  hasLoginError: PropTypes.bool.isRequired,
-  isInvalidEmail: PropTypes.bool.isRequired,
-  loginError: PropTypes.object,
-  onSubmit: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state) => ({
   hasLoginError: getLoginErrorStatus(state),

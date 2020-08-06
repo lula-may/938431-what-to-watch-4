@@ -1,13 +1,12 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 
 import MoviesList from "../movies-list/movies-list";
 import Tabs from "../tabs/tabs";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
-import {movieShape, reviewShape} from "../shapes";
+import {Movie, Review} from "../../types";
 import {SIMILAR_MOVIES_COUNT, TabType, AppRoute} from "../../const";
 import history from "../../history";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state";
@@ -16,9 +15,24 @@ import {AuthorizationStatus} from "../../reducer/user/user";
 import {getMovieById, getMovieComments, selectSimilarMovies, getCommentsLoadingError, getMovies} from "../../reducer/data/selectors";
 import {getAuthorizationStatus, getAvatarUrl} from "../../reducer/user/selectors";
 
+interface Props {
+  authorizationStatus: string;
+  avatar: string;
+  comments: Array<Review>;
+  loadComments: (id: number) => void;
+  hasLoadingError: boolean;
+  movie: Movie;
+  similarMovies: Array<Movie>;
+  onMovieCardClick: (movie: Movie) => void;
+  onMyListButtonClick: (movie: Movie) => void;
+  setActiveMovie: (movie: Movie) => void;
+}
+
 const TabsWrapped = withActiveItem(Tabs);
 
-class MovieDetails extends React.PureComponent {
+class MovieDetails extends React.PureComponent<Props> {
+  props: Props;
+
   constructor(props) {
     super(props);
     this.handleAddToMyListButtonClick = this.handleAddToMyListButtonClick.bind(this);
@@ -129,7 +143,7 @@ class MovieDetails extends React.PureComponent {
               comments={comments}
               hasLoadingError={hasLoadingError}
               movie={movie}
-              onActiveChange={() => {}}
+              onActiveChange={() => null}
             />
           </div>
         </div>
@@ -162,21 +176,6 @@ class MovieDetails extends React.PureComponent {
     </React.Fragment>;
   }
 }
-
-MovieDetails.propTypes = {
-  authorizationStatus: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
-  comments: PropTypes.arrayOf(PropTypes.shape(reviewShape)),
-  loadComments: PropTypes.func.isRequired,
-  hasLoadingError: PropTypes.bool.isRequired,
-  movie: PropTypes.shape(movieShape).isRequired,
-  similarMovies: PropTypes.arrayOf(
-      PropTypes.shape(movieShape)
-  ).isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
-  onMyListButtonClick: PropTypes.func.isRequired,
-  setActiveMovie: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state, props) => ({
   authorizationStatus: getAuthorizationStatus(state),

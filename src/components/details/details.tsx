@@ -1,9 +1,12 @@
 import * as React from "react";
-import PropTypes from "prop-types";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
 import {formatTime} from "../../utils";
 
-const Details = (props) => {
+interface Props {
+  movie: Movie;
+}
+
+const Details: React.FC<Props> = (props: Props) => {
   const {movie} = props;
   const {actors, director, genre, releaseYear, runTime} = movie;
   const duration = formatTime(runTime);
@@ -38,10 +41,6 @@ const Details = (props) => {
       </div>
     </div>
   );
-};
-
-Details.propTypes = {
-  movie: PropTypes.shape(movieShape).isRequired,
 };
 
 export default Details;

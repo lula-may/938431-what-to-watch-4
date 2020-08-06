@@ -1,11 +1,21 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
+
 import {formatElapsedTime} from "../../utils";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
 import {AppRoute} from "../../const";
 
-const Player = (props) => {
+interface Props {
+  children: React.ReactNode;
+  elapsedTime: number;
+  isPlaying: boolean;
+  movie: Movie;
+  onFullScreenButtonClick: () => void;
+  onPlayButtonClick: () => void;
+  progressValue: number;
+}
+
+const Player: React.FC<Props> = (props: Props) => {
   const {
     children,
     isPlaying,
@@ -55,19 +65,6 @@ const Player = (props) => {
       </div>
     </div>
   );
-};
-
-Player.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]).isRequired,
-  elapsedTime: PropTypes.number.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
-  movie: PropTypes.shape(movieShape).isRequired,
-  onFullScreenButtonClick: PropTypes.func.isRequired,
-  onPlayButtonClick: PropTypes.func.isRequired,
-  progressValue: PropTypes.number.isRequired,
 };
 
 export default Player;

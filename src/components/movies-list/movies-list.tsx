@@ -1,12 +1,18 @@
 import * as React from "react";
-import PropTypes from "prop-types";
+
 import MovieCard from "../movie-card/movie-card";
 import withVideoPlayer from "../../hocs/with-video-player/with-video-player";
-import {movieShape} from "../shapes";
+import {Movie} from "../../types";
+
+interface Props {
+  movies: Array<Movie>;
+  moviesCount: number;
+  onMovieCardClick: (Movie) => void;
+}
 
 const MovieCardWrapped = withVideoPlayer(MovieCard);
 
-const MoviesList = (props) => {
+const MoviesList: React.FC<Props> = (props: Props) => {
   const {
     movies,
     moviesCount: count,
@@ -25,12 +31,6 @@ const MoviesList = (props) => {
       })}
     </div>
   );
-};
-
-MoviesList.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.shape(movieShape)).isRequired,
-  moviesCount: PropTypes.number.isRequired,
-  onMovieCardClick: PropTypes.func.isRequired,
 };
 
 export default MoviesList;

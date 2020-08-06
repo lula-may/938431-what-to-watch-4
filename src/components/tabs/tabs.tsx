@@ -1,10 +1,9 @@
 import * as React from "react";
-import PropTypes from "prop-types";
 
-import Details from "../details/details.jsx";
-import Overview from "../overview/overview.jsx";
-import Reviews from "../reviews/reviews.jsx";
-import {movieShape, reviewShape} from "../shapes";
+import Details from "../details/details";
+import Overview from "../overview/overview";
+import Reviews from "../reviews/reviews";
+import {Movie, Review} from "../../types";
 import {TabType} from "../../const";
 
 const tabsWithIds = [
@@ -22,7 +21,16 @@ const tabsWithIds = [
   }
 ];
 
-class Tabs extends React.PureComponent {
+
+interface Props {
+  activeItem: string;
+  comments: Array<Review>;
+  hasLoadingError: boolean;
+  movie: Movie;
+  onClick: () => void;
+}
+
+class Tabs extends React.PureComponent<Props> {
 
   renderInfo() {
     const {activeItem, hasLoadingError, movie, comments} = this.props;
@@ -72,13 +80,5 @@ class Tabs extends React.PureComponent {
     );
   }
 }
-
-Tabs.propTypes = {
-  activeItem: PropTypes.string.isRequired,
-  comments: PropTypes.arrayOf(PropTypes.shape(reviewShape)),
-  hasLoadingError: PropTypes.bool.isRequired,
-  movie: PropTypes.shape(movieShape).isRequired,
-  onClick: PropTypes.func.isRequired,
-};
 
 export default Tabs;

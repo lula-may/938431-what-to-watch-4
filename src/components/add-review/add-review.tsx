@@ -1,19 +1,27 @@
 import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
-import PropTypes from "prop-types";
 
 import AddReviewForm from "../add-review-form/add-review-form";
 import withFormValidity from "../../hocs/with-form-validity/with-form-validity";
-import {movieShape} from "../../components/shapes";
+import {Movie} from "../../types";
 import {getAvatarUrl} from "../../reducer/user/selectors";
 import {getMovieById} from "../../reducer/data/selectors";
 import {AppRoute} from "../../const";
 import {ActionCreator} from "../../reducer/app-state/app-state";
 
+
+interface Props {
+  avatar: string;
+  movie: Movie;
+  setActiveMovie: (movie: Movie) => void;
+}
+
 const AddReviewFormWrapped = withFormValidity(AddReviewForm);
 
-class AddReview extends React.PureComponent {
+class AddReview extends React.PureComponent<Props> {
+  props: Props;
+
   componentDidMount() {
     const {movie, setActiveMovie} = this.props;
     setActiveMovie(movie);
@@ -67,13 +75,6 @@ class AddReview extends React.PureComponent {
     );
   }
 }
-
-
-AddReview.propTypes = {
-  avatar: PropTypes.string.isRequired,
-  movie: PropTypes.shape(movieShape).isRequired,
-  setActiveMovie: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state, props) => ({
   avatar: getAvatarUrl(state),
