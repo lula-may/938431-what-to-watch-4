@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Link, Route, Router, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 
 import AddReview from "../add-review/add-review";
@@ -26,12 +26,10 @@ interface Props {
 
 const PlayerWrapped = withFullVideo(Player);
 
-class App extends React.PureComponent<Props> {
-  props: Props;
+const App: React.FC<Props> = (props: Props) => {
+  const {hasLoadingError, isLoading} = props;
 
-  renderComponent(Component) {
-    const {hasLoadingError, isLoading} = this.props;
-
+  const renderComponent = (Component) => {
     if (isLoading) {
       return (
         <LoadingScreen/>
@@ -43,52 +41,50 @@ class App extends React.PureComponent<Props> {
       );
     }
     return Component;
-  }
+  };
 
-  render() {
-    return (
-      <Router
-        history={history}
-      >
-        <Switch>
-          <Route exact path={AppRoute.ROOT}
-            render={(props) => this.renderComponent(<Main {...props}/>)}
-          />
+  return (
+    <Router
+      history={history}
+    >
+      <Switch>
+        <Route exact path={AppRoute.ROOT}
+          render={(serviceProps) => renderComponent(<Main {...serviceProps}/>)}
+        />
 
-          <NoAuthRoute exact path={AppRoute.LOGIN}
-            render={() => (<SignIn/>)}
-          />
+        <NoAuthRoute exact path={AppRoute.LOGIN}
+          render={() => (<SignIn/>)}
+        />
 
-          <Route exact path={`${AppRoute.FILMS}/:id`}
-            render={(props) => this.renderComponent(<MovieDetails {...props}/>)}
-          />
+        <Route exact path={`${AppRoute.FILMS}/:id`}
+          render={(serviceProps) => renderComponent(<MovieDetails {...serviceProps}/>)}
+        />
 
-          <Route
-            exact
-            path={`${AppRoute.FILMS}/:id${AppRoute.PLAYER}`}
-            render={(props) => this.renderComponent(<PlayerWrapped {...props}/>)}
-          />
+        <Route
+          exact
+          path={`${AppRoute.FILMS}/:id${AppRoute.PLAYER}`}
+          render={(serviceProps) => renderComponent(<PlayerWrapped {...serviceProps}/>)}
+        />
 
-          <PrivateRoute
-            exact
-            path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
-            render={(props) => (<AddReview {...props}/>)}
-          />
+        <PrivateRoute
+          exact
+          path={`${AppRoute.FILMS}/:id${AppRoute.REVIEW}`}
+          render={(serviceProps) => (<AddReview {...serviceProps}/>)}
+        />
 
-          <PrivateRoute
-            exact
-            path={AppRoute.MY_LIST}
-            render={() => (<MyList/>)}
-          />
+        <PrivateRoute
+          exact
+          path={AppRoute.MY_LIST}
+          render={() => (<MyList/>)}
+        />
 
-          <Route>
-            <NotFoundPage/>
-          </Route>
-        </Switch>
-      </Router>
-    );
-  }
-}
+        <Route>
+          <NotFoundPage/>
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
 
 const mapStateToProps = (state) => ({
   hasLoadingError: getLoadingError(state),

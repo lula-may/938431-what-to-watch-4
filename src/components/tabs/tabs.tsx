@@ -29,10 +29,10 @@ interface Props {
   onClick: () => void;
 }
 
-class Tabs extends React.PureComponent<Props> {
+const Tabs: React.FC<Props> = (props: Props) => {
+  const {activeItem, hasLoadingError, movie, comments, onClick} = props;
 
-  renderInfo() {
-    const {activeItem, hasLoadingError, movie, comments} = this.props;
+  const renderInfo = () => {
     switch (activeItem) {
       case TabType.OVERVIEW:
         return (
@@ -51,33 +51,30 @@ class Tabs extends React.PureComponent<Props> {
         );
       default: return null;
     }
-  }
+  };
 
-  render() {
-    const {activeItem, onClick} = this.props;
-    return (
-      <div className="movie-card__desc">
+  return (
+    <div className="movie-card__desc">
 
-        <nav className="movie-nav movie-card__nav">
-          <ul className="movie-nav__list">
-            {tabsWithIds.map((item) => {
-              const isActive = item.type === activeItem;
-              return (
-                <li key={item.id} className={`movie-nav__item${isActive ? ` movie-nav__item--active` : ``}`}>
-                  <a href="#"
-                    className="movie-nav__link"
-                    id={item.type}
-                    onClick={onClick}
-                  >{item.type}</a>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-        {this.renderInfo()}
-      </div>
-    );
-  }
-}
+      <nav className="movie-nav movie-card__nav">
+        <ul className="movie-nav__list">
+          {tabsWithIds.map((item) => {
+            const isActive = item.type === activeItem;
+            return (
+              <li key={item.id} className={`movie-nav__item${isActive ? ` movie-nav__item--active` : ``}`}>
+                <a href="#"
+                  className="movie-nav__link"
+                  id={item.type}
+                  onClick={onClick}
+                >{item.type}</a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+      {renderInfo()}
+    </div>
+  );
+};
 
 export default Tabs;
