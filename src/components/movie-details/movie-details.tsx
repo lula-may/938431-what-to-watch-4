@@ -127,7 +127,9 @@ class MovieDetails extends React.PureComponent<Props> {
                   }
                   <span>My list</span>
                 </button>
-                {isUserAuthorized && <Link to={`${AppRoute.FILMS}/${id}${AppRoute.REVIEW}`} className="btn movie-card__button">Add review</Link>}
+                <Link to={`${AppRoute.FILMS}/${id}${AppRoute.REVIEW}`} className="btn movie-card__button">
+                  Add review
+                </Link>
               </div>
             </div>
           </div>
