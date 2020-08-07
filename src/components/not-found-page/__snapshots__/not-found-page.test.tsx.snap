@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFoundPage should render correctly 404 Page 1`] = `
+<div
+  className="user-page"
+  style={
+    Object {
+      "textAlign": "center",
+    }
+  }
+>
+  <h1>
+    404
+  </h1>
+  <h2>
+    Page not found
+  </h2>
+  <a
+    href="/"
+    onClick={[Function]}
+    style={
+      Object {
+        "color": "#c9b37e",
+      }
+    }
+  >
+    Go to main page
+  </a>
+</div>
+`;

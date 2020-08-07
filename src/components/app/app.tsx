@@ -9,6 +9,7 @@ import Main from "../main/main";
 import MovieDetails from "../movie-details/movie-details";
 import MyList from "../my-list/my-list";
 import NoAuthRoute from "../no-auth-route/no-auth-route";
+import NotFoundPage from "../not-found-page/not-found-page";
 import Player from "../player/player";
 import PrivateRoute from "../private-root/private-root";
 import SignIn from "../sign-in/sign-in";
@@ -80,16 +81,9 @@ class App extends React.PureComponent<Props> {
             render={() => (<MyList/>)}
           />
 
-          <Route
-            render={() => (
-              <div className="user-page" style={{textAlign: `center`}}>
-                <h1>
-                404
-                </h1>
-                <h2>Page not found</h2>
-                <Link to={AppRoute.ROOT} style={{color: `#c9b37e`}}>Go to main page</Link>
-              </div>)}
-          />
+          <Route>
+            <NotFoundPage/>
+          </Route>
         </Switch>
       </Router>
     );
