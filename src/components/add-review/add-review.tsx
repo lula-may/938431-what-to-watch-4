@@ -2,14 +2,14 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
+import {ActionCreator} from "../../reducer/app-state/app-state";
 import AddReviewForm from "../add-review-form/add-review-form";
-import withFormValidity from "../../hocs/with-form-validity/with-form-validity";
-import {Movie} from "../../types";
+import {AppRoute} from "../../const";
 import {getAvatarUrl} from "../../reducer/user/selectors";
 import {getMovieById} from "../../reducer/data/selectors";
-import {AppRoute} from "../../const";
-import {ActionCreator} from "../../reducer/app-state/app-state";
-
+import history from "../../history";
+import {Movie} from "../../types";
+import withFormValidity from "../../hocs/with-form-validity/with-form-validity";
 
 interface Props {
   avatar: string;
@@ -28,7 +28,13 @@ class AddReview extends React.PureComponent<Props> {
   }
 
   render() {
-    const {avatar, movie: {bgPoster, id, poster, title}} = this.props;
+    const {avatar, movie} = this.props;
+    if (!movie) {
+      history.push(AppRoute.NOT_FOUND);
+      return null;
+    }
+    const {bgPoster, id, poster, title} = movie;
+
     return (
       <section className="movie-card movie-card--full">
         <div className="movie-card__header">

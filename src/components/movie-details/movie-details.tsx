@@ -31,8 +31,6 @@ interface Props {
 const TabsWrapped = withActiveItem(Tabs);
 
 class MovieDetails extends React.PureComponent<Props> {
-  props: Props;
-
   constructor(props) {
     super(props);
     this.handleAddToMyListButtonClick = this.handleAddToMyListButtonClick.bind(this);
@@ -47,8 +45,10 @@ class MovieDetails extends React.PureComponent<Props> {
 
   componentDidMount() {
     const {loadComments, movie, setActiveMovie} = this.props;
-    loadComments(movie.id);
-    setActiveMovie(movie);
+    if (movie) {
+      loadComments(movie.id);
+      setActiveMovie(movie);
+    }
   }
 
   render() {
@@ -61,6 +61,12 @@ class MovieDetails extends React.PureComponent<Props> {
       onMovieCardClick,
       similarMovies,
     } = this.props;
+
+    if (!movie) {
+      history.push(AppRoute.NOT_FOUND);
+      return null;
+    }
+
     const {
       bgColor,
       bgPoster,

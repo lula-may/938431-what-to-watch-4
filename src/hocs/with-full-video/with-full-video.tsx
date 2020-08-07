@@ -2,6 +2,8 @@ import * as React from "react";
 import {connect} from "react-redux";
 import {Subtract} from "utility-types";
 
+import {AppRoute} from "../../const";
+import history from "../../history";
 import {Movie} from "../../types";
 import {getMovieById} from "../../reducer/data/selectors";
 
@@ -67,8 +69,11 @@ const withFullVideo = (Component) => {
     }
 
     componentDidMount() {
-      const {movie: {src}} = this.props;
-
+      const {movie} = this.props;
+      if (!movie) {
+        return history.push(AppRoute.NOT_FOUND);
+      }
+      const {src} = movie;
       const video = this.videoRef.current;
       video.src = src;
       video.onloadedmetadata = () => {
@@ -96,6 +101,7 @@ const withFullVideo = (Component) => {
       video.onfullscreenchange = () => {
         video.controls = (document.fullscreenElement && document.fullscreenElement.nodeName === `VIDEO`);
       };
+      return null;
     }
 
     componentDidUpdate() {
@@ -110,15 +116,22 @@ const withFullVideo = (Component) => {
 
     componentWillUnmount() {
       const video = this.videoRef.current;
-      video.onended = null;
-      video.onloadedmetadata = null;
-      video.ontimeupdate = null;
-      video.poster = ``;
-      video.src = ``;
+      if (video) {
+        video.onended = null;
+        video.onloadedmetadata = null;
+        video.ontimeupdate = null;
+        video.poster = ``;
+        video.src = ``;
+      }
     }
 
     render() {
       const {elapsedTime, isPlaying, progress} = this.state;
+      const {movie} = this.props;
+      if (!movie) {
+        history.push(AppRoute.NOT_FOUND);
+        return null;
+      }
       const {movie: {bgPoster}} = this.props;
       const progressValue = Math.round(progress * 100 / this.duration);
       return (
