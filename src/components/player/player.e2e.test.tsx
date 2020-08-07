@@ -2,15 +2,18 @@ import * as React from "react";
 import {Router} from "react-router-dom";
 import {configure, mount} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
+
 import Player from "./player";
 import history from "../../history";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
 configure({
   adapter: new Adapter(),
 });
 
-const movie = testMovies[1];
+const movie: Movie = testMovies[1];
 
 describe(`Player Component`, () => {
   it(`should run callback on Play button click`, () => {
@@ -21,7 +24,7 @@ describe(`Player Component`, () => {
             elapsedTime={5000}
             isPlaying={false}
             movie={movie}
-            onFullScreenButtonClick={() => {}}
+            onFullScreenButtonClick={noop}
             onPlayButtonClick={onPlayButtonClick}
             progressValue={30}
           >
@@ -44,9 +47,8 @@ describe(`Player Component`, () => {
             elapsedTime={5000}
             isPlaying={true}
             movie={movie}
-            onExitButtonClick={() => {}}
             onFullScreenButtonClick={onFullScreenButtonClick}
-            onPlayButtonClick={() => {}}
+            onPlayButtonClick={noop}
             progressValue={30}
           >
             <video/>

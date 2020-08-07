@@ -1,6 +1,10 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
+
 import AddReviewForm from "./add-review-form";
+import {noop} from "../../utils";
+
+const children: React.ReactNode = <div className="children-component"/>;
 
 describe(`AddReviewForm Component`, () => {
   it(`should render all form controls active`, () => {
@@ -8,11 +12,13 @@ describe(`AddReviewForm Component`, () => {
         <AddReviewForm
           isFormBlocked={false}
           isFormValid={true}
-          onSubmit={() => {}}
-          onRatingChange={() => {}}
-          onTextChange={() => {}}
+          onSubmit={noop}
+          onRatingChange={noop}
+          onTextChange={noop}
           rating={5}
-        />
+        >
+          {children}
+        </AddReviewForm>
     ).toJSON();
 
     expect(tree).toMatchSnapshot();
@@ -23,11 +29,13 @@ describe(`AddReviewForm Component`, () => {
         <AddReviewForm
           isFormBlocked={true}
           isFormValid={true}
-          onSubmit={() => {}}
-          onRatingChange={() => {}}
-          onTextChange={() => {}}
+          onSubmit={noop}
+          onRatingChange={noop}
+          onTextChange={noop}
           rating={5}
-        />
+        >
+          {children}
+        </AddReviewForm>
     ).toJSON();
 
     expect(tree).toMatchSnapshot();
@@ -38,11 +46,13 @@ describe(`AddReviewForm Component`, () => {
         <AddReviewForm
           isFormBlocked={false}
           isFormValid={false}
-          onSubmit={() => {}}
-          onRatingChange={() => {}}
-          onTextChange={() => {}}
+          onSubmit={noop}
+          onRatingChange={noop}
+          onTextChange={noop}
           rating={5}
-        />
+        >
+          {children}
+        </AddReviewForm>
     ).toJSON();
 
     expect(tree).toMatchSnapshot();

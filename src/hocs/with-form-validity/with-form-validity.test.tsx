@@ -1,8 +1,14 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import PropTypes from "prop-types";
+
 import {withFormValidity} from "./with-form-validity";
-const MockComponent = (props) => {
+import {noop} from "../../utils";
+
+interface Props {
+  children: React.ReactNode;
+}
+
+const MockComponent: React.FC<Props> = (props: Props) => {
   const {children} = props;
   return (
     <div>
@@ -11,9 +17,6 @@ const MockComponent = (props) => {
   );
 };
 
-MockComponent.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 const MockComponentWrapped = withFormValidity(MockComponent);
 
 describe(`WithFormValidity HOC`, () => {
@@ -22,9 +25,9 @@ describe(`WithFormValidity HOC`, () => {
         <MockComponentWrapped
           hasError={false}
           isCommentLoading={true}
-          onSubmit={() => {}}
-          onRatingChange={() => {}}
-          onTextChange={() => {}}
+          onSubmit={noop}
+          onRatingChange={noop}
+          onTextChange={noop}
         />
     ).toJSON();
 
@@ -36,9 +39,9 @@ describe(`WithFormValidity HOC`, () => {
         <MockComponentWrapped
           isCommentLoading={false}
           hasError={true}
-          onRatingChange={() => {}}
-          onTextChange={() => {}}
-          onSubmit={() => {}}
+          onRatingChange={noop}
+          onTextChange={noop}
+          onSubmit={noop}
         />
     ).toJSON();
 

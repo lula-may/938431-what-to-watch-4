@@ -4,21 +4,24 @@ import * as renderer from "react-test-renderer";
 
 import {MyList} from "./my-list";
 import history from "../../history";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
-const movies = testMovies.slice(0, 3);
+const avatarUrl = `avatar.jpg`;
+const movies: Array<Movie | null> = testMovies.slice(0, 3);
 
 describe(`MyList Component`, () => {
   it(`should render correctly MyList component`, () => {
     const tree = renderer.create(
         <Router history={history}>
           <MyList
-            avatarUrl={`avatar.jpg`}
+            avatarUrl={avatarUrl}
             favoriteMovies={movies}
             hasFavoriteLoadingError={false}
             isLoading={false}
-            loadFavoriteMovies={() => {}}
-            onMovieCardClick={() => {}}
+            loadFavoriteMovies={noop}
+            onMovieCardClick={noop}
           />
         </Router>
     ).toJSON();
@@ -30,12 +33,12 @@ describe(`MyList Component`, () => {
     const tree = renderer.create(
         <Router history={history}>
           <MyList
-            avatarUrl={`avatar.jpg`}
+            avatarUrl={avatarUrl}
             favoriteMovies={[]}
             hasFavoriteLoadingError={false}
             isLoading={true}
-            loadFavoriteMovies={() => {}}
-            onMovieCardClick={() => {}}
+            loadFavoriteMovies={noop}
+            onMovieCardClick={noop}
           />
         </Router>
     ).toJSON();
@@ -51,8 +54,8 @@ describe(`MyList Component`, () => {
             favoriteMovies={[]}
             hasFavoriteLoadingError={true}
             isLoading={false}
-            loadFavoriteMovies={() => {}}
-            onMovieCardClick={() => {}}
+            loadFavoriteMovies={noop}
+            onMovieCardClick={noop}
           />
         </Router>
     ).toJSON();

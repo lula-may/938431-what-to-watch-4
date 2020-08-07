@@ -2,8 +2,10 @@ import * as React from "react";
 import {Router} from "react-router-dom";
 import {configure, mount} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
+
 import {SignIn} from "./sign-in";
 import history from "../../history";
+import {noop} from "../../utils";
 
 configure({
   adapter: new Adapter(),
@@ -25,12 +27,12 @@ describe(`SignIn Component`, () => {
 
     const Component = wrapper.find(SignIn);
     const form = wrapper.find(`form`);
-    const {_emailRef, _passwordRef} = Component.instance();
+    const {emailRef, passwordRef} = Component.instance();
 
-    _emailRef.current.value = `email`;
-    _passwordRef.current.value = `password`;
+    emailRef.current.value = `email`;
+    passwordRef.current.value = `password`;
 
-    form.simulate(`submit`, {preventDefault: () => {}});
+    form.simulate(`submit`, {preventDefault: noop});
     expect(onSubmit).toHaveBeenCalledTimes(1);
     expect(onSubmit).toHaveBeenCalledWith({
       email: `email`,

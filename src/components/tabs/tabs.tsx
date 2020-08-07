@@ -3,8 +3,7 @@ import * as React from "react";
 import Details from "../details/details";
 import Overview from "../overview/overview";
 import Reviews from "../reviews/reviews";
-import {Movie, Review} from "../../types";
-import {TabType} from "../../const";
+import {Movie, Review, TabType} from "../../types";
 
 const tabsWithIds = [
   {

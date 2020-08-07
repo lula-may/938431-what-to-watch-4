@@ -1,11 +1,15 @@
 import * as React from "react";
 import {configure, mount, shallow} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
+
 import AddReviewForm from "./add-review-form";
+import {noop} from "../../utils";
 
 configure({
   adapter: new Adapter(),
 });
+
+const children: React.ReactNode = <div className="children-component"/>;
 
 describe(`AddReviewForm Component`, () => {
   it(`should run callback on form submit`, () => {
@@ -15,14 +19,16 @@ describe(`AddReviewForm Component`, () => {
           isFormBlocked={false}
           isFormValid={true}
           onSubmit={onSubmit}
-          onRatingChange={() => {}}
-          onTextChange={() => {}}
+          onRatingChange={noop}
+          onTextChange={noop}
           rating={4}
-        />
+        >
+          {children}
+        </AddReviewForm>
     );
 
     const form = wrapper.find(`form`);
-    form.simulate(`submit`, {preventDefault: () => {}});
+    form.simulate(`submit`, {preventDefault: noop});
     expect(onSubmit).toHaveBeenCalledTimes(1);
   });
 
@@ -32,11 +38,13 @@ describe(`AddReviewForm Component`, () => {
         <AddReviewForm
           isFormBlocked={false}
           isFormValid={false}
-          onSubmit={() => {}}
+          onSubmit={noop}
           onRatingChange={onRatingChange}
-          onTextChange={() => {}}
+          onTextChange={noop}
           rating={4}
-        />
+        >
+          {children}
+        </AddReviewForm>
     );
 
     const secondStar = wrapper.find(`#star-2`);
@@ -51,11 +59,13 @@ describe(`AddReviewForm Component`, () => {
         <AddReviewForm
           isFormBlocked={false}
           isFormValid={false}
-          onSubmit={() => {}}
-          onRatingChange={() => {}}
+          onSubmit={noop}
+          onRatingChange={noop}
           onTextChange={onTextChange}
           rating={0}
-        />
+        >
+          {children}
+        </AddReviewForm>
     );
 
     const secondStar = wrapper.find(`textarea`);

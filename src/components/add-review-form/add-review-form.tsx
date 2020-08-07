@@ -6,7 +6,7 @@ const REVIEW_LENGTH_MAX = 400;
 const starsIds = [1, 2, 3, 4, 5];
 
 interface Props {
-  children: React.ReactNode;
+  children: React.ReactNode | null;
   isFormBlocked: boolean;
   isFormValid: boolean;
   onRatingChange: () => void;

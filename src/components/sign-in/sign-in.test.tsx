@@ -1,8 +1,10 @@
 import * as React from "react";
 import {Router} from "react-router-dom";
 import * as renderer from "react-test-renderer";
-import {SignIn} from "./sign-in";
+
 import history from "../../history";
+import {noop} from "../../utils";
+import {SignIn} from "./sign-in";
 
 describe(`SingIn Component`, () => {
   it(`should render correctly SignIn Component`, () => {
@@ -11,7 +13,7 @@ describe(`SingIn Component`, () => {
           <SignIn
             hasLoginError={false}
             isInvalidEmail={false}
-            onSubmit={() => {}}
+            onSubmit={noop}
           />
         </Router>
     ).toJSON();
@@ -25,7 +27,7 @@ describe(`SingIn Component`, () => {
           <SignIn
             hasLoginError={true}
             isInvalidEmail={true}
-            onSubmit={() => {}}
+            onSubmit={noop}
           />
         </Router>
     ).toJSON();
@@ -39,7 +41,7 @@ describe(`SingIn Component`, () => {
           <SignIn
             hasLoginError={true}
             isInvalidEmail={false}
-            onSubmit={() => {}}
+            onSubmit={noop}
           />
         </Router>
     ).toJSON();

@@ -1,12 +1,17 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import PropTypes from "prop-types";
+
 import {withFullVideo} from "./with-full-video";
+import {Movie} from "../../types";
 import {testMovies} from "../../test-mocks/test-films";
 
-const movie = testMovies[0];
+const movie: Movie = testMovies[0];
 
-const MockComponent = (props) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const MockComponent: React.FC<Props> = (props: Props) => {
   const {children} = props;
   return (
     <div>
@@ -15,9 +20,6 @@ const MockComponent = (props) => {
   );
 };
 
-MockComponent.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const MockComponentWrapped = withFullVideo(MockComponent);
 

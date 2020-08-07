@@ -1,49 +1,34 @@
 import * as React from "react";
 import {Router} from "react-router-dom";
 import * as renderer from "react-test-renderer";
+
+import {AuthorizationStatus} from "../../reducer/user/user";
 import {MovieDetails} from "./movie-details";
 import history from "../../history";
+import {Movie, Review} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
-const movie = testMovies[1];
 const avatar = `img/avatar.jpg`;
+const movie: Movie = testMovies[1];
+const similarMovies: Array<Movie> = testMovies;
+const comments: Array<Review | null> = [];
 
 describe(`MovieDetails Component`, () => {
-  it(`should render correctly MovieDetailsComponent with AddReview Button`, () => {
+  it(`should render correctly MovieDetailsComponent`, () => {
     const tree = renderer.create(
         <Router history={history}>
           <MovieDetails
-            authorizationStatus={`AUTH`}
+            authorizationStatus={AuthorizationStatus.AUTH}
             avatar={avatar}
+            comments={comments}
             hasLoadingError={false}
-            loadComments={() => {}}
+            loadComments={noop}
             movie={movie}
-            setActiveMovie = {() => {}}
-            similarMovies={testMovies}
-            onLogoLinkClick={() => {}}
-            onMovieCardClick={() => {}}
-            onMyListButtonClick={() => {}}
-          />
-        </Router>
-    )
-    .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-
-  it(`should render MovieDetailsComponent without AddReview Button for unauthorized user`, () => {
-    const tree = renderer.create(
-        <Router history={history}>
-          <MovieDetails
-            authorizationStatus={`NO_AUTH`}
-            avatar={avatar}
-            hasLoadingError={false}
-            loadComments={() => {}}
-            movie={movie}
-            setActiveMovie = {() => {}}
-            similarMovies={testMovies}
-            onLogoLinkClick={() => {}}
-            onMovieCardClick={() => {}}
-            onMyListButtonClick={() => {}}
+            setActiveMovie = {noop}
+            similarMovies={similarMovies}
+            onMovieCardClick={noop}
+            onMyListButtonClick={noop}
           />
         </Router>
     )

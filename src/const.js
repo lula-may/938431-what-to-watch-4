@@ -18,12 +18,6 @@ const AppRoute = {
   REVIEW: `/review`,
 };
 
-const TabType = {
-  OVERVIEW: `Overview`,
-  DETAILS: `Details`,
-  REVIEWS: `Reviews`,
-};
-
 export {
   AppRoute,
   DEFAULT_GENRE,
@@ -32,4 +26,4 @@ export {
   PREVIEW,
   SIMILAR_MOVIES_COUNT,
   SHOWED_MOVIES_ON_START_COUNT,
-  TabType};
+};

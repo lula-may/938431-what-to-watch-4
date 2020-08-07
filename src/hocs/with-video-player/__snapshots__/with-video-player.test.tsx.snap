@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`WithVideoPlayer HOC should render <video/> inside MockComponent 1`] = `
-<div>
+<div
+  onClick={[Function]}
+  onMouseEnter={[Function]}
+>
   <video
     height="175"
     poster="poster-0.jpg"

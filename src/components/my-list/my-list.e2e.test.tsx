@@ -5,12 +5,14 @@ import * as Adapter from "enzyme-adapter-react-16";
 
 import {MyList} from "./my-list";
 import history from "../../history";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
 configure({
   adapter: new Adapter(),
 });
-const favoriteMovies = testMovies.slice(0, 3);
+const favoriteMovies: Array<Movie> = testMovies.slice(0, 3);
 const avatar = `avatar.jpg`;
 
 describe(`MyList Component`, () => {
@@ -23,7 +25,7 @@ describe(`MyList Component`, () => {
             favoriteMovies={favoriteMovies}
             hasFavoriteLoadingError={false}
             isLoading={false}
-            loadFavoriteMovies={() => {}}
+            loadFavoriteMovies={noop}
             onMovieCardClick={onMovieCardClick}
           />
         </Router>

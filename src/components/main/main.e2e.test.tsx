@@ -3,17 +3,22 @@ import {configure, mount} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
 import {Router} from "react-router-dom";
 
+import {AuthorizationStatus} from "../../reducer/user/user";
 import history from "../../history";
 import {Main} from "./main";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
 configure({
   adapter: new Adapter()
 });
 
-const promoMovie = testMovies[0];
-const showedMovies = testMovies.slice(1);
-const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
+const activeGenre = `All genres`;
+const avatar = `img/avatar.jpg`;
+const promoMovie: Movie = testMovies[0];
+const showedMovies: Array<Movie> = testMovies.slice(1);
+const genres: string[] = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 describe(`MainComponent`, () => {
   it(`should run callback on tab click`, () => {
@@ -21,26 +26,25 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Router history={history}>
           <Main
-            activeGenre={`All genres`}
-            authorizationStatus={`AUTH`}
-            avatar={`img/avatar.jpg`}
+            activeGenre={activeGenre}
+            authorizationStatus={AuthorizationStatus.AUTH}
+            avatar={avatar}
             genres={genres}
             hasUploadingError={false}
             isUploading={false}
             movies={showedMovies}
             moviesCount={8}
             onGenreClick={onGenreClick}
-            onMovieCardClick={() => {}}
-            onPlayButtonClick={() => {}}
-            onShowMoreButtonClick={() => {}}
-            onMyListButtonClick={() => {}}
+            onMovieCardClick={noop}
+            onShowMoreButtonClick={noop}
+            onMyListButtonClick={noop}
             promoMovie={promoMovie}
           />
         </Router>
     );
     const genreLink = mainElement.find(`.catalog__genres-link`).at(1);
 
-    genreLink.simulate(`click`, {preventDefault: () => {}});
+    genreLink.simulate(`click`, {preventDefault: noop});
     expect(onGenreClick).toHaveBeenCalledTimes(1);
   });
 
@@ -49,19 +53,18 @@ describe(`MainComponent`, () => {
     const mainElement = mount(
         <Router history={history}>
           <Main
-            activeGenre={`All genres`}
-            authorizationStatus={`AUTH`}
-            avatar={`img/avatar.jpg`}
+            activeGenre={activeGenre}
+            authorizationStatus={AuthorizationStatus.AUTH}
+            avatar={avatar}
             genres={genres}
             hasUploadingError={false}
             isUploading={false}
             movies={showedMovies}
             moviesCount={4}
-            onGenreClick={() => {}}
-            onMovieCardClick={() => {}}
-            onPlayButtonClick={() => {}}
+            onGenreClick={noop}
+            onMovieCardClick={noop}
             onShowMoreButtonClick={onShowMoreButtonClick}
-            onMyListButtonClick={() => {}}
+            onMyListButtonClick={noop}
             promoMovie={promoMovie}
           />
         </Router>

@@ -4,18 +4,20 @@ import * as renderer from "react-test-renderer";
 
 import MovieCard from "./movie-card";
 import history from "../../history";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
-const movie = testMovies[4];
+const movie: Movie = testMovies[4];
 describe(`MovieCard Component`, () => {
   it(`should render correctly MovieCardComponent`, () => {
     const tree = renderer.create(
         <Router history={history}>
           <MovieCard
             movie={movie}
-            onCardClick={() => {}}
-            onCardEnter={() => {}}
-            onCardLeave={() => {}}
+            onCardClick={noop}
+            onCardEnter={noop}
+            onCardLeave={noop}
           >
             <video/>
           </MovieCard>

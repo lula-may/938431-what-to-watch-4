@@ -1,8 +1,9 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
 
+import {noop} from "../../utils";
 import Tabs from "./tabs";
-import {TabType} from "../../const";
+import {TabType} from "../../types";
 import {reviews, testMovies} from "../../test-mocks/test-films";
 
 const movie = testMovies[0];
@@ -15,7 +16,7 @@ describe(`Tabs Component`, () => {
           comments={reviews}
           hasLoadingError={false}
           movie={movie}
-          onClick={() => {}}
+          onClick={noop}
         />
     ).toJSON();
 
@@ -29,7 +30,7 @@ describe(`Tabs Component`, () => {
           comments={reviews}
           hasLoadingError={false}
           movie={movie}
-          onClick={() => {}}
+          onClick={noop}
         />
     ).toJSON();
 
@@ -43,7 +44,7 @@ describe(`Tabs Component`, () => {
           comments={reviews}
           hasLoadingError={false}
           movie={movie}
-          onClick={() => {}}
+          onClick={noop}
         />
     ).toJSON();
 

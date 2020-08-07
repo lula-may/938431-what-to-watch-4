@@ -1,17 +1,24 @@
 import * as React from "react";
 import {configure, mount} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
-import PropTypes from "prop-types";
+
 import withVideoPlayer from "./with-video-player";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
 configure({
   adapter: new Adapter()
 });
 
-const movie = testMovies[0];
+const movie: Movie = testMovies[0];
+interface Props {
+  children: React.ReactNode;
+  onCardClick: () => void;
+  onCardEnter: () => void;
+}
 
-const MockComponent = (props) => {
+const MockComponent: React.FC<Props> = (props: Props) => {
   const {children, onCardClick, onCardEnter} = props;
   return (
     <div onMouseEnter={onCardEnter} onClick={onCardClick}>
@@ -20,11 +27,6 @@ const MockComponent = (props) => {
   );
 };
 
-MockComponent.propTypes = {
-  children: PropTypes.node.isRequired,
-  onCardClick: PropTypes.func.isRequired,
-  onCardEnter: PropTypes.func.isRequired,
-};
 
 const MockComponentWrapped = withVideoPlayer(MockComponent);
 
@@ -35,7 +37,7 @@ describe(`WithVideoPlayer HOC`, () => {
         <MockComponentWrapped
           movie={movie}
           onCardClick={onCardClick}
-          onCardEnter={() => {}}
+          onCardEnter={noop}
         />);
     wrapper.simulate(`click`);
 
@@ -48,32 +50,11 @@ describe(`WithVideoPlayer HOC`, () => {
     const wrapper = mount(
         <MockComponentWrapped
           movie={movie}
-          onCardClick={() => {}}
+          onCardClick={noop}
           onCardEnter={onCardEnter}
         />);
     expect(wrapper.instance().timeOut).toEqual(null);
     wrapper.simulate(`mouseenter`);
     expect(wrapper.instance().timeOut).not.toEqual(null);
-  });
-
-  it(`should autoplay video on mouse entering and timeout is over`, () => {
-    window.setTimeout = (func, timer) => {
-      func();
-      return timer;
-    };
-    const wrapper = mount(
-        <MockComponentWrapped
-          movie={movie}
-          onCardClick={() => {}}
-          onCardEnter={() => {}}
-        />);
-    const {_videoRef} = wrapper.instance();
-    expect(_videoRef.current.autoplay).toEqual(false);
-    expect(_videoRef.current.src).toEqual(``);
-
-    wrapper.simulate(`mouseenter`);
-
-    expect(_videoRef.current.autoplay).toBe(true);
-    expect(_videoRef.current.src).toContain(movie.src);
   });
 });

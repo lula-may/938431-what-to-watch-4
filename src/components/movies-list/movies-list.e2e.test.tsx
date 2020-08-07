@@ -2,13 +2,17 @@ import * as React from "react";
 import {Router} from "react-router-dom";
 import {configure, mount} from "enzyme";
 import * as Adapter from "enzyme-adapter-react-16";
+
 import MoviesList from "./movies-list";
 import history from "../../history";
+import {Movie} from "../../types";
 import {testMovies} from "../../test-mocks/test-films";
 
 configure({
   adapter: new Adapter()
 });
+
+const movies: Array<Movie> = testMovies;
 
 describe(`MoviesList Component`, () => {
   it(`should run callback on card image click`, () => {
@@ -16,7 +20,7 @@ describe(`MoviesList Component`, () => {
     const moviesList = mount(
         <Router history={history}>
           <MoviesList
-            movies={testMovies}
+            movies={movies}
             moviesCount={8}
             onMovieCardClick={onMovieCardClick}
           />
@@ -34,7 +38,7 @@ describe(`MoviesList Component`, () => {
     const moviesList = mount(
         <Router history={history}>
           <MoviesList
-            movies={testMovies}
+            movies={movies}
             moviesCount={8}
             onMovieCardClick={onMovieCardClick}
           />

@@ -6,8 +6,8 @@ import MoviesList from "../movies-list/movies-list";
 import Tabs from "../tabs/tabs";
 import withActiveItem from "../../hocs/with-active-item/with-active-item";
 
-import {Movie, Review} from "../../types";
-import {SIMILAR_MOVIES_COUNT, TabType, AppRoute} from "../../const";
+import {Movie, Review, TabType} from "../../types";
+import {SIMILAR_MOVIES_COUNT, AppRoute} from "../../const";
 import history from "../../history";
 import {ActionCreator as StateActionCreator} from "../../reducer/app-state/app-state";
 import {Operation as DataOperation} from "../../reducer/data/data";

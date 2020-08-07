@@ -140,6 +140,9 @@ exports[`AddReviewForm Component should render all form controls active 1`] = `
       </div>
     </div>
   </form>
+  <div
+    className="children-component"
+  />
 </div>
 `;
 
@@ -287,6 +290,9 @@ exports[`AddReviewForm Component should render all form controls disabled 1`] = 
       </div>
     </div>
   </form>
+  <div
+    className="children-component"
+  />
 </div>
 `;
 
@@ -434,5 +440,8 @@ exports[`AddReviewForm Component should render submitButton disabled 1`] = `
       </div>
     </div>
   </form>
+  <div
+    className="children-component"
+  />
 </div>
 `;

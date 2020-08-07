@@ -1,16 +1,22 @@
 import * as React from "react";
 import {configure, mount} from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
-import PropTypes from "prop-types";
+import * as Adapter from "enzyme-adapter-react-16";
+
 import withActiveItem from "./with-active-item";
+import {noop} from "../../utils";
 
 configure({
   adapter: new Adapter()
 });
 
-const tabs = [`First`, `Second`, `Third`];
+const tabs: string[] = [`First`, `Second`, `Third`];
 
-const MockComponent = (props) => {
+interface Props {
+  activeItem: string;
+  onClick: () => void;
+}
+
+const MockComponent: React.FC<Props> = (props: Props) => {
   const {activeItem, onClick} = props;
   return (
     <div>
@@ -21,10 +27,6 @@ const MockComponent = (props) => {
   );
 };
 
-MockComponent.propTypes = {
-  activeItem: PropTypes.string,
-  onClick: PropTypes.func
-};
 
 const MockComponentWrapped = withActiveItem(MockComponent);
 
@@ -33,8 +35,8 @@ describe(`WithActiveItem HOC`, () => {
   it(`should add "active" class to "Second" link and remove "active" class from "First link on link click`, () => {
     const wrapper = mount(
         <MockComponentWrapped
-          activeItem={`First`}
-          onActiveChange={() => {}}
+          activeItem={tabs[0]}
+          onActiveChange={noop}
         />
     );
 

@@ -13,7 +13,6 @@ interface Props {
 }
 
 class SignIn extends React.PureComponent<Props> {
-  props: Props;
   private emailRef: React.RefObject<HTMLInputElement>;
   private passwordRef: React.RefObject<HTMLInputElement>;
 

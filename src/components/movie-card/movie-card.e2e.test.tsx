@@ -5,13 +5,15 @@ import * as Adapter from "enzyme-adapter-react-16";
 
 import MovieCard from "./movie-card";
 import history from "../../history";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 import {testMovies} from "../../test-mocks/test-films";
 
 configure({
   adapter: new Adapter()
 });
 
-const movie = testMovies[3];
+const movie: Movie = testMovies[3];
 
 describe(`MovieCardComponent`, () => {
   it(`should run callback on Mouse Entering the film card`, () => {
@@ -20,9 +22,9 @@ describe(`MovieCardComponent`, () => {
         <Router history={history}>
           <MovieCard
             movie={movie}
-            onCardClick={() => {}}
+            onCardClick={noop}
             onCardEnter={onCardEnter}
-            onCardLeave={() => {}}
+            onCardLeave={noop}
           >
             <video/>
           </MovieCard>
@@ -40,8 +42,8 @@ describe(`MovieCardComponent`, () => {
         <Router history={history}>
           <MovieCard
             movie={movie}
-            onCardEnter={() => {}}
-            onCardLeave={()=>{}}
+            onCardEnter={noop}
+            onCardLeave={noop}
             onCardClick={onCardClick}
           >
             <video/>
@@ -61,9 +63,9 @@ describe(`MovieCardComponent`, () => {
         <Router history={history}>
           <MovieCard
             movie={movie}
-            onCardEnter={() => {}}
+            onCardEnter={noop}
             onCardClick={onCardClick}
-            onCardLeave={()=>{}}
+            onCardLeave={noop}
           >
             <video/>
           </MovieCard>

@@ -1,23 +1,28 @@
 import * as React from "react";
 import * as renderer from "react-test-renderer";
-import PropTypes from "prop-types";
+
 import withVideoPlayer from "./with-video-player";
 import {testMovies} from "../../test-mocks/test-films";
+import {Movie} from "../../types";
+import {noop} from "../../utils";
 
-const movie = testMovies[0];
+const movie: Movie = testMovies[0];
 
-const MockComponent = (props) => {
-  const {children} = props;
+interface Props {
+  children: React.ReactNode;
+  onCardClick: () => void;
+  onCardEnter: () => void;
+}
+
+const MockComponent: React.FC<Props> = (props: Props) => {
+  const {children, onCardClick, onCardEnter} = props;
   return (
-    <div>
+    <div onMouseEnter={onCardEnter} onClick={onCardClick}>
       {children}
     </div>
   );
 };
 
-MockComponent.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 const MockComponentWrapped = withVideoPlayer(MockComponent);
 
@@ -26,8 +31,8 @@ describe(`WithVideoPlayer HOC`, () => {
     const tree = renderer.create(
         <MockComponentWrapped
           movie={movie}
-          onCardEnter={() => {}}
-          onCardClick={() => {}}
+          onCardEnter={noop}
+          onCardClick={noop}
         />
     ).toJSON();
 

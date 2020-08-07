@@ -1,3 +1,9 @@
+export enum TabType {
+  OVERVIEW = `Overview`,
+  DETAILS = `Details`,
+  REVIEWS = `Reviews`,
+};
+
 export interface Review {
   author: string;
   authorId: number;

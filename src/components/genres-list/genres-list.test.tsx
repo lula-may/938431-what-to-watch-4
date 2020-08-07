@@ -1,16 +1,18 @@
-import React from "react";
-import renderer from "react-test-renderer";
+import * as React from "react";
+import * as renderer from "react-test-renderer";
 
-import GenresList from "./genres-list.jsx";
+import GenresList from "./genres-list";
+import {noop} from "../../utils";
 
-const genres = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
+const activeItem = `War`;
+const genres: string[] = [`All genres`, `Sci-Fi`, `War`, `Detective`, `Fantasy`, `Sport`, `Adventure`];
 
 it(`should render correctly GenresList Component, "War" with active class`, () => {
   const tree = renderer.create(
       <GenresList
-        activeItem={`War`}
+        activeItem={activeItem}
         genres={genres}
-        onClick={() => {}}
+        onClick={noop}
       />
   ).toJSON();
 
