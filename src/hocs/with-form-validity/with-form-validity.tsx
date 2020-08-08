@@ -13,10 +13,15 @@ const isValidComment = (comment) => {
 
 const isValidFormData = (comment, rating) => isValidComment(comment) && (rating !== DEFAULT_RATING);
 
+type CommentType = {
+  comment: string;
+  rating: number;
+}
+
 interface Props {
   hasError: boolean;
   isCommentLoading: boolean;
-  onSubmit: ({comment, rating}: {comment: string; rating: number}) => void;
+  onSubmit: (commentData: CommentType) => void;
 }
 
 interface State {

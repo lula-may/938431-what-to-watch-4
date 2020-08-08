@@ -7,10 +7,15 @@ import {Operation as DataOperation} from "../../reducer/data/data";
 import {Operation as UserOperation} from "../../reducer/user/user";
 import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors";
 
+interface LoginProps {
+  email: string;
+  password: string;
+}
+
 interface Props {
   hasLoginError: boolean;
   isInvalidEmail: boolean;
-  onSubmit: ({email, password}: {email: string; password: string}) => void;
+  onSubmit: (authData: LoginProps) => void;
   updateMovies: () => void;
 }
 
