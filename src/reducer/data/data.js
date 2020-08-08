@@ -1,7 +1,7 @@
-import {adaptComments, adaptMovie, adaptMovies} from "../../adapter.js";
-import {AppRoute} from "../../const.js";
-import {extend} from "../../utils.js";
-import history from "../../history.js";
+import {adaptComments, adaptMovie, adaptMovies} from "../../adapter";
+import {AppRoute} from "../../const";
+import {extend} from "../../utils";
+import history from "../../history";
 
 const Url = {
   FAVORITE: `/favorite`,

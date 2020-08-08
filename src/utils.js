@@ -43,5 +43,6 @@ const getRatingLevel = (rating) => {
   return `Awesome`;
 };
 
+const noop = () => {};
 
-export {extend, formatDate, formatTime, formatDateTimeAttribute, formatElapsedTime, getRatingLevel};
+export {extend, formatDate, formatTime, formatDateTimeAttribute, formatElapsedTime, getRatingLevel, noop};
