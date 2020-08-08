@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 
 import {AppRoute} from "../../const";
+import {Operation as DataOperation} from "../../reducer/data/data";
 import {Operation as UserOperation} from "../../reducer/user/user";
 import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors";
 
@@ -10,6 +11,7 @@ interface Props {
   hasLoginError: boolean;
   isInvalidEmail: boolean;
   onSubmit: ({email, password}: {email: string; password: string}) => void;
+  updateMovies: () => void;
 }
 
 class SignIn extends React.PureComponent<Props> {
@@ -53,6 +55,10 @@ class SignIn extends React.PureComponent<Props> {
     });
   }
 
+  componentWillUnmount() {
+    const {updateMovies} = this.props;
+    updateMovies();
+  }
   render() {
     const {hasLoginError, isInvalidEmail} = this.props;
     return (
@@ -119,6 +125,9 @@ const mapDispatchToProps = (dispatch) => ({
   onSubmit: (authData) => {
     dispatch(UserOperation.login(authData));
   },
+  updateMovies: () => {
+    dispatch(DataOperation.loadMovies());
+  }
 });
 
 export {SignIn};

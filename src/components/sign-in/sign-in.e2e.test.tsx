@@ -21,6 +21,7 @@ describe(`SignIn Component`, () => {
             hasLoginError={false}
             isInvalidEmail={false}
             onSubmit={onSubmit}
+            updateMovies={noop}
           />
         </Router>
     );

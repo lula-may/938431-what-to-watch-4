@@ -14,6 +14,7 @@ describe(`SingIn Component`, () => {
             hasLoginError={false}
             isInvalidEmail={false}
             onSubmit={noop}
+            updateMovies={noop}
           />
         </Router>
     ).toJSON();
@@ -28,6 +29,7 @@ describe(`SingIn Component`, () => {
             hasLoginError={true}
             isInvalidEmail={true}
             onSubmit={noop}
+            updateMovies={noop}
           />
         </Router>
     ).toJSON();
@@ -42,6 +44,7 @@ describe(`SingIn Component`, () => {
             hasLoginError={true}
             isInvalidEmail={false}
             onSubmit={noop}
+            updateMovies={noop}
           />
         </Router>
     ).toJSON();
