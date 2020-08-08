@@ -197,7 +197,7 @@ describe(`Operation`, () => {
 
     return loginMaker(dispatch, () => {}, api)
     .then(() => {
-      expect(dispatch).toHaveBeenCalledTimes(3);
+      expect(dispatch).toHaveBeenCalledTimes(4);
       expect(dispatch.mock.calls[0][0]).toEqual({
         type: ActionType.CLEAR_LOGIN_ERROR,
       });
@@ -210,6 +210,7 @@ describe(`Operation`, () => {
         type: ActionType.SET_AVATAR_URL,
         payload: `https://4.react.pages.academy/picture.jpg`,
       });
+      expect(dispatch.mock.calls[3][0]).toBeInstanceOf(Function);
     });
   });
 

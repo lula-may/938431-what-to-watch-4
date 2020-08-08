@@ -1,4 +1,5 @@
 import {extend} from "../../utils";
+import {Operation as DataOperation} from "../data/data";
 
 const BASE_URL = `https://4.react.pages.academy`;
 const AuthorizationStatus = {
@@ -68,6 +69,7 @@ const Operation = {
       const avatarUrl = `${BASE_URL}${response.data[`avatar_url`]}`;
       dispatch(ActionCreator.setAvatarUrl(avatarUrl));
     })
+    .then(() => dispatch(DataOperation.loadMovies()))
     .catch((err) => {
       dispatch(ActionCreator.setLoginError(err));
     });

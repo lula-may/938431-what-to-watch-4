@@ -7,7 +7,7 @@ import {Operation as DataOperation} from "../../reducer/data/data";
 import {Operation as UserOperation} from "../../reducer/user/user";
 import {getLoginErrorStatus, getEmailValidity} from "../../reducer/user/selectors";
 
-interface LoginProps {
+type LoginProps = {
   email: string;
   password: string;
 }
@@ -60,10 +60,6 @@ class SignIn extends React.PureComponent<Props> {
     });
   }
 
-  componentWillUnmount() {
-    const {updateMovies} = this.props;
-    updateMovies();
-  }
   render() {
     const {hasLoginError, isInvalidEmail} = this.props;
     return (
