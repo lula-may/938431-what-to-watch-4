@@ -57,4 +57,22 @@ describe(`WithVideoPlayer HOC`, () => {
     wrapper.simulate(`mouseenter`);
     expect(wrapper.instance().timeOut).not.toEqual(null);
   });
+
+  it(`should autoplay video on mouse entering and timeout is over`, () => {
+    jest.useFakeTimers();
+    const wrapper = mount(
+        <MockComponentWrapped
+          movie={movie}
+          onCardClick={noop}
+          onCardEnter={noop}
+        />);
+    const {videoRef} = wrapper.instance();
+    expect(videoRef.current.autoplay).toEqual(false);
+    expect(videoRef.current.src).toEqual(``);
+
+    wrapper.simulate(`mouseenter`);
+    jest.runAllTimers();
+    expect(videoRef.current.autoplay).toBe(true);
+    expect(videoRef.current.src).toContain(movie.src);
+  });
 });
